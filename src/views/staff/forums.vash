@@ -1,0 +1,70 @@
+@html.extend('layouts/staff', function(model) {
+    @html.block('content', function(model) {
+            <div class="row" style="margin-top:1rem;">
+                <div class="col-12">
+                    <h1 style="font-size:2rem;">Categories</h1>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Weight</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-categories">
+                @for (const cat of model.page.cats) {
+                    <tr>
+                        <th scope="row">@cat.categoryId</th>
+                        <td><input type="text" class="form-control forumCategoryTitle" data-id="@cat.categoryId" placeholder="Forum Category" value="@cat.title"></td>
+                        <td><input type="text" class="form-control forumCategoryDescription" data-id="@cat.categoryId" placeholder="Forum Description" value="@cat.description"></td>
+                        <td><input type="text" class="form-control forumCategoryWeight" data-id="@cat.categoryId" placeholder="Forum Weight" value="@cat.weight"></td>
+                        <td><button type="button" class="btn btn-success saveChangesCategory" data-id="@cat.categoryId" style="width: 100%;">Save</button></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success" id="addCategory" style="width: 100%;">Add Category</button>
+
+            <div class="row" style="margin-top:1rem;">
+                <div class="col-12">
+                    <h1 style="font-size:2rem;">Subcategories</h1>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">CategoryID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Read Permission Level</th>
+                        <th scope="col">Post Permission Level</th>
+                        <th scope="col">Weight</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-subcategories">
+                @for (const cat of model.page.subs) {
+                    <tr>
+                        <th scope="row">@cat.subCategoryId</th>
+                        <td><input type="text" class="form-control subCategoryId" data-id="@cat.subCategoryId" placeholder="Forum Category" value="@cat.categoryId"></td>
+                        <td><input type="text" class="form-control subCategoryTitle" data-id="@cat.subCategoryId" placeholder="Forum Category" value="@cat.title"></td>
+                        <td><input type="text" class="form-control subCategoryDescription" data-id="@cat.subCategoryId" placeholder="Forum Description" value="@cat.description"></td>
+                        <td><input type="text" class="form-control subCategoryPermissionsRead" data-id="@cat.subCategoryId" placeholder="Read Permissions" value="@cat.permissions.read"></td>
+                        <td><input type="text" class="form-control subCategoryPermissionsPost" data-id="@cat.subCategoryId" placeholder="Post Permissions" value="@cat.permissions.post"></td>
+                        <td><input type="text" class="form-control subCategoryWeight" data-id="@cat.subCategoryId" placeholder="Forum Weight" value="@cat.weight"></td>
+                        <td><button type="button" class="btn btn-success saveChangesSubCategory" data-id="@cat.subCategoryId" style="width: 100%;">Save</button></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success" id="addSubCategory" style="width: 100%;">Add Subcategory</button>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/staff/forums.js?v=@model.v"></script>
+    })
+})

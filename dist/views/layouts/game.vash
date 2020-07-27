@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+    <title>BlocksHub</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="x-lb-origin" content="@model['x-lb-origin']">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
+    <script nonce="@model.nonce">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-161288601-1');
+    </script>
+
+    <style>
+            html, body {
+                overflow: hidden;
+                width   : 100%;
+                height  : 100%;
+                margin  : 0;
+                padding : 0;
+            }
+        
+            #renderCanvas {
+                width   : 100%;
+                height  : 100%;
+                touch-action: none;
+            }
+        </style>
+</head>
+<body>
+    @html.block('content')
+    <!-- Locale -->
+    <script nonce="@model.nonce" src="/js/locale/en.js?v=@model.v"></script>
+    <iframe src="/game-check/browser-compatibility" style="display:none;" sandbox="allow-scripts"></iframe>
+    <iframe src="/game/@model.page.gameId/sandbox?authCode=@model.page.authCode" style="width:100%;height:100%;border:none;" sandbox="allow-scripts"></iframe>
+</body>
+</html>

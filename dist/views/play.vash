@@ -1,0 +1,111 @@
+@html.extend('layouts/default', function(model) {
+    @html.block('seo', function(model) {
+        @if (model.page.genre === 1) {
+            <meta name="og:title" content="Free 3D Browser Games" />
+            <meta name="og:description" content="Browse tons of user-generated 3D games that run on nearly every device, in your browser!" />
+            <meta name="twitter:title" content="Free 3D Browser Games" />
+            <meta name="twitter:description" content="Browse tons of user-generated 3D games that run on nearly every device, in your browser!" />
+        }else{
+            <meta name="og:title" content="Free 3D @model.page.genres[model.page.genre] Games" />
+            <meta name="og:description" content="Browse tons of user-generated 3D @model.page.genres[model.page.genre] games that run on nearly every device, in your browser!" />
+            <meta name="twitter:title" content="Free 3D @model.page.genres[model.page.genre] Games" />
+            <meta name="twitter:description" content="Browse tons of user-generated 3D @model.page.genres[model.page.genre] games that run on nearly every device, in your browser!" />
+        }
+        <meta name="og:type" content="website" />
+    })
+    @html.block('content', function(model) {
+        <div style="display:none;" id="meta-play-info" data-genres="@JSON.stringify(model.page.genres)"></div>
+        <div class="row">
+            <div class="col-12 col-lg-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-lg-none d-block">
+                            <span id="open-search-filters-mobile" class="navbar-toggler-icon" style="background-image: url(/img/nav-grey.svg?v=@model.v);float:left;cursor:pointer;"></span>
+                            <p style="padding-left:0.5rem;float:left;">Search Filters</p>
+                        </div>
+                        <div class="d-lg-block d-none" id="search-filters">
+                            <div class="d-lg-none d-block">
+                                <div style="margin-top:3rem;"></div>
+                            </div>
+                            <h3 style="font-size:1.15rem;margin-bottom:0.25rem;">Games</h3>
+                            <p style="font-size:0.75rem;margin-top:0;">Explore tons of user-created games.</p>
+                            <!-- start sort by options -->
+                            <p style="font-size:0.85rem;line-height:1;margin-top:1.5rem;font-weight:600;margin-bottom:0.5rem;">Sorted By</p>
+                            <ul style="padding-left:1.25rem;list-style: none;font-size:0.85rem;">
+                                @for (const sort in model.page.sorts) {
+                                    @if (sort === '1') {
+                                        <a class="normal sortoption" href="#" data-id="@sort" data-title="Featured Free Games">
+                                            <li style="cursor:pointer;margin-bottom:0.25rem;font-weight:600;">Featured</li>
+                                        </a>
+                                    }else{
+                                        @if (!isNaN(Number(sort))) {
+                                            <a class="normal sortoption" href="#" data-id="@sort" data-title="@model.page.sorts[sort]">
+                                                <li style="cursor:pointer;opacity:0.5;margin-bottom:0.25rem;">@model.page.sorts[sort]</li>
+                                            </a>
+                                        }
+                                    }
+                                }
+                            </ul>
+                            <!-- end sort by options -->
+                            <!-- start genre options -->
+                            <p style="font-size:0.85rem;line-height:1;margin-top:1.5rem;font-weight:600;margin-bottom:0.5rem;">Genres</p>
+                            <ul style="padding-left:1.25rem;list-style: none;font-size:0.85rem;">
+                                @for (const genre in model.page.genres) {
+                                    @if (genre === '1') {
+                                        <a class="normal genreoption" href="#" data-id="@genre">
+                                            <li style="cursor:pointer;margin-bottom:0.25rem;font-weight:600;">Any</li>
+                                        </a>
+                                    }else{
+                                        @if (!isNaN(Number(genre))) {
+                                            <a class="normal genreoption" href="#" data-id="@genre">
+                                                <li style="cursor:pointer;margin-bottom:0.25rem;opacity:0.5;">@model.page.genres[genre]</li>
+                                            </a>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                <div class="row" style="padding-top:1rem;padding-left:1rem;padding-right:1rem;">
+                    <div class="col-8 col-md-10">
+                        <h4 id="title">Featured Free Games</h4>
+                        @if (model.page.genre === 1) {
+                            <p style="font-size:0.85rem;" id="free-games-description">Experience thousands of user-created 3D games designed for all ages, all for free! No download required. Our games are supported on all major devices, including Desktop Computers, Laptop Computers, Tablets, and Phones.</p>
+                        }else{
+                            <p style="font-size:0.85rem;" id="free-games-description">Experience thousands of user-created 3D @model.page.genres[model.page.genre] games designed for all ages, all for free! No download required. Our games are supported on all major devices, including Desktop Computers, Laptop Computers, Tablets, and Phones.</p>
+                        }
+                    </div>
+                    <div class="col-4 col-md-2">
+                        <div class='form-group'>
+                            <a style="width:100%;color:white;display:none;" href="/game/create" class="btn btn-success" id="create-game">Create</a>
+                            <a style="width:100%;color:white;margin-top:0.5rem;" href="/support/game-help" class="btn btn-danger">Help</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-top:1rem;" id="topTwoGames">
+                    
+                </div>
+                <div class="row" style="padding-top:1rem;padding-bottom:1rem;padding-left:1rem;padding-right:1rem;" id="header-when-top-two-games-are-visible">
+                    <div class="col-12">
+                        <h4>Top Free Games</h4>
+                    </div>
+                </div>
+                <div class="row" id="popularGamesList" style="padding-left: 0.5rem;padding-right: 0.5rem;">
+                        
+                </div>
+            </div>
+            <div class="col-2 skyscraper-ads d-none d-lg-block"></div>
+        </div>
+        <div class="row" style="margin-top:1rem;">
+            <div class="col-12">
+                <p style="font-size:0.75rem;padding-left: 1rem;padding-right: 1rem;">We're proud to offer the web's best collection of free online games and 3D virtual worlds. We are committed to making sure that all of our free games are fun and safe. Users can create their own virtual world online games; customize their avatar character with the best virtual goods like hats, shirts and gear; and play free online games with their friends while also meeting new friends. Whether you are interested in Comedy games, Action games, Adventure games, Car games, or even Tycoon games, count on us to deliver the best free online games for you to play.</p>
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/play.js?v=@model.v"></script>
+    })
+})

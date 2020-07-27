@@ -1,0 +1,16 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+      @if (model.debug === true) {
+        <h1>@model.message</h1>
+        <h2>@model.error.status</h2>
+        <pre>@model.error.stack</pre>
+      }else{
+        <div class="row" style="margin-top:1rem;">
+            <div class="col-12">
+                <h1 class="display-2" style="background:linear-gradient(0deg, rgba(40,167,69,1) 0%, rgba(40,167,69,0.7245273109243697) 100%);  color:transparent;-webkit-background-clip: text;background-clip: text;">Oops</h1>
+                <p>@model.page.errorMessage</p>
+            </div>
+        </div>
+      }
+  })
+})

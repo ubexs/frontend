@@ -1,0 +1,118 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+      <div id="groupdata" data-groupid="@model.page.groupId" data-encoded-name="@model.page.groupEncodedName"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Create Item</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Item Info</h3>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" id="assetName" placeholder="Item Name">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" id="assetDescription" placeholder="Description">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="assetCategory">Category</label>
+                                        <select class="form-control" id="assetCategory">
+                                            <option value="2">Shirt</option>
+                                            <option value="3">Pants</option>
+                                            <option value="4">Face</option>
+                                            <option value="7">TShirt</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Sale Info</h3>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="assetForSale">Will This Item Be For Sale?</label>
+                                        <select class="form-control" id="assetForSale">
+                                            <option value="1">Yes</option>
+                                            <option value="0" selected="selected">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 item-for-sale-info" style="display:none;">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="text" class="form-control" id="assetPrice" placeholder="Price">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-12 col-md-6 item-for-sale-info" style="display:none;">
+                                    <div class="form-group">
+                                        <label for="assetCurrency">Currency</label>
+                                        <select class="form-control" id="assetCurrency">
+                                            <option value="1">Primary</option>
+                                            <option value="2" selected="selected">Secondary</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Item Image</h3>
+                                    <p style="font-size:0.85rem;margin-bottom:1rem;">The texture file must be a PNG or JPG file.</p>
+                                </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <form id="assetsForm" enctype="multipart/form-data">
+                                                <label for="exampleFormControlFile1">Texture File</label>
+                                                <input type="file" class="form-control-file" id="textureFile">
+                                            </form>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success" style="width: 100%;" id="createAssetClick">Create Item</button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/catalog_creategroup.js?v=@model.v"></script>
+  })
+})

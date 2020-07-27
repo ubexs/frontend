@@ -1,0 +1,78 @@
+@html.extend('layouts/staff', function(model) {
+  @html.block('content', function(model) {
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Ban a User</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>UserID</label>
+                        <input type="text" class="form-control" id="userId" placeholder="The User's ID">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Reason</label>
+                        <input type="text" class="form-control" id="reason" placeholder="Reason for Ban (Try to stay under 120 Characters or so.)">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Private Note(s)</label>
+                        <textarea class="form-control" id="privateNotes" rows="3" placeholder="This will only be visible for other moderators"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Length</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="length" placeholder="Length">
+                            </div>
+                            <div class="col-6">
+                                <select class="form-control" id="lengthType">
+                                    <option value="hours">Hours</option>
+                                    <option value="days" selected="selected">Days</option>
+                                    <option value="weeks">Weeks</option>
+                                    <option value="months">Months</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Permanent?</label>
+                        <select class="form-control" id="isTerminated">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Delete Account?</label>
+                        <label>This will prevent it's username, profile, and other info from being visible to anyone other than the account's owner and staff.</label>
+                        <select class="form-control" id="isDeleted">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" style="width: 100%;" id="banUser">Ban User</button>
+                    </div>
+                </div>
+            </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/staff/ban.js?v=@model.v"></script>
+  })
+})

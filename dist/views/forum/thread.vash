@@ -1,0 +1,215 @@
+@html.extend('layouts/default', function(model) {
+    @html.block("meta", function(model) {
+        <meta property="og:title" content="@model.page.threadTitle" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="@model.page.threadTitle">
+        <meta name="twitter:description" content="@model.page.threadTitle | A Forum Post on blockshub.net">
+    })
+    @html.block('content', function(model) {
+        @if (model.userInfo) {
+            <div id="threaddata" data-threadid="@model.page.threadId" data-page="@model.page.page" data-userstaff="@model.userInfo.staff"></div>
+        }else{
+            <div id="threaddata" data-threadid="@model.page.threadId" data-page="@model.page.page" data-userstaff="0"></div>
+        }
+
+        <!-- Forum Reply Modal -->
+        <div class="row fixed-bottom" style="display:none;" id="replyCreationModal">
+            <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+                <div class="card" style="box-shadow: 0 0 10px 20px rgba(0, 0, 0, 0.075);">
+                    <div class="card-body">
+                        <h3>Create Reply</h3>
+                        <textarea class="form-control" id="replyBody" rows="6" placeholder="Reply Body"></textarea>
+                        <br>
+                        <div class="row">
+                            <div class="col-6 col-md-3">
+                                <button type="button" style="width:100%;" class="btn btn-success" id="createReply">Create</button>
+                            </div>
+                            <div class="col-6 col-md-3 offset-md-6">
+                                <button type="button" style="width:100%;" class="btn btn-danger" id="closeReply">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forum Edit Modal -->
+        <div class="row fixed-bottom" style="display:none;" id="editReplyModal">
+            <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+                <div class="card" style="box-shadow: 0 0 10px 20px rgba(0, 0, 0, 0.075);">
+                    <div class="card-body">
+                        <h3>Edit Reply</h3>
+                        <textarea class="form-control" id="editReplyBody" rows="6" placeholder="Reply Body"></textarea>
+                        <br>
+                        <div class="row">
+                            <div class="col-6 col-md-3">
+                                <button type="button" style="width:100%;" class="btn btn-success" id="editReplyClick">Update</button>
+                            </div>
+                            <div class="col-6 col-md-3 offset-md-6">
+                                <button type="button" style="width:100%;" class="btn btn-danger" id="closeEditReply">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forum Thread Edit Modal -->
+        <div class="row fixed-bottom" style="display:none;" id="editThreadModal">
+            <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+                <div class="card" style="box-shadow: 0 0 10px 20px rgba(0, 0, 0, 0.075);">
+                    <div class="card-body">
+                        <h3>Edit Thread</h3>
+                        @if (model.userInfo && model.userInfo.staff >= 1) {
+                            <div class="row">
+                                <div class="col-6">
+                                    <label style="padding-top:0.5rem;">Lock Thread?</label>
+                                    <select class="form-control" id="threadLocked">
+                                        @if (model.page.threadLocked === 0) {
+                                            <option value="1">Yes</option>
+                                            <option value="0" selected="selected">No</option>
+                                        }else{
+                                            <option value="1" selected="selected">Yes</option>
+                                            <option value="0">No</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label style="padding-top:0.5rem;">Pin Thread?</label>
+                                    <select class="form-control" id="threadPinned">
+                                        @if (model.page.threadPinned === 0) {
+                                            <option value="1">Yes</option>
+                                            <option value="0" selected="selected">No</option>
+                                        }else{
+                                            <option value="1" selected="selected">Yes</option>
+                                            <option value="0">No</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        }
+                        <br>
+                        <div class="row">
+                            <div class="col-6 col-md-3">
+                                <button type="button" style="width:100%;" class="btn btn-success" id="editThreadClick" data-id="@model.page.threadId">Submit</button>
+                            </div>
+                            <div class="col-6 col-md-3 offset-md-6">
+                                <button type="button" style="width:100%;" class="btn btn-danger" id="editThreadClose">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-10">
+            <div class="row" style="padding:1rem 0 1rem 0">
+                <div class="col-6">
+                    <h5 style="padding-top: 0.5rem;"><a href="/forum" class="normal">Forums</a>/@model.page.categoryName :: <a href="/forum/@model.page.subCategoryId" class="normal">@model.page.subCategoryName</a></h5>
+                </div>
+                <!--
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <div class="col-8 col-md-8">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="searchForForumInput" placeholder="Search Forum" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-4">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-success" style="width: 100%;" id="searchForumPostClick">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                -->
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <div class="col-12 col-md-6 offset-md-6">
+                            <div class="form-group">
+                                @if (model.page.threadLocked === 1) {
+                                    <button disabled="disabled" class="btn btn-success" style="width: 100%;">This topic is locked.</button>
+                                }else{
+                                    <button id="reply" class="btn btn-success" style="width: 100%;">Reply</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row forumcategories">
+                        <div class="col-12" id="forumPosts">
+                            <div class="card bg-success" style="color:white;border-radius:0;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-8 col-sm-8 col-md-10">
+                                            <h5 style="margin-bottom:0;">@model.page.threadTitle</h5>
+                                        </div>
+                                        @if (model.userInfo && model.userInfo.staff >= 1 || model.userInfo && model.userInfo.userId === model.page.userId) {
+                                        <div class="col-4 col-sm-4 col-md-2">    
+                                            <button type="button" class="btn btn-light" style="margin:0auto;display:block;width: 3rem;font-size:0.75rem;float:right;" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                                                <i class="fas fa-chevron-circle-down" aria-hidden="true"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right fade" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-19px, 38px, 0px);">
+                                                @if (model.page.deleted) {
+                                                    <a class="dropdown-item unDeleteThread" data-id="@model.page.threadId" href="#">Undelete Thread</a>
+                                                }else{
+                                                    <a class="dropdown-item deleteThread" data-id="@model.page.threadId" href="#">Delete Thread</a>
+                                                }
+                                                @if (model.userInfo && model.userInfo.staff >= 1) {
+                                                    <a class="dropdown-item editThread" data-id="@model.page.threadId" href="#">Edit Thread</a>
+                                                }
+                                                <a class="dropdown-item"  href="/ad/thread/create/@model.page.threadId/">Advertise</a>
+                                            </div>
+                                        </div>
+                                        }
+                                        <!--
+                                        <div class="col-3 d-none d-lg-block text-center">
+                                            <h5 style="margin-bottom:0;"><a href="" style="color:white;">Previous Thread</a></h5>
+                                        </div>
+                                        <div class="col-6 col-lg-3 text-center">
+                                            <h5 style="margin-bottom:0;"><a href="" style="color:white;">Next Thread</a></h5>
+                                        </div>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" id="loader">
+                        <div class="forumPost" style="border-bottom: 1px solid rgba(0,0,0,.125);">
+                            <div class="card" style="border-radius:0;border:none;box-shadow:none;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:1rem;">
+                <div class="col-12">
+                    <ul class="pagination justify-content-center">
+                    
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 skyscraper-ads d-none d-lg-block">
+        </div>
+    </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js?v=@model.v" crossorigin="anonymous"></script>
+        <script nonce="@model.nonce" src="/js/pages/forum/thread.js?v=@model.v"></script>
+    })
+})

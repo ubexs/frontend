@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="x-lb-origin" content="@model['x-lb-origin']">
+        @html.block('meta')
+
+        <!-- Prefetch -->
+        <link rel="dns-prefetch" href="https://cdn.hindigamer.club">
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/">
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@@4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+        <!-- Local CSS -->
+        <link href="/css/custom.css?v=@model.v" rel="stylesheet">
+        <link href="/css/animate.css?v=@model.v" rel="stylesheet">
+        @if (model.userInfo) {
+            @if (model.userInfo.theme === 1) {
+                <!-- Dark Theme -->
+                <link href="/css/dark.css?v=@model.v" rel="stylesheet">
+            }
+        }
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800&display=swap" rel="stylesheet">
+        <!-- Metrics -->
+        <script nonce="@model.nonce" src="/js/metrics.js?v=@model.v"></script>
+        <!-- Font Awesome -->
+        <script nonce="@model.nonce" src="https://kit.fontawesome.com/983cb40861.js"></script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
+        <script nonce="@model.nonce">
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-161288601-1');
+        </script>
+        <!-- Title -->
+        <title>@model.title - BlocksHub</title>
+        <!-- SEO -->
+        @model.seo
+        @html.block('seo')
+        <!-- Extra CSS -->
+        @html.block('css')
+    </head>
+    <body>
+    <div id="meta" data-api-base-url="@model.apiBaseUrl"></div>
+    @if (typeof model.userInfo !== "undefined") {
+        <div 
+            id="userdata" 
+            data-authenticated="true" 
+            data-csrf="@model.csrf" 
+            data-userid="@model.userInfo.userId" 
+            data-username="@model.userInfo.username"
+            data-theme="@model.userInfo.theme"
+    ></div>
+    }else{
+        <div id="userdata" data-authenticated="false" data-csrf="@model.csrf"></div>
+    }
+    @{
+        model._extraCssClass = 'signedout sticky-top';
+    }
+    @if (typeof model.userInfo !== "undefined") {
+        @{
+            model._extraCssClass = '';
+        }
+        <div class="row secondaryNavBar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" style="padding-top:0.25rem;padding-bottom:0.25rem;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+        <nav class="navbar navbar-expand-lg sticky-top @model._extraCssClass">
+            <div class="container">
+                <h3 style="margin:0;padding:0;font-weight:600;">
+                    <a class="navbar-brand" href="/" style="font-weight:600;">
+                        <span style="color:rgba(71,195,91,1);">BLOCKS </span><span style="background-color:rgba(71,195,91,1);border-radius:0.25rem;color:white;padding-left:0.25rem;padding-right:0.25rem;padding-top:0.1rem;padding-bottom:0.15rem;">HUB</span>
+                    </a>
+                </h3>
+
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding:0;">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/play">Play</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/groups">Groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/forum">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/currency">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/discord">Discord</a>
+                    </li>
+                    <!--
+                    <li class="nav-item">
+                        <a class="nav-link" href="/membership">Membership</a>
+                    </li>
+                    -->
+                </ul>
+                @if (typeof model.userInfo !== 'undefined' && typeof model.userInfo.userId !== "undefined" && model.userInfo.userId !== null) {
+                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item displayCurrency">
+                            <div class="dropdown">
+                                <a style="font-size: 0.8125rem;padding-top: 1rem;padding-bottom: 1rem;" class="nav-link dropdown-toggle" type="button" id="dropdownNotifications" data-toggle="dropdown" >
+                                    @if (!model.userInfo || model.userInfo.theme !== 1) {
+                                        <i class="far fa-envelope-open" style="padding-right:4px;"></i>
+                                    }else{
+                                        <i class="far fa-envelope-open" style="color:white;padding-right:4px;"></i>
+                                    }
+                                    <span id="notificationCount">0</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" style="height:18rem;max-height:18rem;overflow-y:auto;overflow-x:hidden;width:18rem;" id="notifications-dropdown">
+                                    <div class="row" style="padding-left: 0.5rem;padding-right: 0.5rem;">
+                                        <div class="col-sm-12">
+                                            <p style="padding:0.5rem 1rem;font-size:0.75rem;text-align:center;">You do not have any notifications.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </li>
+                    <li class="nav-item displayCurrency">
+
+                    <a class="nav-link" href="/transactions">
+                                    @if (!model.userInfo || model.userInfo.theme !== 1) {
+                                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-grey.svg"/>    
+                                    }else{
+                                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-white.svg"/>    
+                                    }
+                                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.primaryBalance" id="currencyBalanceOne" data-amt="@model.userInfo.primaryBalance">@model.userInfo.primaryBalance</span>
+                                </a>
+                            </li>
+                            <li class="nav-item displayCurrency">
+                                <a class="nav-link" href="/transactions"> 
+                                    @if (!model.userInfo || model.userInfo.theme !== 1) {
+                                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-grey.svg"/>    
+                                    }else{
+                                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-white.svg"/>    
+                                    }
+                                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.secondaryBalance" id="currencyBalanceTwo" data-amt="@model.userInfo.secondaryBalance">@model.userInfo.secondaryBalance</span>
+                                </a>
+                    <!--
+                                <a class="nav-link" href="/transactions">
+                                    <i class="far fa-money-bill-alt"></i> 
+                                    <span id="currencyBalanceOne"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/transactions"> 
+                                    <i class="fas fa-coins"></i> 
+                                    <span id="currencyBalanceTwo"></span>
+                                </a>
+                                -->
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@model.userInfo.username</a>
+                        <div class="dropdown-menu dropdown-menu-right fade" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/dashboard"><i class="fas fa-home"></i> Home</a>
+                            @if (model.userInfo && model.userInfo.staff >= 1) {
+                                <a class="dropdown-item staff-sidebar-button" href="#"><i class="fas fa-lock"></i> Staff</a>
+                            }
+                            @html.block('extraNavItemBelowHome')
+                            <a class="dropdown-item" href="/users/@model.userInfo.userId/profile"><i class="fas fa-id-card"></i> My Profile</a>
+                            <a class="dropdown-item" href="/avatar"><i class="fas fa-user-tag"></i> My Avatar</a>
+                            <a class="dropdown-item" href="/trades"><i class="fas fa-exchange-alt"></i> My Trades</a>
+                            <a class="dropdown-item" href="/transactions"><i class="fas fa-money-bill-alt"></i> My Transactions</a>
+                            <a class="dropdown-item" href="/ads"><i class="fas fa-ad"></i> My Ads</a>
+                            <a class="dropdown-item" href="/settings"><i class="fas fa-sliders-h"></i> My Settings</a>
+                            <a class="dropdown-item" href="/moderation"><i class="fas fa-exclamation-triangle"></i> Moderation History</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" id="logoutAClick" href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+                }else{
+                    <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <div class="row" style="margin:0;padding:0;">
+                            <div class="col-12" style="margin:0;padding:0;line-height: 1;width:100%;">
+                                <a style="margin:0;width:100%;color:white;padding:0;padding-left:1rem;padding-right:1rem;font-weight:700;" href="/signup" class="btn btn-success">JOIN</a>
+                            </div>
+                            <div class="col-12" style="margin:0;padding:0;line-height: 1;text-align:center;">
+                                <a href="/login" style="font-size:0.5rem;padding-top:0;padding-bottom:0;text-align:center;color: #16181b;opacity:1;font-weight:600;    line-height: 1;">Sign In</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                }
+            </div>
+            </div>
+        </nav>
+        @*
+        <div class="row paddingForStickyNav" style="margin-top: 52px;"></div>
+        *@
+        
+        <!-- Scripts Disabled -->
+        <noscript>
+            <div class="row" style="margin: 0;">
+                <div class="col-12 bg-danger text-white">
+                    <div class="container">
+                        <h4 style="margin-top:1rem;margin-bottom:1rem;">Please enable javascript, or upgrade to a newer browser, in order to properly use our website.</h4>
+                    </div>
+                </div>
+            </div>
+        </noscript>
+        <!-- XHR Error -->
+        <div class="row" style="display:none;margin:0;" id="alert">
+            <div class="col-12 bg-danger text-white">
+                <div class="container">
+                    <h6 style="margin-top:1rem;margin-bottom:1rem;">Our website seems to be experiencing issues right now. Please try again later.</h6>
+                </div>
+            </div>
+        </div>
+        @if (model.env !== 'production' || model.isStaging) {
+            <!-- debug info -->
+            <div class="row">
+                <div class="col-12 bg-warning white-text">
+                    <div class="container">
+                        <p style="margin:0.25rem 0;"><b>env:</b> @model.env -- <b>staging:</b> @model.isStaging -- <b>host:</b> @(model.host || '(not specified)')</p>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row" style="display:none;margin:0;" id="systemWideStatsArea"></div>
+        @if (model.bannerText) {
+            <div class="row" style="margin:0;" id="bannerText">
+                <div class="col-12" style="background-color: #23282d;color: white;">
+                    <div class="container">
+                        <h6 style="margin-top:1rem;margin-bottom:1rem;font-size:0.85rem;">@html.raw(model.bannerText)</h6>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @if (model.userInfo && model.userInfo.staff >= 1 && model.hasPerm) {
+            <div class="staff-sidebar">
+                <div class="card" style="height:100%;min-height: 100vh;">
+                    <div class="card-body" style="height:100%;">
+                        <h3 style="font-size:1rem;">GENERAL</h3>
+                        @if (model.hasPerm('ReviewPendingItems')) {
+                            <a class="normal" href="/staff/catalog">
+                                <p class="staff-item">PENDING ITEMS</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('ManageBanner')) {
+                            <a class="normal" href="/staff/banner">
+                                <p class="staff-item">BANNER</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('ManageSupportTickets')) {
+                            <a class="normal" href="/staff/tickets">
+                                <p class="staff-item">VIEW TICKETS</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('ManageSupportTickets')) {
+                            <a class="normal" href="/staff/create">
+                                <p class="staff-item">CREATE ITEM</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('ManageForumCategories')) {
+                            <a class="normal" href="/staff/forums">
+                                <p class="staff-item">FORUMS</p>
+                            </a>
+                        }
+
+                        @if (model.hasPerm('ReviewAbuseReports')) {
+                            <div class="seperator-staff"></div>
+
+                            <h3 style="font-size:1rem;">ABUSE REPORTS</h3>
+                            <a class="normal" href="/staff/report-abuse/user-status">
+                                <p class="staff-item">USER STATUS</p>
+                            </a>
+                        }
+
+                        <div class="seperator-staff"></div>
+
+                        <h3 style="font-size:1rem;">USER</h3>
+                        @if (model.hasPerm('ManagePublicUserInfo')) {
+                            <a class="normal" href="/staff/user/search">
+                                <p class="staff-item">SEARCH</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('BanUser')) {
+                            <a class="normal" href="/staff/ban">
+                                <p class="staff-item">BAN</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('UnbanUser')) {
+                            <a class="normal" href="/staff/unban">
+                                <p class="staff-item">UNBAN</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('ResetPassword')) {
+                            <a class="normal" href="/staff/password">
+                                <p class="staff-item">RESET PASSWORD</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('GiveItemToUser')) {
+                            <a class="normal" href="/staff/give">
+                                <p class="staff-item">GIVE ITEM</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('GiveCurrencyToUser')) {
+                            <a class="normal" href="/staff/give/currency">
+                                <p class="staff-item">GIVE CURRENCY</p>
+                            </a>
+                        }
+
+                        @if (model.hasPerm('ManageCurrencyProducts')) {
+                            <div class="seperator-staff"></div>
+
+                            <h3 style="font-size:1rem;">ECONOMY</h3>
+                            <a class="normal" href="/staff/currency-product">
+                                <p class="staff-item">CURRENCY PRODUCTS</p>
+                            </a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @html.block('aboveLeaderboardAd')
+
+        @if (model && typeof model.ad === 'boolean' && model.ad === false) {
+
+        }else{
+            <div class="row leaderboard-ad">
+                <!-- whitespace so that when the ad loads, the user doesnt accidentally click it -->
+                <div style="padding-top:130px;" class="whitespace-ad"></div>
+            </div>
+        }
+
+        @html.block('aboveContent')
+
+        <div class="container">
+            <div class="row">
+                <div class="content" style="width:100%;overflow:visible;">
+                <!--
+                    <div class="alert alert-warning" role="alert" style="margin-top: -3rem;z-index: -1;display:hidden;" id="warningAlertSystem"></div>-->
+                    @html.block('content')
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div id="footerUpper" class="row">
+                <div class="container">
+                    <div class="content" style="width:100%;">
+                    <div class="col-12" style="padding: 3rem 0 0 0;">
+                        <div class="row" style="padding-bottom:1rem;">
+                            <div class="col-12">
+                                <h2 style="">BlocksHub</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-md-4 footerBarListItems">
+                                <h5>COMPANY</h5>
+                                <p style="font-size:0.85rem;"><a href="/play">Play</a></p>
+                                <p style="font-size:0.85rem;"><a href="/forum/9?page=1">Blog</a></p>
+                                <p style="font-size:0.85rem;"><a href="/staff">Staff</a></p>
+                                <p style="font-size:0.85rem;"><a href="/terms">Terms of Service</a></p>
+                                <p style="font-size:0.85rem;"><a href="/terms#privacypolicy">Privacy Policy</a></p>
+                            </div>
+                            <div class="col-6 col-md-4 footerBarListItems">
+                                <h5>SUPPORT</h5>
+                                <p style="font-size:0.85rem;"><a href="/support">Contact Us</a></p>
+                                <p style="font-size:0.85rem;"><a href="/support/refund-policy">Refund Policy</a></p>
+                                <p style="font-size:0.85rem;"><a href="/support/game-help">Game Help</a></p>
+                                <p style="font-size:0.85rem;"><a href="/support/account-hacked">Account Hacked</a></p>
+                                <p style="font-size:0.85rem;"><a href="/support/scammed">I was scammed</a></p>
+                                <p style="font-size:0.85rem;"><a href="/support/account-banned-help">Why was my account banned?</a></p>
+                            </div>
+                            <div class="col-12 col-md-4 footerBarListItems">
+                                <p>
+                                    Free 3D in-browser video games. Use your own virtual 3D sanbox to create nearly whatever you want, the only limitation is your imagination.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:2rem;">
+                                @for (const genre in model.gameGenres) {
+                                    @if (Number.isInteger(parseInt(genre, 10))) {
+                                        <div class="col text-center text-truncate d-none d-lg-block" style="padding-left: 5px;padding-right: 5px;">
+                                            <p style="font-size:0.75rem;"><a href="/game/genre/@model.gameGenres[genre]">@model.gameGenres[genre]</a></p>
+                                        </div>
+                                        <div class="col-3 text-center text-truncate d-block d-lg-none" style="padding-left: 5px;padding-right: 5px;">
+                                            <p style="font-size:0.75rem;"><a href="/game/genre/@model.gameGenres[genre]">@model.gameGenres[genre]</a></p>
+                                        </div>
+                                    }
+                                }
+                        </div>
+                    </div>
+                        <div class="col-12">
+                            <div class="row" style="padding: 1rem 0;">
+                                <div class="mr-auto">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12">
+                                            <p style="padding-top: 10%;font-size:0.85rem;">&copy; @model.year BlocksHub</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-bottom:1rem;">
+                                <div class="col-12">
+                                    <p class="text-center" style="font-size:small;font-weight:300;margin-bottom:1rem;">Certain Icons made by freepik & vectors-market from <a href="http://www.flaticon.com/" target="_blank" rel="noopener">www.flaticon.com</a></p>
+                                    <p class="text-center" style="font-size:small;font-weight: 300;">We are not sponsored, authorized or endorsed by any producer of plastic building bricks, and no resemblance to the products of these companies is intended. Use of this site signifies your acceptance of the <a href="/terms" style="font-weight: 400;">Terms and Conditions.</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        @html.raw(model.javascript)
+
+        @if (model.impersonateUserId) {
+                                <div class="col-12">
+                                    <p id="leave-impersonate">Exit Impersonation</p>
+                                </div>
+                                <script src="/js/impersonate.js?v=@model.v" nonce="@model.nonce"></script>
+        }
+
+        <!-- Locale -->
+        <script nonce="@model.nonce" src="/js/locale/en.js?v=@model.v"></script>
+        <!-- request.js -->
+        <script nonce="@model.nonce" src="/js/request.js?v=@model.v"></script>
+        <!-- app.js -->
+        <script nonce="@model.nonce" src="/js/app.js?v=@model.v"></script>
+        @if (model.userInfo && typeof model.userInfo.userId !== "undefined" && model.userInfo.userId !== null) {
+        <!-- Chat Stuff -->
+            <script nonce="@model.nonce" src="/js/chat.js?v=@model.v"></script>
+        }
+        <!-- gdpr cookie prompt -->
+        <script nonce="@model.nonce" src="/js/misc/cookies.js?v=@model.v"></script>
+        @if (model.userInfo && model.userInfo.staff >= 1) {
+            <!-- staff userinf -->
+            <script src="/js/pages/staff/_staff.js?v=@model.v" nonce="@model.nonce"></script>
+        }
+        <!-- Page Specific JS -->
+        @html.block('jsInternal')
+        @html.block('js')
+    </body>
+</html>

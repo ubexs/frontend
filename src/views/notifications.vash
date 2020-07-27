@@ -1,0 +1,29 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+      <div class="row">
+        <div class="col-sm-12">
+            <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Notifications</h1>
+        </div>
+      </div>
+            <div class="row">
+            <div class="col-sm-12">
+        <div class="btn-group" role="TradesTab" aria-label="Trades Tab" style="width:100%;">
+          <button type="button" class="btn btn-success" id="openMessages">Messages</button>
+          <button type="button" class="btn btn-success" id="openFriends">Friend Requests</button>
+      </div></div>
+      </div>
+        <div class="row" id="containingItemsDiv">
+
+        </div>
+    <div class="row">
+    <div class="col-sm-12" style="margin-bottom:1rem;">
+      <button type="button" class="btn btn-small btn-success loadMoreItems" style="margin:0 auto;display: none;width:100%;">Load More Items</button>
+      <button type="button" class="btn btn-small btn-success goBackButton" style="margin:0 auto;display: none;width:100%;">Go Back</button>
+      <button type="button" class="btn btn-small btn-success loadMoreFriends" style="margin:0 auto;display: none;width:100%;">Load More Items</button>
+      </div>
+    </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/notifications.js?v=@model.v"></script>
+  })
+})

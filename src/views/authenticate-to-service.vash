@@ -1,0 +1,26 @@
+@html.extend('layouts/default', function(model) {
+    @html.block('content', function(model) {
+        <div class="meta-info-for-service" style="display:none;" data-returnurl="@model.page.url" data-service-name="@model.page.parsedUrl"></div>
+        <div class="row" style="margin-top:1rem;">
+            <div class="col-12" style="display:block;margin:0 auto;max-width:600px;">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1 style="font-size:1.5rem;margin-bottom:0;display:none;" id="service-name-header">Login to @model.page.parsedUrl</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="auth-service-pending">
+                                <div class="spinner-border" role="status" style="display: block;margin:0 auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/authenticate-to-service.js?v=@model.v"></script>
+    })
+})

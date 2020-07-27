@@ -1,0 +1,3 @@
+@html.extend('layouts/default', function(model) {
+
+})

@@ -1,0 +1,85 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+      <input type="hidden" id="groupid" value="@model.page.groupInfo.groupId">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Create Ad for &quot;@model.page.groupInfo.groupName&quot;</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Ad Info</h3>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control" id="adName" placeholder="Not required, but it will appear when users hover over your advertisement.">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Ad Image</h3>
+                                </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <form id="assetsForm" enctype="multipart/form-data" style="margin-top:1 rem;">
+                                                <input type="file" class="form-control-file" id="imageFile">
+                                            </form>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Ad Type</h3>
+                                </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <select id="adDisplayType" class="form-control">
+                                                @for (const type in model.page.adDisplayTypes) {
+                                                    @if (!isNaN(parseInt(type, 10))) {
+                                                        <option value="@type">@model.page.adDisplayTypes[type]</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success" style="width: 100%;" id="createAdClick">Create Ad</button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/ad/group_create.js?v=@model.v"></script>
+  })
+})

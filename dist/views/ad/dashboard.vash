@@ -1,0 +1,33 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Ad Dashboard</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row" style="max-height:500px;overflow-y:auto;">
+                                <div class="col-12">
+                                    <h3>Your Ads</h3>
+                                </div>
+                                <div class="col-sm-12" id="running-ads">
+                                    <p>Loading...</p>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top:1rem;">
+                                <div class="col-12">
+                                    <p style="font-size:0.75rem;opacity:0.65;text-align:center;"><a href="/support/ad-system">Need help? Click me</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/ad/dashboard.js?v=@model.v"></script>
+  })
+})

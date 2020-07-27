@@ -1,0 +1,218 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+        <div 
+            id="groupdata" 
+            data-encoded-name="@model.page.groupEncodedName" 
+            data-groupid ="@model.page.groupId" 
+            data-groupowner="@model.page.groupOwnerUserId" 
+            data-status="@model.page.groupStatus"
+        ></div>
+        <div class="row">
+            @if (model.userInfo && model.userInfo.userId) {
+                <div class="d-none d-sm-none d-md-none d-lg-block col-lg-2" id="UserGroupsDiv" style="padding-left:0.5rem;padding-right:0.5rem;">
+                    <div style="margin-top:1rem;">
+                        <a role="button" href="/groups/create" class="btn btn-success" style="width:100%;">Create</a>
+                    </div>
+                    <div class="card" style="margin-top:1rem;" style="display:none;">
+                        <div class="card-body" style="padding-top: 0;padding-bottom:0;">
+                            <div class="row">
+                                <div class="col-12" id="myGroups" style="padding-left:0.5rem;padding-right:0.5rem;max-height:700px;overflow-y:scroll;overflow-x:hidden;padding-top:1rem;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (model.page.groupStatus === 1) {
+                <div class="col-12 col-lg-10">
+                    <h1 style="margin-top:2rem;font-size:1.5rem;">This group has been locked.</h1>
+                    <button type="button" class="btn btn-success" style="display:none;margin-top:1rem;" id="groupLeave">Leave Group</button>
+                    
+                     @if (model.userInfo && model.userInfo.staff >= 2) {
+                        <a class="btn btn-success text-white" style="margin-top:0.5rem;" href="/staff/groups/manage?groupId=@model.page.groupId">Manage Group (Staff)</a>
+                    }
+                </div>
+            }else{
+                <div class="col-12 coi-lg-8" id="groupDisplayCol" style="display:none;">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card" style="margin-top:1rem;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <img src="/api/v1/catalog/@model.page.groupIconCatalogId/thumbnail/redirect" style="width:100%;" />
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h1 class="card-title" style="font-size:1.75rem;">@model.page.groupName</h1>
+                                            @if (model.page.groupOwnerUserId === 0) {
+                                                <p style="font-size:0.85rem;">Owner: Nobody</p>
+                                            }else{
+                                                <p style="font-size:0.85rem;">Owner: <a href="/users/@model.page.groupOwnerUserId/profile"><span data-userid="@model.page.groupOwnerUserId"></span></a></p>
+                                            }
+                                            
+                                            <p style="font-size:0.85rem;">Members: <span id="memberCountSpan" data-membercount="@model.page.groupMemberCount"></span></p>
+                                            <p id="authUserRank" style="font-size:0.85rem;"></p>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" class="btn btn-success" style="margin:0auto;display:block;width: 100%;" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fas fa-chevron-circle-down"></i></button><div class="dropdown-menu dropdown-menu-right fade">
+                                                <a class="dropdown-item" href="#" id="groupJoin" style="display:none;">Join Group</a>
+                                                <a class="dropdown-item" href="#" id="claimOwnership" style="display:none;">Claim Ownership</a>
+                                                <a class="dropdown-item" href="#" id="groupLeave" style="display:none;">Leave Group</a>
+                                                <a class="dropdown-item" href="/groups/@model.page.groupId/@model.page.groupEncodedName/manage" id="groupManage" style="display:none;">Manage</a>
+                                                <a class="dropdown-item" href="/ad/group/create/@model.page.groupId" id="advertise" style="display:none;">Advertise</a>
+                                                @if (model.userInfo && model.userInfo.staff >= 2) {
+                                                    <a class="dropdown-item" href="/staff/groups/manage?groupId=@model.page.groupId">Manage Group (Staff)</a>
+                                                }
+                                            </div>
+                                        @*
+                                            <button type="button" class="btn btn-success" id="groupJoin" style="display:none;">Join Group</button>
+                                            <button type="button" class="btn btn-success" id="groupLeave" style="display:none;">Leave Group</button>
+                                            <a role="button" href="/groups/@model.page.groupId/@model.page.groupEncodedName/manage" class="btn btn-success" id="groupManage" style="display:none;">Manage</a>
+                                        *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:1rem;">
+                        <div class="col-sm-12">
+                            <div class="btn-group" role="InventoryTab" style="width:100%;">
+                                <button type="button" class="btn btn-success" id="aboutCategory">About</button>
+                                <button type="button" class="btn btn-success" id="catalogCategory">Catalog</button>
+                                <!--<button type="button" class="btn btn-success" id="relationsCategory">Relations</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div id="aboutSection">
+                        <div class="row" id="shoutDiv" style="margin-top:1rem;display:hidden;">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-body" id="groupShoutDisplayDiv">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h3 style="font-size:1.35rem;">Shout</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="descriptionDiv" style="margin-top:1rem;">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h3 style="font-size:1.35rem;">Description</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p style="font-weight: 500;white-space:pre-wrap;font-size:0.85rem;">@model.page.groupDescription</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="membersDiv" style="margin-top:1rem;">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-6 col-md-8">
+                                                        <h3 style="font-size:1.35rem;">Members</h3>
+                                                    </div>
+                                                    <div class="col-6 col-md-4">
+                                                        <select class="form-control" id="groupRolesSelection">
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="noMembersDisplay" style="display:none;">
+                                                    <div class="col-12">
+                                                        <p>This roleset has no members.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="hasMembersDisplay" style="display:none;">
+                                                    
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <button type="button" class="btn btn-small btn-success" id="loadLessMembers" style="width:100%;margin: 0px auto;display:none;">Previous Page</button>
+                                                    </div>
+                                                    <div class="col-3 offset-6">
+                                                        <button type="button" class="btn btn-small btn-success" id="loadMoreMembers" style="width:100%;margin: 0px auto;display:none;">Next Page</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="groupWallDiv" style="margin-top:1rem;display:hidden;">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h3 style="font-size:1.35rem;">Group Wall</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="postToGroupWall">
+
+                                                </div>
+                                                <div class="row" id="noGroupWallPostsDisplay" style="display:none;">
+                                                    <div class="col-12">
+                                                        <p style="font-size:0.85rem;">This group has no wall posts.</p>
+                                                    </div>
+                                                </div>
+                                                <div id="hasGroupWallPostsDisplay" style="display:none;">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="relationsSection">
+                        
+                    </div>
+                    <div id="catalogSection" style="display:none;">
+                        <div class="row" id="createGroupItemButton" style="display:none;">
+                            <div class="col-4 offset-8">
+                                <div class="form-group">
+                                    <a style="margin-top: 1rem;width:100%;color:white;" href="/groups/@model.page.groupId/@model.page.groupEncodedName/create" class="btn btn-success" id="createGr">Create</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="catalogItemsDiv">
+
+                        </div>
+                    </div>
+                
+                </div>
+                <div class="col-2 skyscraper-ads d-none d-lg-block"></div>
+        }
+        </div>
+  })
+  @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/groups.js?v=@model.v"></script>
+  })
+})

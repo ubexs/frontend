@@ -1,0 +1,38 @@
+@html.extend('layouts/staff', function(model) {
+  @html.block('content', function(model) {
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Edit Site Banner</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Banner Text</label>
+                        <textarea class="form-control" id="bannerText" rows="3" placeholder="HTML formatting is supported, and anything put here won't be caught by any sort of filter. Maximum of 128 Characters.">@model.bannerText</textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Enabled?</label>
+                        <select class="form-control" id="isEnabled">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" style="width: 100%;" id="banUser">Update Banner</button>
+                    </div>
+                </div>
+            </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/staff/banner.js?v=@model.v"></script>
+  })
+})

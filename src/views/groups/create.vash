@@ -1,0 +1,50 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Create Group</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" id="groupName" placeholder="Group Name">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" id="groupDescription" placeholder="Description">
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <form id="assetsForm" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Group Logo (PNG or JPG File)</label>
+                            <input type="file" class="form-control-file" id="textureFile">
+                        </div>
+                    </div>
+                </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="createAssetClick">Creating a Group costs 
+                            <span id="group-cost">
+                                <div class="spinner-border" style="height:1rem;width:1rem;margin-left:0.5rem;border-width:0.2rem;" role="status"></div>
+                            </span>
+                        </label>
+                        <button type="button" class="btn btn-success" style="width: 100%;" id="createGroupClick">Create Group</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/groups/create.js?v=@model.v"></script>
+  })
+})

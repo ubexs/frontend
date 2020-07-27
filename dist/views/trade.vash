@@ -1,0 +1,138 @@
+@{
+    model.ad = false;
+}
+@html.extend('layouts/default', function(model) {
+    @html.block('content', function(model) {
+        <div id="tradedata" data-userid="@model.page.userId" data-username="@model.page.username"></div>
+
+
+        <div class="row" style="margin-top:1rem;">
+            <div class="col-12 col-md-8" style="border-left: 1px solid rgba(0,0,0,.1);border-right: 1px solid rgba(0,0,0,.1);">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <h3>Your Items</h1>
+                    </div>
+                    <div class="col-9 col-lg-5">
+                        <input type="text" class="form-control" placeholder="Search Items" id="search-requester">
+                    </div>
+                    <div class="col-3 col-lg-1" style="padding:0;">
+                        <button class="btn btn-success" id="search-requester-click"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="row" id="requester-items" style="margin-top:1rem;margin-bottom:1rem;">
+                    <div class="col-12" style="margin-top:8rem;margin-bottom:8rem;">
+                        <div class="spinner-border" role="status" style="margin:0 auto;display: block;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="requester-items-pagination">
+                    <div class="col-4">
+                        <p style="user-select: none;text-align:center;">
+                            <span style="font-weight:600;opacity:0.5;cursor:pointer;" class="previous-page"><i class="fas fa-arrow-circle-left"></i></span>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p style="user-select: none;text-align:center;">
+                            <span class="current-page">&emsp;Page 1&emsp;</span>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p style="user-select: none;text-align:center;">
+                            <span style="font-weight:600;opacity:0.5;cursor:pointer;" class="next-page"><i class="fas fa-arrow-circle-right"></i></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <h5>Your Offer</h5>
+                <p style="font-size:0.75rem;">Items you are offering. Click an item to remove it.</p>
+                <hr />
+                <div class="row" id="offer-items">
+                    <div class="col-12">
+                        <p style="text-align:center;margin-top:1rem;opacity:0.5;font-weight:600;">You have not offered any items yet.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="margin-top:2rem;">
+                        <p id="total-offer-value">Total Value: 0</p>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" class="form-control" placeholder="Currency Offer" id="currency-offer" style="font-size:0.85rem;">
+                    </div>
+                </div>
+            </div> 
+            <div class="col-12 col-md-8" style="border-left: 1px solid rgba(0,0,0,.1);border-right: 1px solid rgba(0,0,0,.1);">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <h3>@model.page.username's Items</h1>
+                    </div>
+                    <div class="col-9 col-lg-5">
+                        <input type="text" class="form-control" placeholder="Search Items" id="search-requestee">
+                    </div>
+                    <div class="col-3 col-lg-1" style="padding:0;">
+                        <button class="btn btn-success" id="search-requestee-click"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="row" id="requestee-items" style="margin-top:1rem;margin-bottom:1rem;">
+                    <div class="col-12" style="margin-top:8rem;margin-bottom:8rem;">
+                        <div class="spinner-border" role="status" style="margin:0 auto;display: block;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="requestee-items-pagination">
+                    <div class="col-4">
+                        <p style="user-select: none;text-align:center;">
+                            <span style="font-weight:600;opacity:0.5;cursor:pointer;" class="previous-page"><i class="fas fa-arrow-circle-left"></i></span>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p style="user-select: none;text-align:center;">
+                            <span class="current-page">&emsp;Page 1&emsp;</span>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <p style="user-select: none;text-align:center;">
+                            <span style="font-weight:600;opacity:0.5;cursor:pointer;" class="next-page"><i class="fas fa-arrow-circle-right"></i></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <h5>Your Request</h5>
+                <p style="font-size:0.75rem;">Items you are requesting. Click an item to remove it.</p>
+                <hr />
+                <div class="row" id="request-items">
+                    <div class="col-12">
+                        <p style="text-align:center;margin-top:1rem;opacity:0.5;font-weight:600;">You have not requested any items yet.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="margin-top:2rem;">
+                        <p id="total-request-value">Total Value: 0</p>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" class="form-control" placeholder="Currency Request" id="currency-request" style="font-size:0.85rem;">
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-8">
+            
+            </div>
+            <div class="col-12 col-md-4" style="margin-top:1rem;">
+                <button class="btn btn-success" id="send-trade" style="width:100%;" disabled="disabled">SEND</button>
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/trade.js?v=@model.v"></script>
+  })
+})

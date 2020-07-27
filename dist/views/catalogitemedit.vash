@@ -1,0 +1,185 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+      <div id="catalogdata" data-id="@model.page.catalogId"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Edit &quot;@model.page.catalogName&quot;</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input value="@model.page.catalogName" type="text" class="form-control" id="assetName" placeholder="Asset Name">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input value="@model.page.price" type="text" class="form-control" id="assetPrice" placeholder="Price">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label for="isForSale">Is For Sale?</label>
+                        <select class="form-control" id="isForSale">
+                        @if (model.page.forSale === 1) {
+                            <option value="1" selected="selected">Yes</option>
+                            <option value="0">No</option>
+                        }else{
+                            <option value="1">Yes</option>
+                            <option value="0" selected="selected">No</option>
+                        }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input value="@model.page.description" type="text" class="form-control" id="assetDescription" placeholder="Description">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label for="assetCurrency">Currency</label>
+                        <select class="form-control" id="assetCurrency">
+                        @if (model.page.currency === 1) {
+                            <option value="1" selected="selected">Primary</option>
+                            <option value="2">Secondary</option>
+                        }else{
+                            <option value="1">Primary</option>
+                            <option value="2" selected="selected">Secondary</option>
+                        }
+                        </select>
+                    </div>
+                </div>
+                @if (model.page.loadStaffPage === true) {
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="assetIsCollectible">Is Collectible</label>
+                            <select class="form-control" id="assetIsCollectible">
+                            @if (model.page.collectible === 1) {
+                                <option value="1" selected="selected">Yes</option>
+                                <option value="0">No</option>
+                            }else{
+                                <option value="1">Yes</option>
+                                <option value="0" selected="selected">No</option>
+                            }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label>If this Item is Serialed, how many will be in stock? (leave blank if not serialed/not collectible)</label>
+                            @if (model.page.maxSales !== 0) {
+                                <input type="text" value="@model.page.maxSales" class="form-control" id="assetStock" placeholder="Stock">
+                            }else{
+                                <input type="text" value="" class="form-control" id="assetStock" placeholder="Stock">
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="category">Category</label>
+                                                            <select class="form-control" id="category">
+                                                                @for (let _cat in model.page.categories) {
+                                                                    let cat = parseInt(_cat, 10);
+                                                                    @if (!cat) {
+                                                                        continue;
+                                                                    }
+                                                                    @if (model.page.category === cat) {
+                                                                        <option value="@cat" selected="selected">@model.page.categories[cat]</p>
+                                                                    }else{
+                                                                        <option value="@cat">@model.page.categories[cat]</p>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="moderation">Moderation Level</label>
+                            <select class="form-control" id="moderation">
+                            @if (model.page.status === 0) {
+                                <option value="0" selected="selected">Approved</option>
+                                <option value="1">Awaiting Approval</option>
+                                <option value="2">Declined</option>
+                            }else if (model.page.status === 1) {
+                                <option value="0">Approved</option>
+                                <option value="1" selected="selected">Awaiting Approval</option>
+                                <option value="2">Declined</option>
+                            }else{
+                                <option value="0">Approved</option>
+                                <option value="1">Awaiting Approval</option>
+                                <option value="2" selected="selected">Declined</option>
+                            }
+                            </select>
+                        </div>
+                    </div>
+                }
+            </div>
+            <hr />
+            <form id="assetsForm" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" style="width: 100%;" id="editAssetClick">Update Item</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        @if (model.page.loadStaffPage === true) {
+            <h1>Edit Files</h1>
+                    <form id="assetsForm" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p>Note about these files:</p>
+                                <ul>
+                                    <li>If uploading a face or shirt/tshirt/pants, you only need to select the Texture file.</li>
+                                    <li>Providing an MTL or OBJ file for a Shirt, Pants, TShirt, or Face will have no effect.</li>
+                                    <li>This will overwrite the old file with no way of un-doing.</li>
+                                </ul>
+                                 <p>If this is a 3D Model (Gear, Hat, etc):</p>
+                                <ul>
+                                    <li>If you are uploading a image that is a different file type from the old texture, then you should also upload the MTL file (otherwise it won't update).</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">OBJ File</label>
+                                    <input type="file" class="form-control-file" id="objFile">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">MTL File</label>
+                                    <input type="file" class="form-control-file" id="mtlFile">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">Texture File</label>
+                                    <input type="file" class="form-control-file" id="textureFile">
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-success" style="width: 100%;" id="updateAssetTexturesClick">Update Item Textures</button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                }
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/catalogitemedit.js?v=@model.v"></script>
+  })
+})

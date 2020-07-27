@@ -1,0 +1,188 @@
+body {
+    background-color:#212529;
+}
+::-webkit-scrollbar {
+    background: #3d4348!important;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+.secondaryNavBar {
+    background-color: rgba(61, 67, 72, 0.5)!important;
+}
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+h1,h2,h3,h4,h5,h6,p,a {
+    color: white;
+}
+input {
+    color: white!important;
+    background-color: #3d4348!important;;
+}
+input:focus {
+    color: white!important;
+    background-color: #3d4348!important;;
+}
+div {
+    color:white;
+}
+.btn-success {
+    background-color:#3d4348!important;
+    border-color: #212529!important;
+}
+.btn-success.focus, .btn-success:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255,255,255, 0.5)!important;
+}
+.online-status {
+    color:white!important;
+}
+.navbar {
+    background:#3d4348!important;
+}
+.dropdown-menu {
+    background-color:#212529!important;
+}
+.dropdown-item {
+    color:white;
+    background-color:#212529!important;
+}
+a:hover {
+    color:#c3c3c3!important;
+    text-decoration: none!important;
+}
+textarea {
+    background-color:#3d4348!important;
+    color:white!important;
+}
+.card {
+    background-color:#3d4348;
+}
+select {
+    background-color: #3d4348!important;
+    color: white!important;
+}
+table {
+    color:white;
+}
+tr {
+    color:white;
+}
+th {
+    color:white;
+}
+.swal2-popup {
+    background-color:#212529!important;
+}
+.swal2-success-circular-line-left {
+    background-color:#212529!important;
+}
+.swal2-icon.swal2-success .swal2-success-ring {
+    border: .25em solid rgba(165,220,134,1);
+}
+.swal2-success-fix {
+    background-color:#212529!important;
+}
+.swal2-title {
+    color:white!important;
+}
+.swal2-confirm {
+    color:white!important;
+    background-color:#3d4348!important;
+}
+#onClickSellitem {
+    color:white!important;
+}
+.swal2-container.swal2-shown {
+    background-color: rgba(0,0,0,.3)!important;
+}
+#footer {
+    background: #3d4348!important;
+}
+
+.swal2-container.swal2-top-end.swal2-fade.swal2-shown {
+    background: none!important;
+    box-shadow: none;
+}
+.swal2-popup.swal2-toast.swal2-show {
+    box-shadow: 0 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.bg-success {
+    background: #3d4348!important;
+}
+pre {
+    color:white;
+}
+.modal-content {
+    background-color: #3d4348!important;
+}
+.modal-header > .close {
+    color: white;
+}
+#replyCreationModal > div > .card {
+    background-color: #212529;
+}
+#threadCreationModal > div > .card {
+    background-color: #212529;
+}
+#footerUpper {
+    background: #3d4348
+}
+
+.image-with-background {
+    background-color: #212529!important;
+}
+div.groupChangeBgOnHover:hover {
+    background-color: #212529;
+    cursor: pointer;
+}
+
+p.ad-alert-text {
+    color: rgba(255,255,255,0.5)
+}
+
+a.navbar-brand {
+    color: white!important;
+}
+
+.navbar-nav> .nav-item > .nav-link {
+    color: rgba(255,255,255,1);
+}
+a.normal {
+    color: #ffffff;
+    transition: all 0.1s;
+}
+a.normal:hover {
+    color: #afb7be!important;
+    transition: all 0.1s;
+    text-decoration: none;
+}
+a.normal:hover > p {
+    color: #afb7be!important;
+    transition: all 0.1s;
+    text-decoration: none;
+}
+a.normal > p {
+    transition: all 0.1s;
+}
+
+div.trade-card-hover:hover > div.card {
+    border: 1px solid white!important;
+}
+
+a#dropdownNotifications {
+    color: white;
+}
+.container > .navbar-toggler > .navbar-toggler-icon {
+    background-image: url(/img/nav-white.svg?v2=);
+}
+div.game-profile-card {
+    background-color: #212529;
+    transition: all 0.15s;
+}
+div.game-profile-card:hover {
+    background-color: #3d4348;
+    transition: all 0.15s;
+}

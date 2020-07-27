@@ -1,0 +1,135 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+      <div id="gamedetails" style="display:none;" data-gameid="@model.page.gameInfo.gameId"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Edit &quot;@model.page.gameInfo.gameName&quot;</h1>
+                </div>
+            </div>
+            <h3>General Settings</h3>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" id="assetName" placeholder="Game Name" value="@model.page.gameInfo.gameName">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" id="assetDescription" placeholder="Game Description" value="@model.page.gameInfo.gameDescription">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Max Player Count</label>
+                        <input type="text" class="form-control" id="assetMaxPlayers" placeholder="Max Players" value="@model.page.gameInfo.maxPlayers">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Genre</label>
+                        <select class="form-control" id="game-genre-selection">
+                            @for (const genre in model.page.genres) {
+                                @if (!isNaN(Number(genre))) {
+                                    @if (genre == model.page.gameInfo.genre) {
+                                        <option value="@genre" selected="selected">@model.page.genres[genre]</option>
+                                    }else{
+                                        <option value="@genre">@model.page.genres[genre]</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" style="width: 100%;" id="updateDescAndTitleOnClick">Update Info</button>
+                    </div>
+                </div>
+            </div>
+            <h3>Map Script</h3>
+            <p>Eventually, we will have something like studio where you can drag and resize parts, and the idea is that a script will be automatically generated for you so you don't have to create this "Map Script". For now, you have to do it manually. Check out Babylon JS for more info</p>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <textarea class="form-control" id="mapScriptContent" rows="12">@model.page.scripts.map</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" style="width: 100%;" id="updateMapScript">Update Map Script</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Client Scripts</h3>
+            <p>Executed on the Client. You mostly have access to babylon although that will be removed eventually</p>
+            @{model.index = 0}
+            @for (const script of model.page.scripts.client) {
+                 @{model.index++}
+                <div class="row">
+                    <div class="col-12">
+                        <p>Script @model.index - <span style="color:red;cursor:pointer;" data-scriptid="@script.id" class="deleteScriptOnClick">Delete</span></p>
+                        <div class="form-group">
+                            <textarea class="form-control scriptContent" rows="12" data-scriptid="@script.id">@script.content</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success updateScriptOnCLick" style="width: 100%;" data-scriptid="@script.id">Update Script</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" style="width: 100%;" id="createClientScript">Create Client Script</button>
+                        </div>
+                    </div>
+            </div>
+
+            <h3>Server Scripts</h3>
+            <p>Executed on the Server.</p>
+            @{model.index = 0}
+            @for (const script of model.page.scripts.server) {
+                 @{model.index++}
+                <div class="row">
+                    <div class="col-12">
+                        <p>Script @model.index - <span style="color:red;cursor:pointer;" data-scriptid="@script.id" class="deleteScriptOnClick">Delete</span></p>
+                        <div class="form-group">
+                            <textarea class="form-control scriptContent" rows="12" data-scriptid="@script.id">@script.content</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success updateScriptOnCLick" style="width: 100%;" data-scriptid="@script.id">Update Script</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" style="width: 100%;" id="createServerScript">Create Server Script</button>
+                        </div>
+                    </div>
+            </div>
+            <hr />
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/game_edit.js?v=@model.v"></script>
+  })
+})

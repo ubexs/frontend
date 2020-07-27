@@ -1,0 +1,18 @@
+{
+    "presets": [["@babel/preset-env", {
+          "useBuiltIns": "entry",
+          "corejs": 3
+    }],["minify", {
+        "builtIns": false,
+        "mangle": true,
+        "removeConsole": false,
+        "removeDebugger": true
+    }]],
+    "comments": true,
+    "ignore": [
+        "node_modules",
+        "src/public/js/game/babylon.js",
+        "**/bundle/*.bundle.js"
+    ],
+    "compact": true
+}

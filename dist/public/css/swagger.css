@@ -1,0 +1,34 @@
+div.topbar {
+    display: none!important;
+}
+div.scheme-container {
+    display: none!important;
+}
+div.wrapper {
+    max-width: 1000px!important;
+    margin: 0 auto;
+}
+.swagger-ui .opblock .opblock-summary-description {
+    text-align: right;
+}
+.swagger-ui .opblock .opblock-summary-operation-id, .swagger-ui .opblock .opblock-summary-path, .swagger-ui .opblock .opblock-summary-path__deprecated {
+    font-size: 14px;
+}
+div.opblock {
+    margin-bottom: 5px!important;
+    border: none!important;
+    box-shadow: none!important;
+}
+span.opblock-summary-method {
+    font-size: 12px!important;
+}
+
+div.opblock-tag {
+    border-bottom: 0!important;
+}
+div.parameter__name {
+    font-size: 14px!important;
+}
+div.parameter__in {
+    font-size: 10px!important;
+}

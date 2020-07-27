@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "lib": ["es2017","DOM"],
+      "types": ["reflect-metadata","node"],
+      "removeComments": true,
+      "module": "commonjs",
+      "outDir": "dist",
+      "moduleResolution": "node",
+      "experimentalDecorators":true,
+      "emitDecoratorMetadata": true,
+      "sourceMap": true,
+      "declaration": false,
+      "strict": true,
+      "strictPropertyInitialization": false
+    },
+    "exclude": [
+      "node_modules"
+    ],
+    "include": [
+        "src/**/*.ts"
+    ]
+  }

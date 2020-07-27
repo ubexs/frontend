@@ -1,0 +1,6 @@
+@html.extend('layouts/game_sandbox', function(model) {
+    @html.block('content', function(model) {
+        <div id="gamedata" style="display:none;" data-gameid="@model.page.gameId" data-authcode="@model.page.authCode" >
+        </div>
+    })
+})
