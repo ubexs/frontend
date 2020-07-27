@@ -63,7 +63,7 @@ export class Server {
                 .use(express.static(path.join(__dirname, './public/')))
         }
 
-        // MIddleware is split down here so we dont make unneccesary requests for static files
+        // Middleware is split down here so we dont make unnecessary requests for static files
         this.app
             .use(cookieParser())
             .use(bodyParser.json())
