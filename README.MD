@@ -8,7 +8,7 @@
     "baseUrl": {
         "backend": "http://api-devsite.blockshub.net",
         "frontend": "http://api-devsite.blockshub.net",
-        "play": "http://play-devsite.blockshub.nett"
+        "play": "http://play-devsite.blockshub.net"
     },
     "backendAuthorization": "example-key",
     "env": "DEVELOPMENT",
