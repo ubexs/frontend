@@ -16,20 +16,21 @@ export default class Catalog extends base {
      * @param catalogId
      */
     public async getInfo(catalogId: number): Promise<model.Catalog.CatalogInfo> {
-        const info = await this.v1.get('/catalog/'+catalogId+'/info');
-        return info.data;
+        return (await this.v1.get('/catalog/' + catalogId + '/info')).data;
     }
 
     /**
      * count sales for the {catalogId}
      * @param catalogId
      */
-    public async countSales(catalogId: number): Promise<{sales: number}> {
-        const info = await this.v1.get('/catalog/'+catalogId+'/sales/count');
-        return info.data;
+    public async countSales(catalogId: number): Promise<{ sales: number }> {
+        return (await this.v1.get('/catalog/' + catalogId + '/sales/count')).data;
     }
 
-
-
-
+    /**
+     * count all catalog items for sale
+     */
+    public async countAllItemsForSale(): Promise<number> {
+        return (await this.v1.get('/catalog/all-items/count')).data;
+    }
 }

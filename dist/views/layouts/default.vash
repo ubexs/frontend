@@ -48,6 +48,7 @@
         @html.block('css')
     </head>
     <body>
+    <div id="meta" data-api-base-url="@model.apiBaseUrl"></div>
     @if (typeof model.userInfo !== "undefined") {
         <div 
             id="userdata" 
@@ -71,32 +72,6 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12" style="padding-top:0.25rem;padding-bottom:0.25rem;">
-                        <ul class="list-inline" style="padding-bottom:0;margin-bottom:0;">
-                            <li class="list-inline-item">
-                                <a class="text-white" href="/users/@model.userInfo.userId/profile">My Profile</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="text-white" href="/avatar">My Character</a>
-                            </li>
-                            <li class="list-inline-item d-lg-inline-block d-none">
-                                <a class="text-white" href="/users/@model.userInfo.userId/friends">My Friends</a>
-                            </li>
-                            <li class="list-inline-item d-lg-inline-block d-none">
-                                <a class="text-white" href="/users/@model.userInfo.userId/groups">My Groups</a>
-                            </li>
-                            <li class="list-inline-item d-lg-inline-block d-none">
-                                <a class="text-white" href="/users/@model.userInfo.userId/inventory">My Inventory</a>
-                            </li>
-                            <li class="list-inline-item d-md-inline-block d-none">
-                                <a class="text-white" href="/trades">My Trades</a>
-                            </li>
-                            <li class="list-inline-item d-sm-inline-block d-none">
-                                <a class="text-white" href="/transactions">My Money</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="text-white" href="/settings">My Settings</a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -257,6 +232,7 @@
                 </div>
             </div>
         </div>
+        @*
         @if (model.env !== 'production' || model.isStaging) {
             <!-- debug info -->
             <div class="row">
@@ -267,6 +243,7 @@
                 </div>
             </div>
         }
+        *@
         <div class="row" style="display:none;margin:0;" id="systemWideStatsArea"></div>
         @if (model.bannerText) {
             <div class="row" style="margin:0;" id="bannerText">
@@ -471,6 +448,8 @@
 
         <!-- Locale -->
         <script nonce="@model.nonce" src="/js/locale/en.js?v=@model.v"></script>
+        <!-- request.js -->
+        <script nonce="@model.nonce" src="/js/request.js?v=@model.v"></script>
         <!-- app.js -->
         <script nonce="@model.nonce" src="/js/app.js?v=@model.v"></script>
         @if (model.userInfo && typeof model.userInfo.userId !== "undefined" && model.userInfo.userId !== null) {

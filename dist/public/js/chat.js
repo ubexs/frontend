@@ -20,8 +20,11 @@ function getCsrf() {
     // In the future, I would probably like to look into either a) using a custom 'csrf'/'authentication' type system for ws connections, or an endpoint that returns a csrf token in the body/headers while returning '200 OK'
     return new Promise(function (res, rej) {
         $.ajax({
+            xhrFields: {
+                withCredentials: true
+            },
             type: "POST",
-            url: '/api/v1/chat/metadata',
+            url: HTTPMeta.baseUrl+'/api/v1/chat/metadata',
             data: '',
             complete: function (xhr) {
                 res(xhr.getResponseHeader('X-CSRF-Token'));

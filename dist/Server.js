@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@tsed/common");
-const Any_1 = require("./middleware/Any");
 const platform_express_1 = require("@tsed/platform-express");
 const bodyParser = require("body-parser");
 const compress = require("compression");
@@ -20,13 +19,19 @@ const express = require("express");
 const path = require("path");
 require("@tsed/swagger");
 const cons = require("consolidate");
+const morgan = require("morgan");
 const config_1 = require("./helpers/config");
+const Any_1 = require("./middleware/Any");
+const ErrorHandle_1 = require("./middleware/ErrorHandle");
 const rootDir = __dirname;
+let portToListenOn = config_1.default.port || process.env.PORT || 3000;
+console.log('[info] listening on port', portToListenOn);
 let Server = class Server {
     $beforeRoutesInit() {
         this.app.raw.set("views", this.settings.get("viewsDir"));
         this.app.raw.set('view engine', 'vash');
         this.app.raw.engine("vash", cons.vash);
+        this.app.raw.set('mergeParams', true);
         this.app
             .use(platform_express_1.GlobalAcceptMimesMiddleware)
             .use(methodOverride())
@@ -42,6 +47,14 @@ let Server = class Server {
             extended: true
         }))
             .use(Any_1.default);
+        if (process.env.NODE_ENV === 'development') {
+        }
+        else {
+            this.app.use(morgan('tiny'));
+        }
+    }
+    $afterRoutesInit() {
+        this.app.use(ErrorHandle_1.NotFoundMiddleware);
     }
 };
 __decorate([
@@ -62,12 +75,17 @@ Server = __decorate([
         },
         viewsDir: `${rootDir}/views`,
         acceptMimes: ["application/json"],
-        port: config_1.default.port || process.env.PORT || 3000,
+        port: portToListenOn,
         logger: {
             logEnd: false,
             logRequest: false,
             logStart: false,
-        }
+        },
+        componentsScan: [
+            `${rootDir}/middleware/*.ts`
+        ],
+        validationModelStrict: false,
+        httpsPort: false,
     })
 ], Server);
 exports.Server = Server;

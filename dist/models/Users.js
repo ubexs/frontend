@@ -31,5 +31,86 @@ __decorate([
     common_1.Required(),
     __metadata("design:type", Number)
 ], Info.prototype, "userId", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", String)
+], Info.prototype, "username", void 0);
+__decorate([
+    common_1.Required(),
+    common_1.AllowTypes('string', 'null'),
+    __metadata("design:type", Object)
+], Info.prototype, "status", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", String)
+], Info.prototype, "joinDate", void 0);
+__decorate([
+    common_1.Required(),
+    common_1.AllowTypes('string', 'null'),
+    __metadata("design:type", Object)
+], Info.prototype, "blurb", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Number)
+], Info.prototype, "banned", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", String)
+], Info.prototype, "lastOnline", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Number)
+], Info.prototype, "tradingEnabled", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Number)
+], Info.prototype, "staff", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Number)
+], Info.prototype, "accountStatus", void 0);
 exports.Info = Info;
+class AuthenticatedInfo {
+}
+exports.AuthenticatedInfo = AuthenticatedInfo;
+class ModerationAction {
+}
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Number)
+], ModerationAction.prototype, "id", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Number)
+], ModerationAction.prototype, "userId", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", String)
+], ModerationAction.prototype, "reason", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", String)
+], ModerationAction.prototype, "date", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Object)
+], ModerationAction.prototype, "untilUnbanned", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Number)
+], ModerationAction.prototype, "terminated", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Boolean)
+], ModerationAction.prototype, "unlock", void 0);
+__decorate([
+    common_1.Required(),
+    __metadata("design:type", Boolean)
+], ModerationAction.prototype, "isEligibleForAppeal", void 0);
+exports.ModerationAction = ModerationAction;
+var terminated;
+(function (terminated) {
+    terminated[terminated["true"] = 1] = "true";
+    terminated[terminated["false"] = 0] = "false";
+})(terminated = exports.terminated || (exports.terminated = {}));
 //# sourceMappingURL=Users.js.map

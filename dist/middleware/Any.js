@@ -2,16 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const crypto = require("crypto");
 const os = require("os");
-const util = require("util");
-const randomBytes = util.promisify(crypto.randomBytes);
+const moment = require("moment");
 const ts_httpexceptions_1 = require("ts-httpexceptions");
 const base_1 = require("../controllers/base");
+const model = require("../models");
+const config_1 = require("../helpers/config");
 exports.csp = {
     'form-action': `'self'`,
     'media-src': `'none'`,
     'frame-ancestors': `'self'`,
-    'img-src': `'self' data: https://cdn.blockshub.net/ https://hindigamerclub-game.ewr1.vultrobjects.com/ https://www.google-analytics.com/`,
-    'connect-src': `'self' ws://localhost:8080/ https://sentry.io/ https://ka-f.fontawesome.com/releases/v5.13.1/css/free.min.css`,
+    'img-src': `'self' data: https://cdn.blockshub.net/ https://hindigamerclub-game.ewr1.vultrobjects.com/ https://www.google-analytics.com/ ${config_1.default.baseUrl.frontend}`,
+    'connect-src': `'self' ws://localhost:8080/ https://sentry.io/ https://ka-f.fontawesome.com/releases/v5.13.1/css/free.min.css ${config_1.default.baseUrl.frontend} ${config_1.default.baseUrl.play}`,
     'object-src': `'none'`,
     'base-uri': `'self'`,
 };
@@ -27,7 +28,7 @@ exports.getCspString = () => {
 };
 exports.lbOrigin = crypto.randomBytes(8).toString('base64');
 exports.version = crypto.randomBytes(8).toString('hex');
-exports.generateCspWithNonce = async (req, res, next, randomBytesFunction = randomBytes) => {
+exports.generateCspWithNonce = async (req, res) => {
     res.set({
         'x-lb-origin': exports.lbOrigin,
     });
@@ -36,7 +37,7 @@ exports.generateCspWithNonce = async (req, res, next, randomBytesFunction = rand
         req.headers['cf-connecting-ip'] = '127.0.0.1';
     }
     if (req.url === '/docs' || req.url === '/docs/') {
-        return next();
+        return;
     }
     res.set({
         'X-Frame-Options': 'DENY',
@@ -48,20 +49,9 @@ exports.generateCspWithNonce = async (req, res, next, randomBytesFunction = rand
         'X-Permitted-Cross-Domain-Policies': 'none',
     });
     if (req.url.slice(0, '/api/'.length) === '/api/') {
-        return next();
+        return;
     }
-    const nonceBuffer = await randomBytesFunction(48);
-    let nonce;
-    if (!nonceBuffer) {
-        const rand = (length, current = '') => {
-            current = current ? current : '';
-            return length ? rand(--length, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz".charAt(Math.floor(Math.random() * 60)) + current) : current;
-        };
-        nonce = rand(48);
-    }
-    else {
-        nonce = nonceBuffer.toString('base64');
-    }
+    let nonce = crypto.randomBytes(32).toString('base64');
     let headerString;
     if (req.originalUrl.match(/\/game\/(\d+)\/sandbox/g)) {
         headerString = 'script-src \'nonce-' + nonce + '\' ' + "'unsafe-eval'; " + exports.getCspString();
@@ -75,10 +65,10 @@ exports.generateCspWithNonce = async (req, res, next, randomBytesFunction = rand
     res.set({
         'Content-Security-Policy': headerString,
     });
-    res.locals.version =
-        res.locals.nonce = nonce;
+    res.locals.version = exports.version;
+    res.locals.captchakey = config_1.default.recaptcha.v2.public;
+    res.locals.nonce = nonce;
     res.locals.javascript = exports.getJavascript(nonce, exports.version);
-    next();
 };
 exports.getIp = (req) => {
     const cloudflareIP = req.get('cf-connecting-ip');
@@ -103,14 +93,7 @@ exports.getJavascript = (nonce, version) => {
         <script nonce="${nonce}" src="/js/bundle/bootstrap.bundle.js?v=${version}"></script>`;
 };
 exports.default = async (req, res, next) => {
-    let doSkip = false;
-    await exports.generateCspWithNonce(req, res, () => {
-        doSkip = true;
-        next();
-    });
-    if (doSkip) {
-        return;
-    }
+    await exports.generateCspWithNonce(req, res);
     if (req.query.sort) {
         if (req.query.sort !== 'asc' && req.query.sort !== 'desc') {
             return next(new ts_httpexceptions_1.BadRequest('InvalidSort'));
@@ -125,12 +108,45 @@ exports.default = async (req, res, next) => {
     });
     try {
         const newUserInfo = await baseService.Users.getAuthenticatedUserInfo();
-        console.log('[info] user is logged in. info', newUserInfo);
         res.locals.userInfo = newUserInfo;
+        if (newUserInfo.banned) {
+            if (req.url === "/Membership/NotApproved.aspx?ID=" + newUserInfo.userId) {
+                let banData;
+                try {
+                    banData = await baseService.Users.getBanData();
+                    banData.date = moment(banData.date).format();
+                }
+                catch (e) {
+                    console.error(e);
+                    banData = {
+                        id: 0,
+                        userId: newUserInfo.userId,
+                        reason: "The reason for your account's termination was not specified.",
+                        date: moment().format(),
+                        untilUnbanned: new Date(),
+                        terminated: 1,
+                        unlock: false,
+                        isEligibleForAppeal: false,
+                    };
+                }
+                const template = new model.WWWTemplate({
+                    title: 'Account Banned',
+                    page: banData,
+                });
+                res.render("banned", template);
+                return;
+            }
+            else if (req.url.toLowerCase().slice(0, '/support'.length) === '/support' ||
+                req.url.toLowerCase() === '/terms') {
+                return next();
+            }
+            else {
+                return res.redirect(302, '/Membership/NotApproved.aspx?ID=' + newUserInfo.userId);
+            }
+        }
     }
     catch (err) {
-        if (err.isAxiosError && err.response.status === 401) {
-            console.log('[info] user is not logged in');
+        if (err.isAxiosError && err.response && err.response.status === 401) {
         }
         else {
             return next(err);

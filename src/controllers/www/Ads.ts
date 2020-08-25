@@ -1,8 +1,8 @@
 import base from '../base';
-import {Controller, Get, Locals, PathParams, Render, Res, Use} from '@tsed/common';
+import { Controller, Get, Locals, PathParams, Render, Res, Use } from '@tsed/common';
 import * as model from '../../models/index';
 import * as middleware from '../../middleware/v1';
-import {Summary} from "@tsed/swagger";
+import { Summary } from "@tsed/swagger";
 
 @Controller('/ads')
 export class AdsWWWController extends base {
@@ -28,6 +28,7 @@ export class AdsWWWController extends base {
         @Locals('userInfo') userInfo: model.UserSession,
         @PathParams('catalogId', Number) catalogId: number
     ) {
+        catalogId = base.ValidateId(catalogId);
         let info = await this.Catalog.getInfo(catalogId);
         if (info.creatorType === model.Catalog.creatorType.User && info.creatorId !== userInfo.userId) {
             throw new this.BadRequest('InvalidCatalogId');
@@ -52,6 +53,7 @@ export class AdsWWWController extends base {
         @Locals('userInfo') userInfo: model.UserSession,
         @PathParams('groupId', Number) groupId: number
     ) {
+        groupId = base.ValidateId(groupId);
         let info = await this.Groups.getInfo(groupId);
         if (info.groupStatus === model.Groups.groupStatus.locked || info.groupOwnerUserId !== userInfo.userId) {
             throw new this.BadRequest('InvalidGroupId');
@@ -71,6 +73,7 @@ export class AdsWWWController extends base {
         @Locals('userInfo') userInfo: model.UserSession,
         @PathParams('threadId', Number) threadId: number
     ) {
+        threadId = base.ValidateId(threadId);
         let info = await this.Forums.getThreadById(threadId);
         if (info.userId !== userInfo.userId) {
             throw new this.BadRequest('InvalidThreadId');

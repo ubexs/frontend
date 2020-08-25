@@ -1,7 +1,7 @@
-$('#newStatusValue').css('overflow-y','hidden').autogrow({vertical: true, horizontal: false});
+$('#newStatusValue').css('overflow-y', 'hidden').autogrow({ vertical: true, horizontal: false });
 $(document).on('click', '#updateStatusClick', function (e) {
     e.preventDefault();
-    $('#newStatusValue').attr('disabled','disabled');
+    $('#newStatusValue').attr('disabled', 'disabled');
     var status = $('#newStatusValue').val();
     if (status !== "" && status.length >= 1 && status.length <= 255) {
         request("/feed/status", "PATCH", JSON.stringify({ "status": status }))
@@ -22,47 +22,47 @@ $(document).on('click', '#updateStatusClick', function (e) {
                     <div class="col text-center add-reaction" data-id="${k.statusId}">
                         <p style="font-size:0.85rem;"><i class="far fa-heart"></i> Heart</p>
                     </div>`;
-                    if (k.didReactWithHeart) {
-                        reactionBox = `
+                if (k.didReactWithHeart) {
+                    reactionBox = `
                         <div class="col text-center remove-reaction" data-id="${k.statusId}">
                             <p style="font-size:0.85rem;color:red;"><i class="fas fa-heart"></i> Unheart</p>
                         </div>`;
-                    }
-                    var dateDisplay = moment(k["date"]).format('MMMM Do YYYY, h:mm a');
-                    let reactionCountDisplay = `
+                }
+                var dateDisplay = moment(k["date"]).format('MMMM Do YYYY, h:mm a');
+                let reactionCountDisplay = `
                     
                     <p style="font-size:0.65rem;text-align:center;"><i class="fas fa-heart"></i> <span class="formated-total-reactions" data-count="${k.heartReactionCount}" data-id="${k.statusId}">0 Hearts</span></p>`;
 
-                    if (k.heartReactionCount !== 0) {
-                        let heartWithS = 'Heart';
-                        if (k.heartReactionCount > 1) {
-                            heartWithS = 'Hearts';
-                        }
-                        reactionCountDisplay = `
+                if (k.heartReactionCount !== 0) {
+                    let heartWithS = 'Heart';
+                    if (k.heartReactionCount > 1) {
+                        heartWithS = 'Hearts';
+                    }
+                    reactionCountDisplay = `
                         
                         <p style="font-size:0.65rem;text-align:center;"><i class="fas fa-heart"></i> <span class="formated-total-reactions" data-count="${k.heartReactionCount}" data-id="${k.statusId}">${number_format(k.heartReactionCount)} ${heartWithS}</span></p>
                         
                         `;
-                    }
+                }
 
 
-                    let commentCountDisplay = `
+                let commentCountDisplay = `
                     
                     <p style="font-size:0.65rem;text-align:center;" class="add-comment" data-id="${k.statusId}">
                         <span class="formated-total-comments" data-count="${k.commentCount}" data-id="${k.statusId}">${k.commentCount}</span> Comment
                     </p>
                     
                     `;
-                    if (k.commentCount === 0 || k.commentCount > 1) {
-                        commentCountDisplay = `
+                if (k.commentCount === 0 || k.commentCount > 1) {
+                    commentCountDisplay = `
                     
                         <p style="font-size:0.65rem;text-align:center;" class="add-comment" data-id="${k.statusId}">
                             <span class="formated-total-comments" data-count="${k.commentCount}" data-id="${k.statusId}">${number_format(k.commentCount)}</span> Comments
                         </p>
                         
                         `;
-                    }
-                    let divData = `
+                }
+                let divData = `
                     <div class="col-12">
                         <div class="row">
                             <div class="col-12">
@@ -105,10 +105,7 @@ $(document).on('click', '#updateStatusClick', function (e) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <hr style="margin-bottom:0;" />
-                            </div>
-                            <div class="col-12" style="margin-bottom:0;">
+                            <div class="col-12" style="margin-bottom:0;margin-top:1rem;">
                                 <div class="row">
                                     ${reactionBox}
                                     <div class="col text-center add-comment" data-id="${k.statusId}">
@@ -121,7 +118,7 @@ $(document).on('click', '#updateStatusClick', function (e) {
                             </div>
                         </div>
                     </div>`;
-                    $('#userFeedDiv').prepend(divData);
+                $('#userFeedDiv').prepend(divData);
                 setUserThumbs([userId]);
                 setUserNames([userId]);
             })
@@ -227,7 +224,7 @@ request("/user/"+userId+"/games", "GET")
         if (isLoading || !areMoreAvailable) {
             return;
         }
-        if($(window).scrollTop() + $(window).height() > $(document).height() - $('div#footerUpper').innerHeight()) {
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - $('div#footerUpper').innerHeight()) {
             if (currentFeed === 'friends') {
                 getFeedFriends(feedOffset);
             } else if (currentFeed === 'groups') {
@@ -260,113 +257,113 @@ request("/user/"+userId+"/games", "GET")
         getFeedGroups(0);
     });
     // Get Feed
-    $(document).on('click', '.add-reaction', function(e) {
+    $(document).on('click', '.add-reaction', function (e) {
         if ($(this).parent().attr('data-react-disabled')) {
             return;
         }
         let id = $(this).attr('data-id');
-        $(this).parent().attr('data-react-disabled','true');
+        $(this).parent().attr('data-react-disabled', 'true');
         let elAppended = $(this).parent().prepend(`
         <div class="col text-center remove-reaction" data-id="${id}">
             <p style="font-size:0.85rem;color:red;"><i class="fas fa-heart"></i> Unheart</p>
         </div>`);
-        let elToEdit = $('span.formated-total-reactions[data-id='+id+']');
+        let elToEdit = $('span.formated-total-reactions[data-id=' + id + ']');
         let oldHeartCount = parseInt(elToEdit.attr('data-count'));
         let newHeartCount = oldHeartCount + 1;
-        if (newHeartCount > 1||newHeartCount === 0) {
+        if (newHeartCount > 1 || newHeartCount === 0) {
             elToEdit.html(number_format(newHeartCount) + ' Hearts');
-        }else{
+        } else {
             elToEdit.html(number_format(newHeartCount) + ' Heart');
         }
         elToEdit.attr('data-count', newHeartCount);
         console.log(elAppended);
-        let changeTooltip = $('span.formated-total-reactions[data-id="'+id+'"]').attr('data-original-title');
+        let changeTooltip = $('span.formated-total-reactions[data-id="' + id + '"]').attr('data-original-title');
         if (changeTooltip) {
             if (changeTooltip === 'Nobody') {
                 changeTooltip = xss(username);
-                $('span.formated-total-reactions[data-id="'+id+'"]').attr('data-original-title',changeTooltip);
-            }else{
-                changeTooltip = xss(username)+'<br>'+changeTooltip;
+                $('span.formated-total-reactions[data-id="' + id + '"]').attr('data-original-title', changeTooltip);
+            } else {
+                changeTooltip = xss(username) + '<br>' + changeTooltip;
                 if (changeTooltip === '' || newHeartCount === 0) {
                     changeTooltip = 'Nobody';
                 }
-                $('span.formated-total-reactions[data-id="'+id+'"]').attr('data-original-title',changeTooltip);
+                $('span.formated-total-reactions[data-id="' + id + '"]').attr('data-original-title', changeTooltip);
             }
         }
-        request('/feed/friends/'+id+'/react', 'POST', {
+        request('/feed/friends/' + id + '/react', 'POST', {
             'reactionType': 'heart',
         }).then(() => {
             elAppended.removeAttr('data-react-disabled');
         })
-        .catch(e => {
-            console.error(e);
-            toast(false,'Oops, let\'s try that again.')
-            $(this).parent().prepend(`
+            .catch(e => {
+                console.error(e);
+                toast(false, 'Oops, let\'s try that again.')
+                $(this).parent().prepend(`
             <div class="col text-center add-reaction" data-id="${id}">
                 <p style="font-size:0.85rem;"><i class="far fa-heart"></i> Heart</p>
             </div>`);
-        })
+            })
         $(this).remove();
     });
-    $(document).on('click', '.remove-reaction', function(e) {
+    $(document).on('click', '.remove-reaction', function (e) {
         if ($(this).parent().attr('data-react-disabled')) {
             return;
         }
         let id = $(this).attr('data-id');
-        $(this).parent().attr('data-react-disabled','true');
+        $(this).parent().attr('data-react-disabled', 'true');
         let elAppended = $(this).parent().prepend(`
         <div class="col text-center add-reaction" data-id="${id}">
             <p style="font-size:0.85rem;"><i class="far fa-heart"></i> Heart</p>
         </div>`);
-        let elToEdit = $('span.formated-total-reactions[data-id='+id+']');
+        let elToEdit = $('span.formated-total-reactions[data-id=' + id + ']');
         let oldHeartCount = parseInt(elToEdit.attr('data-count'));
         let newHeartCount = oldHeartCount - 1;
-        if (newHeartCount > 1||newHeartCount === 0) {
+        if (newHeartCount > 1 || newHeartCount === 0) {
             elToEdit.html(number_format(newHeartCount) + ' Hearts');
-        }else{
+        } else {
             elToEdit.html(number_format(newHeartCount) + ' Heart');
         }
-        let changeTooltip = $('span.formated-total-reactions[data-id="'+id+'"]').attr('data-original-title');
+        let changeTooltip = $('span.formated-total-reactions[data-id="' + id + '"]').attr('data-original-title');
         if (changeTooltip) {
             if (changeTooltip === 'Nobody') {
                 // uhh
-            }else{
+            } else {
                 // changeTooltip = xss(username)+'<br>'+changeTooltip;
-                changeTooltip = changeTooltip.replace(username+'<br>', '');
+                changeTooltip = changeTooltip.replace(username + '<br>', '');
                 if (changeTooltip === '' || newHeartCount === 0) {
                     changeTooltip = 'Nobody';
                 }
-                $('span.formated-total-reactions[data-id="'+id+'"]').attr('data-original-title',changeTooltip);
+                $('span.formated-total-reactions[data-id="' + id + '"]').attr('data-original-title', changeTooltip);
             }
         }
         elToEdit.attr('data-count', newHeartCount);
         console.log(elAppended);
-        request('/feed/friends/'+id+'/react', 'DELETE', {
+        request('/feed/friends/' + id + '/react', 'DELETE', {
             'reactionType': 'heart',
         }).then(() => {
             elAppended.removeAttr('data-react-disabled');
         })
-        .catch(e => {
-            console.error(e);
-            toast(false,'Oops, let\'s try that again.')
-            $(this).parent().prepend(`
+            .catch(e => {
+                console.error(e);
+                toast(false, 'Oops, let\'s try that again.')
+                $(this).parent().prepend(`
             <div class="col text-center remove-reaction" data-id="${id}">
                 <p style="font-size:0.85rem;color:red;"><i class="far fa-heart"></i> Heart</p>
             </div>`);
-        })
+            })
         $(this).remove();
     });
     let commentsLoaded = {};
     let loadingComments = {};
-    $(document).on('click', '.add-comment-to-status-submit', function(e) {
+    $(document).on('click', '.add-comment-to-status-submit', function (e) {
         e.preventDefault();
         let id = $(this).attr('data-id');
-        let commentBox = $('textarea.add-comment-to-status-textarea[data-id="'+id+'"]');
+        let commentBox = $('textarea.add-comment-to-status-textarea[data-id="' + id + '"]');
         commentBox.attr('disabled', 'disabled');
-        $(this).attr('disabled','disabled');
+        $(this).attr('disabled', 'disabled');
         let commentText = commentBox.val();
 
-        request('/feed/friends/'+id+'/comment', 'POST', {
+        request('/feed/friends/' + id + '/comment', 'POST', {
             comment: commentText,
         }).then(d => {
             commentBox.removeAttr('disabled');
@@ -374,7 +371,7 @@ request("/user/"+userId+"/games", "GET")
             $(this).removeAttr('disabled');
 
             if (commentsLoaded[id] === true) {
-                let divToAddCommentsTo = $('.comments-area[data-id="'+id+'"]');
+                let divToAddCommentsTo = $('.comments-area[data-id="' + id + '"]');
                 divToAddCommentsTo.append(`
                     
                     <div class="col-12">
@@ -395,31 +392,31 @@ request("/user/"+userId+"/games", "GET")
                     </div>
                     
                     `);
-                    setUserThumbs([userId]);
-                    setUserNames([userId]);
+                setUserThumbs([userId]);
+                setUserNames([userId]);
             }
         }).catch(e => {
             commentBox.removeAttr('disabled', 'disabled');
-            $(this).removeAttr('disabled','disabled');
+            $(this).removeAttr('disabled', 'disabled');
             console.error(e);
             toast(false, e.responseJSON.message);
         })
     });
-    
-    $(document).on('click', '.add-reply-to-comment-submit', function(e) {
+
+    $(document).on('click', '.add-reply-to-comment-submit', function (e) {
         e.preventDefault();
         let commentId = $(this).attr('data-id');
         let statusId = $(this).attr('data-status-id');
-        $('.add-reply-to-comment-textarea[data-id="'+commentId+'"]').attr('disabled','disabled');
-        let text = $('.add-reply-to-comment-textarea[data-id="'+commentId+'"]').val();
-        $(this).attr('disabled','disabled');
+        $('.add-reply-to-comment-textarea[data-id="' + commentId + '"]').attr('disabled', 'disabled');
+        let text = $('.add-reply-to-comment-textarea[data-id="' + commentId + '"]').val();
+        $(this).attr('disabled', 'disabled');
         console.log(text);
-        request('/feed/friends/'+statusId+'/comment/'+commentId+'/reply', 'POST', {
+        request('/feed/friends/' + statusId + '/comment/' + commentId + '/reply', 'POST', {
             'reply': text,
         }).then(d => {
             // ok
             $(this).removeAttr('disabled');
-            $('.add-reply-to-comment-textarea[data-id="'+commentId+'"]').removeAttr('disabled').val('');
+            $('.add-reply-to-comment-textarea[data-id="' + commentId + '"]').removeAttr('disabled').val('');
 
             $(this).parent().parent().parent().parent().parent().append(`
                 <div class="row">
@@ -440,20 +437,20 @@ request("/user/"+userId+"/games", "GET")
                         </div>
                         </div>
                 </div>`);
-                setUserThumbs([userId]);
-                setUserNames([userId]);
+            setUserThumbs([userId]);
+            setUserNames([userId]);
         })
-        .catch(e => {
-            console.log(e);
-            $(this).removeAttr('disabled');
-            $('.add-reply-to-comment-textarea[data-id="'+commentId+'"]').removeAttr('disabled');
-            warning(e.responseJSON.message);
-        })
+            .catch(e => {
+                console.log(e);
+                $(this).removeAttr('disabled');
+                $('.add-reply-to-comment-textarea[data-id="' + commentId + '"]').removeAttr('disabled');
+                warning(e.responseJSON.message);
+            })
     });
 
     let breakLoading = false;
     let repliesLoading = {};
-    $(document).on('click', '.reply-to-comment', function(e) {
+    $(document).on('click', '.reply-to-comment', function (e) {
         e.preventDefault();
         let commentId = $(this).attr('data-id');
         let statusId = $(this).attr('data-status-id');
@@ -462,8 +459,8 @@ request("/user/"+userId+"/games", "GET")
         }
         if ($(this).attr('data-replybox-loaded')) {
             $(this).removeAttr('data-replybox-loaded');
-            $('.add-reply-container[data-id="'+commentId+'"]').remove();
-            $('.reply-to-comment[data-commentid="'+commentId+'"]').remove();
+            $('.add-reply-container[data-id="' + commentId + '"]').remove();
+            $('.reply-to-comment[data-commentid="' + commentId + '"]').remove();
             return;
         }
         repliesLoading[commentId] = true;
@@ -486,7 +483,7 @@ request("/user/"+userId+"/games", "GET")
                 </div>
         </div>`);
         // load replies
-        request('/feed/friends/'+statusId+'/comment/'+commentId+'/replies?limit=25').then(d => {
+        request('/feed/friends/' + statusId + '/comment/' + commentId + '/replies?limit=25').then(d => {
             repliesLoading[commentId] = false;
             let userIds = [];
             for (const reply of d) {
@@ -520,7 +517,7 @@ request("/user/"+userId+"/games", "GET")
         });
     });
 
-    $(document).on('click', '.add-comment', function(e) {
+    $(document).on('click', '.add-comment', function (e) {
         console.log(loadingComments);
         e.preventDefault();
         let id = $(this).attr('data-id');
@@ -529,19 +526,19 @@ request("/user/"+userId+"/games", "GET")
         }
         loadingComments[id] = true;
 
-        let divToAddCommentsTo = $('.comments-area[data-id="'+id+'"]');
+        let divToAddCommentsTo = $('.comments-area[data-id="' + id + '"]');
         if (commentsLoaded[id] === true) {
             commentsLoaded[id] = false;
             loadingComments[id] = false;
             divToAddCommentsTo.empty();
             $(this).removeAttr('data-loading-comments');
-        }else{
+        } else {
             commentsLoaded[id] = true;
             divToAddCommentsTo.append(`<div class="col-12" style="margin-top:1rem;margin-bottom:1rem;"><div class="spinner-border text-success" role="status" style="display:block;margin:0 auto;"></div>`);
-            request('/feed/friends/'+id+'/comments?limit=25', 'GET')
-            .then(d => {
-                divToAddCommentsTo.empty();
-                divToAddCommentsTo.append(`
+            request('/feed/friends/' + id + '/comments?limit=25', 'GET')
+                .then(d => {
+                    divToAddCommentsTo.empty();
+                    divToAddCommentsTo.append(`
                     
                     <div class="col-12">
                         <div class="row">
@@ -560,11 +557,11 @@ request("/user/"+userId+"/games", "GET")
                     </div>
                     
                 `);
-                setUserThumbs([userId]);
-                let userIdsWhoCommented = [];
-                for (const comment of d) {
-                    userIdsWhoCommented.push(comment.userId);
-                    divToAddCommentsTo.append(`
+                    setUserThumbs([userId]);
+                    let userIdsWhoCommented = [];
+                    for (const comment of d) {
+                        userIdsWhoCommented.push(comment.userId);
+                        divToAddCommentsTo.append(`
                     
                     <div class="col-12">
                         <div class="row">
@@ -585,25 +582,25 @@ request("/user/"+userId+"/games", "GET")
                     </div>
                     
                     `);
-                }
-                divToAddCommentsTo.append(`<div class="col-12" style="margin-bottom:1rem;"></div>`);
-                setUserNames(userIdsWhoCommented);
-                setUserThumbs(userIdsWhoCommented);
-            })
-            .catch(e => {
-                divToAddCommentsTo.empty();
-                console.error(e);
-                toast(false, 'Uh-oh, could you try that again?');
-                commentsLoaded[id] = false;
-            }).finally(() => {
-                loadingComments[id] = false;
-            })
+                    }
+                    divToAddCommentsTo.append(`<div class="col-12" style="margin-bottom:1rem;"></div>`);
+                    setUserNames(userIdsWhoCommented);
+                    setUserThumbs(userIdsWhoCommented);
+                })
+                .catch(e => {
+                    divToAddCommentsTo.empty();
+                    console.error(e);
+                    toast(false, 'Uh-oh, could you try that again?');
+                    commentsLoaded[id] = false;
+                }).finally(() => {
+                    loadingComments[id] = false;
+                })
         }
     });
 
     let loadingUsersWhoReacted = {};
     let loadedTotalReactions = {};
-    $(document).on('mouseenter', '.formated-total-reactions', function(e) {
+    $(document).on('mouseenter', '.formated-total-reactions', function (e) {
         e.preventDefault();
         let id = $(this).attr('data-id');
         if (loadedTotalReactions[id]) {
@@ -617,7 +614,7 @@ request("/user/"+userId+"/games", "GET")
         $(this).attr('data-html', 'true');
         $(this).tooltip('show');
         loadingUsersWhoReacted[id] = true;
-        request('/feed/friends/'+id+'/reactions', 'GET').then(d => {
+        request('/feed/friends/' + id + '/reactions', 'GET').then(d => {
             console.log(d);
             let allIds = [];
             for (const id of d) {
@@ -638,15 +635,15 @@ request("/user/"+userId+"/games", "GET")
                 return;
             }
             let newTitle = ``;
-            request('/user/names?ids='+[...new Set(allIds)].join(',')).then(d => {
+            request('/user/names?ids=' + [...new Set(allIds)].join(',')).then(d => {
                 console.log(d);
                 for (const username of d) {
-                    newTitle += username.username+'<br>';
+                    newTitle += username.username + '<br>';
                 }
-                if(d.length >= 25) {
+                if (d.length >= 25) {
                     newTitle += 'and others.';
-                }else{
-                    newTitle = newTitle.slice(0,newTitle.length-'<br>'.length);
+                } else {
+                    newTitle = newTitle.slice(0, newTitle.length - '<br>'.length);
                 }
                 $(this).attr('title', newTitle);
                 $(this).attr('data-original-title', newTitle);
@@ -664,7 +661,7 @@ request("/user/"+userId+"/games", "GET")
         })
         console.log(id);
     });
-    $(document).on('mouseleave', '.formated-total-reactions', function(e) {
+    $(document).on('mouseleave', '.formated-total-reactions', function (e) {
         e.preventDefault();
     });
     getFeedFriends(0);
@@ -782,10 +779,7 @@ request("/user/"+userId+"/games", "GET")
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <hr style="margin-bottom:0;" />
-                            </div>
-                            <div class="col-12" style="margin-bottom:0;">
+                            <div class="col-12" style="margin-bottom:0;margin-top:1rem;">
                                 <div class="row">
                                     ${reactionBox}
                                     <div class="col text-center add-comment" data-id="${k.statusId}">
@@ -809,10 +803,10 @@ request("/user/"+userId+"/games", "GET")
                 console.log(idsToGrabOGDataFor);
                 if (idsToGrabOGDataFor.length > 0) {
                     // load og data
-                    request('/feed/friends/multi-get-og-info?ids='+idsToGrabOGDataFor.join(','), 'GET').then(d => {
+                    request('/feed/friends/multi-get-og-info?ids=' + idsToGrabOGDataFor.join(','), 'GET').then(d => {
                         let claimedObj = {};
                         for (const item of d) {
-                            $('div.og-meta-info[data-id="'+item.statusId+'"]').empty()
+                            $('div.og-meta-info[data-id="' + item.statusId + '"]').empty()
                         }
                         for (const item of d) {
                             claimedObj[item.statusId] = true;
@@ -821,11 +815,11 @@ request("/user/"+userId+"/games", "GET")
                             let specialPaddingIfThumb = ``;
                             if (item.ogInfo && item.ogInfo && item.ogInfo.thumbnailUrl) {
                                 thumbThing = `
-                                <img src="${item.ogInfo.thumbnailUrl}" style="width:100%;height:auto;display:block;margin:0 auto;" class="zoom-on-hover" />
+                                <img src="${window.HTTPMeta.baseUrl + item.ogInfo.thumbnailUrl}" style="width:100%;height:auto;display:block;margin:0 auto;" class="zoom-on-hover" />
                                 `;
                                 specialPaddingIfThumb = `padding-top:5px;`;
                             }
-                            $('div.og-meta-info[data-id="'+item.statusId+'"]').append(`
+                            $('div.og-meta-info[data-id="' + item.statusId + '"]').append(`
                             
                             <div class="row" style="margin-top:1rem;">
                                 <div class="col-12">
@@ -847,16 +841,16 @@ request("/user/"+userId+"/games", "GET")
 
                         for (const item of idsToGrabOGDataFor) {
                             if (!claimedObj[item]) {
-                                $('div.og-meta-info[data-id="'+item+'"]').remove();
+                                $('div.og-meta-info[data-id="' + item + '"]').remove();
                             }
                         }
                     })
-                    .catch(e => {
-                        for (const item of idsToGrabOGDataFor) {
-                            $('div.og-meta-info[data-id="'+item+':]').remove();
-                        }
-                        console.error(e);
-                    })
+                        .catch(e => {
+                            for (const item of idsToGrabOGDataFor) {
+                                $('div.og-meta-info[data-id="' + item + ':]').remove();
+                            }
+                            console.error(e);
+                        })
                 }
                 setUserThumbs(userIdsRequest);
                 setUserNames(userIdsRequest);
@@ -897,7 +891,7 @@ request("/user/"+userId+"/games", "GET")
                     thumbnailIds.push(k.thumbnailCatalogId);
                     groupIdsRequest.push(k.groupId);
                     var dateDisplay = moment(k["date"]).format('MMMM Do YYYY, h:mm a');
-                    $('#userFeedDiv').append('<div class="col-sm-12"><hr /></div><div style="" class="col-4 col-lg-2"><img style="width:100%;display:block;margin:0 auto;" data-catalogid="' + k.thumbnailCatalogId + '" src="' + window.subsitutionimageurl + '" /></div><div class="col-8 col-lg-10" style="padding-left: 0;"><div class="row"><div class="col-12"><h6 class="text-left" style="margin-bottom: 0;"><a style="color:#212529;" href="/groups/' + k.groupId + '/--"><span data-groupid="' + k.groupId + '"></span></a> <span style="font-size:0.65rem;font-weight:400;opacity:1;cursor:pointer;" title="' + dateDisplay + '">(' + moment(k["date"]).fromNow() + ')</span></h6></div><div class="col-12"></div><div class="col-12 col-sm-9 col-lg-10"><p style="font-size:0.85rem;">' + xss(k["shout"]) + '</p></div></div></div>');
+                    $('#userFeedDiv').append('<div class="col-sm-12"><hr /></div><div style="" class="col-4 col-lg-2"><img style="width:100%;display:block;margin:0 auto;" data-catalogid="' + k.thumbnailCatalogId + '" src="' + window.subsitutionimageurl + '" /></div><div class="col-8 col-lg-10" style="padding-left: 0;"><div class="row"><div class="col-12"><h6 class="text-left" style="margin-bottom: 0;"><a href="/groups/' + k.groupId + '/--"><span data-groupid="' + k.groupId + '"></span></a> <span style="font-size:0.65rem;font-weight:400;opacity:1;cursor:pointer;" title="' + dateDisplay + '">(' + moment(k["date"]).fromNow() + ')</span></h6></div><div class="col-12"></div><div class="col-12 col-sm-9 col-lg-10"><p style="font-size:0.85rem;">' + xss(k["shout"]) + '</p></div></div></div>');
                 });
                 setGroupThumbs(thumbnailIds);
                 setGroupNames(groupIdsRequest);
@@ -925,12 +919,12 @@ request("/user/"+userId+"/games", "GET")
     }
 
     setInterval(() => {
-        $('.format-date-interval-fromnow').each(function() {
+        $('.format-date-interval-fromnow').each(function () {
             let ogDate = $(this).attr('data-original-date');
             if (!ogDate) {
                 return;
             }
-            $(this).html('( '+moment(ogDate).fromNow()+' )');
+            $(this).html('( ' + moment(ogDate).fromNow() + ' )');
         });
     }, 1000);
 });

@@ -9,11 +9,7 @@
                                     <h1>Report User Status</h1>
                                     <p style="font-size:0.85rem;margin-top:1rem;">Please select a reason</p>
                                     <select class="form-control" id="report-reason">
-                                        @for (const item in model.page.reasons) {
-                                            if (!isNaN(parseInt(item))) {
-                                                <option value="@item">@model.page.reasons[item]</option>
-                                            }
-                                        }
+                                    
                                     </select>
                                     <input type="hidden" id="user-status-id" value="@model.page.userStatusId">
                                     <button type="button" class="btn btn-success" style="margin-top:1rem;" id="submit">SUBMIT</button>

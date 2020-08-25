@@ -35,6 +35,7 @@
         </style>
 </head>
 <body>
+    <div id="meta" data-api-base-url="@model.apiBaseUrl"></div>
     @html.block('content')
     <!-- Locale -->
     <script nonce="@model.nonce" src="/js/locale/en.js?v=@model.v"></script>

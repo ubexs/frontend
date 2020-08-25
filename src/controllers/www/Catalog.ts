@@ -1,8 +1,8 @@
 import base from '../base';
-import {Controller, Get, Header, HeaderParams, Render, Use, Res, Locals, PathParams} from '@tsed/common';
+import { Controller, Get, Header, HeaderParams, Render, Use, Res, Locals, PathParams, Req } from '@tsed/common';
 import * as model from '../../models/index';
 import * as middleware from '../../middleware/v1';
-import {Summary} from "@tsed/swagger";
+import { Summary } from "@tsed/swagger";
 
 @Controller('/catalog')
 export class CatalogController extends base {
@@ -39,7 +39,8 @@ export class CatalogController extends base {
         @Locals('userInfo') userInfo: model.UserSession,
         @PathParams('catalogId', Number) catalogId: number
     ) {
-        let ViewData = new model.WWWTemplate({'title': ''});
+        catalogId = base.ValidateId(catalogId);
+        let ViewData = new model.WWWTemplate<any>({ 'title': '' });
         let catalogData;
         let salesCount = 0;
         try {
@@ -51,16 +52,17 @@ export class CatalogController extends base {
         }
         if (userInfo.staff >= 2) {
             // idk yet
-        }else if (catalogData.creatorType === model.Catalog.creatorType.Group) {
+        } else if (catalogData.creatorType === model.Catalog.creatorType.Group) {
             const groupRole = await this.Groups.getUserRole(catalogData.creatorId, userInfo.userId);
             if (groupRole.permissions.manage === 0) {
                 throw new this.BadRequest('InvalidPermissions');
             }
-        }else if (catalogData.creatorType === model.Catalog.creatorType.User) {
+        } else if (catalogData.creatorType === model.Catalog.creatorType.User) {
             if (catalogData.creatorId !== userInfo.userId) {
                 throw new this.BadRequest('InvalidPermissions');
             }
         }
+        ViewData.page = {};
         // todo: REPLACE WITH STAFF PERMISSION SYSTEM
         ViewData.page.loadStaffPage = userInfo.staff >= 2;
 
@@ -89,8 +91,9 @@ export class CatalogController extends base {
     @Summary('Redirect /:id/ to /:id/:name')
     public async redirectToCatalogItem(
         @Res() res: Res,
-        @PathParams('catalogId', Number) catalogId: number,
+        @PathParams('catalogId') catalogId: any,
     ) {
+        catalogId = base.ValidateId(catalogId);
         let catalogData = await this.Catalog.getInfo(catalogId);
         const encodedName = model.urlEncode(catalogData.catalogName);
         return res.redirect("/catalog/" + catalogId + "/" + encodedName);
@@ -100,18 +103,15 @@ export class CatalogController extends base {
     @Summary('Catalog item page')
     @Render('catalog/item')
     public async catalogItem(
-        @PathParams('catalogId', Number) catalogId: number
+        @PathParams('catalogId') catalogId: number,
+        @Req() req: Req,
     ) {
-        let catalogData;
-        let salesCount;
-        try {
-            catalogData = await this.Catalog.getInfo(catalogId);
-            let _salesData = await this.Catalog.countSales(catalogId);
-            salesCount = _salesData.sales;
-        } catch (e) {
-            throw new this.BadRequest('InvalidCatalogId');
-        }
-        let ViewData = new model.WWWTemplate({'title': ''});
+        catalogId = base.ValidateId(catalogId);
+        let catalogData = await this.Catalog.getInfo(catalogId);
+        let _salesData = await this.Catalog.countSales(catalogId);
+        let salesCount = _salesData.sales;
+        let ViewData = new model.WWWTemplate<any>({ 'title': '' });
+        ViewData.page = {};
         ViewData.page.catalogId = catalogData.catalogId;
         ViewData.page.catalogEncodedName = model.urlEncode(catalogData.catalogName);
         ViewData.page.catalogName = catalogData.catalogName;

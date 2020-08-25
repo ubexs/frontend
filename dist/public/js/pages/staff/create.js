@@ -32,6 +32,9 @@ $(document).on('click', '#createAssetClick', function() {
 });
 function makeAsset(form, csrf) {
     $.ajax({
+        xhrFields: {
+            withCredentials: true
+        },
         type: "POST",
         enctype: 'multipart/form-data',
         url: HTTPMeta.baseUrl+"/api/v1/catalog/create",

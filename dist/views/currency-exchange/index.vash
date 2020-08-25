@@ -1,0 +1,89 @@
+@{
+    // view settings below
+    model.ad = false;
+}
+@html.extend('layouts/default', function(model) {
+    @html.block('content', function(model) {
+        <div class="row" style="margin-top:1rem;">
+            <div class="col-12">
+                <h1>Currency Exchange</h1>
+                <p>Exchange currencies with other players in real-time with the public currency exchange. Buy and sell at your own rate.</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top:1rem;margin-bottom:1rem;">
+            <div class="col-12 col-lg-8">
+                <div class="card">
+                                    <div class="card-body">
+                                        <div class="card-title text-left" style="margin-bottom:0;display:block;">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6">
+                                                    <h5 id="chart-heading" style="font-size:1rem;"></h5>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <select class="form-control" id="type-selection" disabled="disabled">
+                                                        <option value="2" selected="selected">Primary to Secondary</option>
+                                                        <option value="1">Secondary to Primary</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                            <div class="card">
+                                <div class="card-body" style="max-height:440px;overflow-y:auto;">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h1 style="font-size:1rem;">Latest Transactions</h1>
+                                        </div>
+                                        <div class="col-12" id="latest-transactions">
+                                            <div class="spinner-border" style="margin: 0 auto;display:block;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h1 style="font-size:1rem;">My Open Positions</h1>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-outline-success new-position" style="padding-top:0.25rem;padding-bottom:0.25rem;font-size:0.85rem;float:right;" data-id="${pos.positionId}">New</button>
+                            </div>
+                            <div class="col-12" id="my-positions">
+                                <div class="spinner-border" style="margin: 0 auto;display:block;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h1 style="font-size:1rem;">Best Rates</h1>
+                                        </div>
+                                        <div class="col-12" id="all-positions">
+                                            <div class="spinner-border" style="margin: 0 auto;display:block;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.18.1/apexcharts.min.js" integrity="sha256-RalQXBZdisB04aaBsm+6YZ0b/iRYjX1MZn90m19AnCY=" crossorigin="anonymous" nonce="@model.nonce"></script>
+        <script nonce="@model.nonce" src="/js/pages/currency-exchange/index.js?v=@model.v"></script>
+    })
+})

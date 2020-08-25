@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="col-sm-12 col-md-6 col-lg-6" style="padding-left:0;padding-right:0;">
         <!--
             <h1>Hello, @model.userInfo.username</h1>-->
             <div class="card">

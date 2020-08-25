@@ -6,7 +6,9 @@ const Server_1 = require("./Server");
 async function bootstrap() {
     try {
         common_1.$log.debug("Start server...");
-        const platform = await platform_express_1.PlatformExpress.bootstrap(Server_1.Server, {});
+        const platform = await platform_express_1.PlatformExpress.bootstrap(Server_1.Server, {
+            mergeParams: true
+        });
         await platform.listen();
         common_1.$log.debug("Server initialized");
     }

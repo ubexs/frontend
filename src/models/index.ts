@@ -35,8 +35,8 @@ import * as crypto from 'crypto';
 import config from "../helpers/config";
 const versionStr = crypto.randomBytes(8).toString('hex');
 
-export class WWWTemplate {
-    constructor(props: WWWTemplate) {
+export class WWWTemplate<PageType> {
+    constructor(props: WWWTemplate<PageType>) {
         for (const [key, value] of Object.entries(props)) {
             // @ts-ignore
             this[key] = value;
@@ -58,7 +58,7 @@ export class WWWTemplate {
     /**
      * Page Info to Send to View
      */
-    page?: any = {};
+    page?: PageType;
 
     /**
      * JS Version String

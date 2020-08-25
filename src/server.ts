@@ -11,12 +11,12 @@ import * as cons from 'consolidate';
 import * as morgan from 'morgan';
 // app-specific stuff
 import config from "./helpers/config";
-import requestInterscept from './middleware/Any';
-import {NotFoundMiddleware} from './middleware/ErrorHandle';
+import requestIntercept from './middleware/Any';
+import { NotFoundMiddleware } from './middleware/ErrorHandle';
 
 const rootDir = __dirname;
 let portToListenOn = config.port || process.env.PORT || 3000;
-console.log('[info] listening on port',portToListenOn);
+console.log('[info] listening on port', portToListenOn);
 @Configuration({
     rootDir,
     mount: {
@@ -35,6 +35,8 @@ console.log('[info] listening on port',portToListenOn);
     componentsScan: [
         `${rootDir}/middleware/*.ts`
     ],
+    validationModelStrict: false,
+    httpsPort: false,
 })
 export class Server {
     @Inject()
@@ -51,6 +53,7 @@ export class Server {
         this.app.raw.set("views", this.settings.get("viewsDir"));
         this.app.raw.set('view engine', 'vash');
         this.app.raw.engine("vash", cons.vash);
+        this.app.raw.set('mergeParams', true);
         this.app
             .use(GlobalAcceptMimesMiddleware) // optional
             .use(methodOverride())
@@ -70,11 +73,11 @@ export class Server {
             .use(bodyParser.urlencoded({
                 extended: true
             }))
-            .use(requestInterscept)
+            .use(requestIntercept)
 
         if (process.env.NODE_ENV === 'development') {
             // this.app.use(morgan('dev'));
-        }else{
+        } else {
             this.app.use(morgan('tiny'));
         }
     }

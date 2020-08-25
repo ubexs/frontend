@@ -1,8 +1,8 @@
 import base from '../base';
-import {Controller, Get, Header, HeaderParams, Render, Use, Res, Locals, PathParams, QueryParams} from '@tsed/common';
+import { Controller, Get, Header, HeaderParams, Render, Use, Res, Locals, PathParams, QueryParams } from '@tsed/common';
 import * as model from '../../models/index';
 import * as middleware from '../../middleware/v1';
-import {Summary} from "@tsed/swagger";
+import { Summary } from "@tsed/swagger";
 
 @Controller('/forum')
 export class ForumsController extends base {
@@ -68,6 +68,7 @@ export class ForumsController extends base {
         @Locals('userInfo') userData: model.UserSession,
         @QueryParams('subid', Number) numericId: number
     ) {
+        numericId = base.ValidateId(numericId);
         let rank = userData.staff;
         if (!numericId) {
             throw new this.BadRequest('InvalidSubCategoryId');
@@ -77,8 +78,9 @@ export class ForumsController extends base {
             throw new this.Conflict('InvalidPermissions')
         }
         let allForumSubCategories = await this.Forums.getSubCategories(rank);
-        let ViewData = new model.WWWTemplate({'title': 'Create a thread'});
+        let ViewData = new model.WWWTemplate<any>({ 'title': 'Create a thread' });
         ViewData.title = "Create a Thread";
+        ViewData.page = {};
         ViewData.page.subCategoryId = forumSubCategory.subCategoryId;
         ViewData.page.subCategoryName = forumSubCategory.title;
         ViewData.page.subCategories = allForumSubCategories;
@@ -93,6 +95,7 @@ export class ForumsController extends base {
         @QueryParams('threadId', Number) numericId: number,
         @QueryParams('page', Number) page?: number,
     ) {
+        numericId = base.ValidateId(numericId);
         let rank = userData.staff;
         let threadInfo;
         try {
@@ -104,7 +107,8 @@ export class ForumsController extends base {
         if (forumSubCategory.permissions.read > rank) {
             throw new this.Conflict('InvalidPermissions');
         }
-        let ViewData = new model.WWWTemplate({title: "Reply to " + '"' + forumSubCategory.title + '"'})
+        let ViewData = new model.WWWTemplate<any>({ title: "Reply to " + '"' + forumSubCategory.title + '"' })
+        ViewData.page = {};
         ViewData.page.subCategoryId = forumSubCategory.subCategoryId;
         ViewData.page.subCategoryName = forumSubCategory.title;
         ViewData.page.page = page;
@@ -122,6 +126,7 @@ export class ForumsController extends base {
         @PathParams('id', Number) numericId: number,
         @QueryParams('page', Number) page?: number,
     ) {
+        numericId = base.ValidateId(numericId);
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -129,15 +134,16 @@ export class ForumsController extends base {
         if (!numericId) {
             throw new this.BadRequest('InvalidThreadId');
         }
-        let ViewData = new model.WWWTemplate({title: 'Thread'});
+        let ViewData = new model.WWWTemplate<any>({ title: 'Thread' });
         let threadInfo;
+        ViewData.page = {};
         try {
             threadInfo = await this.Forums.getThreadById(numericId);
             if (threadInfo.threadDeleted === model.Forums.threadDeleted.true) {
-                threadInfo.title = '[ Deleted '+threadInfo.threadId+' ]';
+                threadInfo.title = '[ Deleted ' + threadInfo.threadId + ' ]';
                 ViewData.page.deleted = true;
             }
-        }catch(e) {
+        } catch (e) {
             throw new this.BadRequest('InvalidThreadId');
         }
         let forumSubCategory: model.Forums.SubCategories;
@@ -146,13 +152,13 @@ export class ForumsController extends base {
             if (forumSubCategory.permissions.read > rank) {
                 throw false;
             }
-        }catch(e) {
+        } catch (e) {
             throw new this.BadRequest('InvalidThreadId');
         }
         let forumCategory: model.Forums.Categories;
         try {
             forumCategory = await this.Forums.getCategoryById(forumSubCategory.categoryId);
-        }catch(e) {
+        } catch (e) {
             throw new this.BadRequest('InvalidThreadId');
         }
         if (typeof page !== 'number' || page <= 0) {
@@ -182,7 +188,7 @@ export class ForumsController extends base {
         @PathParams('subCategoryId', Number) numericId: number,
         @QueryParams('page', Number) page?: number,
     ) {
-
+        numericId = base.ValidateId(numericId);
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -196,26 +202,27 @@ export class ForumsController extends base {
             if (forumSubCategory.permissions.read > rank) {
                 throw false;
             }
-        }catch(e) {
+        } catch (e) {
             throw new this.BadRequest('InvalidSubCategoryId');
         }
         // grab category info
         let forumCategory;
         try {
             forumCategory = await this.Forums.getCategoryById(forumSubCategory.categoryId);
-        }catch(e) {
+        } catch (e) {
             throw new this.BadRequest('InvalidCategoryId');
         }
         let allForumSubCategories: model.Forums.SubCategories[];
         try {
             allForumSubCategories = await this.Forums.getSubCategories(rank);
-        }catch(e) {
+        } catch (e) {
             throw new this.BadRequest('InvalidSubCategoryId');
         }
         if (typeof page !== 'number' || page <= 0) {
             page = 1;
         }
-        let ViewData = new model.WWWTemplate({title: forumSubCategory.title});
+        let ViewData = new model.WWWTemplate<any>({ title: forumSubCategory.title });
+        ViewData.page = {};
         ViewData.page.subCategoryId = forumSubCategory.subCategoryId;
         ViewData.page.subCategoryName = forumSubCategory.title;
         ViewData.page.page = page;

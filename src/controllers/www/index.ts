@@ -1,8 +1,9 @@
 import base from '../base';
-import {Controller, Get, Locals, QueryParams, Redirect, Render, Req, Required, Res, Use} from '@tsed/common';
+import { Controller, Get, Locals, QueryParams, Redirect, Render, Req, Required, Res, Use } from '@tsed/common';
 import * as model from '../../models/index';
 import * as middleware from '../../middleware/v1';
-import {Summary} from "@tsed/swagger";
+import { Summary } from "@tsed/swagger";
+import { use } from 'chai';
 
 @Controller('/')
 export class GenericWWWController extends base {
@@ -14,13 +15,33 @@ export class GenericWWWController extends base {
         return 'BWS OK';
     }
 
+    @Get('/api/group/GetUserRoleInGroupAsync')
+    @Summary('GetUserRoleInGroupAsync')
+    public async getUserRoleInGroup(
+        @Required()
+        @QueryParams('userId') userId: number,
+        @Required()
+        @QueryParams('groupId') groupId: number,
+    ) {
+        console.log('user', userId, 'group', groupId);
+        userId = base.ValidateId(userId);
+        groupId = base.ValidateId(groupId);
+        const info = await this.Groups.getUserRole(groupId, userId);
+        return info.name;
+    }
+
     @Get('/discord')
     @Redirect(302, 'https://discord.gg/CAjZfcZ')
-    public redirectToDiscord() {}
+    public redirectToDiscord() { }
 
     @Get('/play')
     @Redirect(302, '/game/play')
-    public redirectOldPlayPage() {}
+    public redirectOldPlayPage() { }
+
+    // Ban Redirect
+    @Get('/membership/notapproved.aspx')
+    @Redirect(302, '/')
+    public redirectIfNoLongerBanned() { }
 
     @Get("/terms")
     @Render('terms')
@@ -38,9 +59,8 @@ export class GenericWWWController extends base {
         // Grab Catalog Items
         let count = 1500;
         try {
-            // disabled for now. gotta wait for the api to make this available...
-            // count = await this.Catalog.countAllItemsForSale();
-        }catch(e) {
+            count = await this.Catalog.countAllItemsForSale();
+        } catch (e) {
             // lol
         }
         return new model.WWWTemplate({
@@ -68,28 +88,17 @@ export class GenericWWWController extends base {
     @Get('/dashboard')
     @Render('dashboard')
     @Use(middleware.auth.YesAuth)
-    public dashboard(
-        @Res() res: Res,
-        @Locals('userInfo') info: model.UserSession
-    ) {
+    public dashboard() {
         return new model.WWWTemplate({
             title: 'Dashboard',
         })
     }
 
-    // Ban Redirect
-    @Get('/membership/notapproved.aspx')
-    @Redirect('/')
-    public redirectIfNoLongerBanned() { }
-
     @Get('/avatar')
     @Summary('Customize avatar page')
     @Render('avatar')
     @Use(middleware.auth.YesAuth)
-    public avatar(
-        @Res() res: Res,
-        @Locals('userInfo') info: model.UserSession
-    ) {
+    public avatar() {
         return new model.WWWTemplate({
             title: 'Avatar',
         })
@@ -99,10 +108,7 @@ export class GenericWWWController extends base {
     @Summary('User trades page/overview')
     @Render('trades')
     @Use(middleware.auth.YesAuth)
-    public trades(
-        @Res() res: Res,
-        @Locals('userInfo') info: model.UserSession
-    ) {
+    public trades() {
         return new model.WWWTemplate({
             title: 'Trades',
         })
@@ -112,10 +118,7 @@ export class GenericWWWController extends base {
     @Summary('User transactions page/overview')
     @Render('transactions')
     @Use(middleware.auth.YesAuth)
-    public transactions(
-        @Res() res: Res,
-        @Locals('userInfo') info: model.UserSession
-    ) {
+    public transactions() {
         return new model.WWWTemplate({
             title: 'Transactions',
         })
@@ -125,10 +128,7 @@ export class GenericWWWController extends base {
     @Summary('User ads manage page/overview')
     @Render('ad/dashboard')
     @Use(middleware.auth.YesAuth)
-    public ads(
-        @Res() res: Res,
-        @Locals('userInfo') info: model.UserSession
-    ) {
+    public ads() {
         return new model.WWWTemplate({
             title: 'Ads',
         })
@@ -138,10 +138,7 @@ export class GenericWWWController extends base {
     @Summary('User account settings')
     @Render('settings')
     @Use(middleware.auth.YesAuth)
-    public settings(
-        @Res() res: Res,
-        @Locals('userInfo') info: model.UserSession
-    ) {
+    public settings() {
         return new model.WWWTemplate({
             title: 'Settings',
         })
@@ -151,10 +148,7 @@ export class GenericWWWController extends base {
     @Summary('User account moderation history/overview')
     @Render('moderation')
     @Use(middleware.auth.YesAuth)
-    public moderation(
-        @Res() res: Res,
-        @Locals('userInfo') info: model.UserSession
-    ) {
+    public moderation() {
         return new model.WWWTemplate({
             title: 'Moderation History',
         })
@@ -176,27 +170,30 @@ export class GenericWWWController extends base {
     public async signup(
         @Res() res: Res,
         @Req() req: Req,
-        @QueryParams('r', Number) referralId?: number,
     ) {
-        // confirm referral is valid
         let referral = undefined;
-        if (referralId) {
-            referral = await this.UserReferral.getInfoById(referralId);
+        if (typeof req.query['r'] === 'string') {
+            let referralId = parseInt(req.query['r'], 10);
+            console.log('ref is', referralId, typeof referralId);
+            // confirm referral is valid
+            if (referralId && Number.isInteger(referralId)) {
+                referral = await this.UserReferral.getInfoById(referralId);
 
-            let referer = req.headers['referer'];
-            if (referer) {
-                const badReferers = [
-                    'brick-hill.com',
-                    'finobe.com',
-                ];
-                for (const bad of badReferers) {
-                    if (referer.indexOf(bad)) {
-                        res.redirect('https://www.google.com');
-                        return;
+                let referer = req.headers['referer'];
+                if (referer) {
+                    const badReferers = [
+                        'brick-hill.com',
+                        'finobe.com',
+                    ];
+                    for (const bad of badReferers) {
+                        if (referer.indexOf(bad) !== -1) {
+                            res.redirect('https://www.google.com');
+                            return;
+                        }
                     }
                 }
-            }
 
+            }
         }
         // return
         return new model.WWWTemplate({
@@ -214,7 +211,7 @@ export class GenericWWWController extends base {
     public emailVerification(
         @QueryParams('code', String) code: string
     ) {
-        return new model.WWWTemplate({'title': 'Email Verification', page: {'code': code}});
+        return new model.WWWTemplate({ 'title': 'Email Verification', page: { 'code': code } });
     }
 
     @Get('/request/password-reset')
@@ -238,7 +235,7 @@ export class GenericWWWController extends base {
         @Required()
         @QueryParams('userId', Number) userId: number,
     ) {
-        return new model.WWWTemplate({
+        return new model.WWWTemplate<{ code: string; userId: number; }>({
             title: 'Reset Password',
             page: {
                 code,
@@ -262,7 +259,6 @@ export class GenericWWWController extends base {
     @Use(middleware.auth.YesAuth)
     @Render('authenticate-to-service')
     public V1AuthenticationFlow(
-        @Locals('userInfo') userInfo: model.UserSession,
         @QueryParams('returnUrl', String) returnUrl: string,
     ) {
         // Try to parse the URL, removing any weird characters
@@ -272,9 +268,8 @@ export class GenericWWWController extends base {
         if (positionOfFirstSlash !== -1) {
             parsedUrl = parsedUrl.slice(0, positionOfFirstSlash);
         }
-        return new model.WWWTemplate({
-            title: "Sign Into "+parsedUrl,
-            userInfo: userInfo,
+        return new model.WWWTemplate<{ url: string; parsedUrl: string }>({
+            title: "Sign Into " + parsedUrl,
             page: {
                 url: returnUrl,
                 parsedUrl: parsedUrl,

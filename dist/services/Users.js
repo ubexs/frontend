@@ -16,9 +16,21 @@ class Users extends base_1.default {
         const info = await this.v1.get('/user/' + userId + '/info');
         return info.data;
     }
+    async getBanData() {
+        const info = await this.v1.get('/auth/ban');
+        return info.data;
+    }
     async getAuthenticatedUserInfo() {
         const info = await this.v1.get('/auth/current-user');
         return info.data;
+    }
+    async getPastUsernames(userId) {
+        const results = await this.v1.get('/user/' + userId + '/past-usernames');
+        let pastNames = [];
+        for (const name of results.data) {
+            pastNames.push(name.username);
+        }
+        return pastNames;
     }
 }
 exports.default = Users;

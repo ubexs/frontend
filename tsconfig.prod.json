@@ -1,8 +1,8 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-      "sourceMap": false,
-      "types": []
+        "sourceMap": false,
+        "types": []
     },
     "exclude": [
         "node_modules",
@@ -10,5 +10,4 @@
         "src/**/*.mock.ts",
         "src/public/"
     ]
-  }
-  
+}

@@ -403,6 +403,12 @@ pre > code {
     background: none;
 }
 
+@media (max-width: 991px) {
+    .navbar-nav > .nav-item > .nav-link {
+        padding-top:0;
+    }
+}
+
 @media only screen and (min-width: 1680px) {
     div.staff-sidebar {
         display: block!important;
@@ -575,11 +581,12 @@ div.add-reaction:hover,div.add-comment:hover,div.remove-reaction:hover {
     transition: all 0.15s;
 
     border-radius: 0.25rem;
-    background: rgba(0,0,0,0.05);
+    background: rgba(0,0,0,0.1);
 }
 p.add-comment {
     cursor: pointer;
 }
+
 
 
 img.zoom-on-hover  {

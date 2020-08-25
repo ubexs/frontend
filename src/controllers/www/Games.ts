@@ -1,5 +1,5 @@
-import {Controller, Get, Locals, PathParams, QueryParams, Redirect, Render, Required, Res, Use} from "@tsed/common";
-import {Summary} from "@tsed/swagger"; // import swagger Ts.ED module
+import { Controller, Get, Locals, PathParams, QueryParams, Redirect, Render, Required, Res, Use } from "@tsed/common";
+import { Summary } from "@tsed/swagger"; // import swagger Ts.ED module
 import * as model from '../../models/index';
 import base from '../base'
 // Models
@@ -20,19 +20,16 @@ export class WWWGameController extends base {
         @PathParams('gameId', Number) gameId: number,
         @Res() res: Res,
     ) {
+        gameId = base.ValidateId(gameId);
         // todo: confirm with game team that this URL is valid
-        res.redirect(config.baseUrl.play+'/'+gameId+'/edit');
+        res.redirect(config.baseUrl.play + '/' + gameId + '/edit');
     }
 
     @Render('game/create')
     @Get('/create')
     @Use(YesAuth)
-    public async gameCreate(
-        @Locals('userInfo') userData: model.UserSession,
-        @PathParams('subCategoryId', Number) numericId: number,
-        @QueryParams('page', Number) page?: number,
-    ) {
-        let ViewData = new model.WWWTemplate({title: 'Create a Game'});
+    public async gameCreate() {
+        let ViewData = new model.WWWTemplate({ title: 'Create a Game' });
         ViewData.page = {};
         return ViewData;
     }
@@ -43,8 +40,9 @@ export class WWWGameController extends base {
         @Res() res: Res,
         @PathParams('gameId', Number) gameId: number,
     ) {
+        gameId = base.ValidateId(gameId)
         // todo: confirm with game team that this URL is valid
-        res.redirect(config.baseUrl.play+'/'+gameId+'/play');
+        res.redirect(config.baseUrl.play + '/' + gameId + '/play');
     }
 
     @Get('/play')
@@ -57,7 +55,7 @@ export class WWWGameController extends base {
         }
         let title = 'Free 3D Games';
         if (genre !== 1) {
-            title = 'Free 3D '+model.Games.GameGenres[genre]+ ' Games';
+            title = 'Free 3D ' + model.Games.GameGenres[genre] + ' Games';
         }
         return new model.WWWTemplate({
             title: title,
@@ -74,16 +72,17 @@ export class WWWGameController extends base {
     public async gamePage(
         @PathParams('gameId', Number) gameId: number,
     ) {
+        gameId = base.ValidateId(gameId);
         let gameInfo: model.Games.GameInfo;
         let gameThumb: model.Games.GameThumbnail;
         try {
             gameInfo = await this.Games.getInfo(gameId);
             gameThumb = await this.Games.getGameThumbnail(gameId);
-        }catch(e) {
+        } catch (e) {
             // Invalid ID
             throw new this.BadRequest('InvalidGameId');
         }
-        let ViewData = new model.WWWTemplate({'title': gameInfo.gameName});
+        let ViewData = new model.WWWTemplate<any>({ 'title': gameInfo.gameName });
         ViewData.page = {};
         ViewData.page.gameInfo = gameInfo;
         if (gameInfo.creatorType === 0) {
@@ -91,11 +90,11 @@ export class WWWGameController extends base {
             try {
                 const creatorName = await this.Users.getInfo(gameInfo.creatorId);
                 ViewData.page.creatorName = creatorName.username;
-            }catch(err) {
-                ViewData.page.creatorName = '[Deleted'+gameInfo.creatorId+']';
+            } catch (err) {
+                ViewData.page.creatorName = '[Deleted' + gameInfo.creatorId + ']';
             }
             ViewData.page.thumbnailId = gameInfo.creatorId;
-        }else{
+        } else {
             // By Group
             const creatorName = await this.Groups.getInfo(gameInfo.creatorId);
             ViewData.page.creatorName = creatorName.groupName;
@@ -130,8 +129,8 @@ export class WWWGameController extends base {
         }
         let genreToRedirectTo = model.Games.GameGenres[gameGenre as any];
         if (genreToRedirectTo) {
-            return res.redirect('/game/play?genre='+genreToRedirectTo+'&sortBy=1');
-        }else{
+            return res.redirect('/game/play?genre=' + genreToRedirectTo + '&sortBy=1');
+        } else {
             return res.redirect('/game/play');
         }
     }
@@ -141,7 +140,7 @@ export class WWWGameController extends base {
     public browserCompatibilityCheck(
         @Res() res: Res,
     ) {
-        res.set('x-frame-options','sameorigin');
+        res.set('x-frame-options', 'sameorigin');
         res.send(`<!DOCTYPE html><html><head><title>Checking your browser...</title></head><body><script nonce="${res.locals.nonce}">try{alert("Sorry, your browser is not supported.");window.top.location.href = "/support/browser-not-compatible";}catch(e){}</script></body></html>`);
         return;
     }

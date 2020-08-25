@@ -5,7 +5,7 @@ import * as model from '../../models/index';
 @Middleware()
 export class YesAuth extends base {
     public use(
-        @Locals('userInfo') info?: model.UserSession,
+        @Locals('userInfo') info?: model.UserSession, // Inbox me
     ) {
         if (!info) {
             throw new this.Unauthorized('LoginRequired');
@@ -17,7 +17,7 @@ export class YesAuth extends base {
 @Middleware()
 export class NoAuth extends base {
     public use(
-        @Locals('userInfo') info?: model.UserSession,
+        @Locals('userInfo') info?: model.UserSession, // Inbox me
     ) {
         if (info) {
             throw new this.Unauthorized('LogoutRequired');

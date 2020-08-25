@@ -19,19 +19,12 @@ import {
     UseBeforeEach,
     HeaderParams
 } from "@tsed/common";
-import { Description, Summary, Hidden } from "@tsed/swagger"; // import swagger Ts.ED module
-import { Exception, NotFound, BadRequest } from "ts-httpexceptions";
-import * as Express from 'express';
+
 import * as model from '../../models';
 import base from '../base'
 import moment = require("moment");
 import * as middleware from '../../middleware/v1';
-import xss = require('xss');
-import Config from '../../helpers/config';
-// Models
 
-
-@Hidden()
 @Controller("/support")
 export class WWWSupportController extends base {
     constructor() {
@@ -40,7 +33,7 @@ export class WWWSupportController extends base {
 
     @Get("/")
     @Render('support')
-    public async SupportPage() {
+    public SupportPage() {
         return new model.WWWTemplate({
             title: "Support",
         });
@@ -54,7 +47,8 @@ export class WWWSupportController extends base {
         @Locals('userInfo') userInfo: model.UserSession,
         @PathParams('ticketId', Number) ticketId: number,
     ) {
-        const baseService = new base({
+        ticketId = base.ValidateId(ticketId);
+        const baseService = new this.base({
             cookie: cookies,
         });
         let info = await baseService.Support.getTicketById(ticketId);
@@ -82,7 +76,8 @@ export class WWWSupportController extends base {
         @Locals('userInfo') userInfo: model.UserSession,
         @PathParams('ticketId', Number) ticketId: number,
     ) {
-        const baseService = new base({
+        ticketId = base.ValidateId(ticketId);
+        const baseService = new this.base({
             cookie: cookies,
         });
         let info = await baseService.Support.getTicketById(ticketId);
@@ -101,7 +96,7 @@ export class WWWSupportController extends base {
 
     @Get("/refund-policy")
     @Render('refund_policy')
-    public async RefundPolicy() {
+    public RefundPolicy() {
         return new model.WWWTemplate({
             title: "Refund Policy",
         });
@@ -263,7 +258,7 @@ export class WWWSupportController extends base {
     public AdSystemSupport() {
         return new model.WWWTemplate({
             title: 'Ad System Help',
-            page : {
+            page: {
                 'article': `<div class="col-12" style="margin-bottom:1rem;">
                 <h1>Ad System Help</v>
             </div>

@@ -232,6 +232,7 @@
                 </div>
             </div>
         </div>
+        @*
         @if (model.env !== 'production' || model.isStaging) {
             <!-- debug info -->
             <div class="row">
@@ -242,6 +243,7 @@
                 </div>
             </div>
         }
+        *@
         <div class="row" style="display:none;margin:0;" id="systemWideStatsArea"></div>
         @if (model.bannerText) {
             <div class="row" style="margin:0;" id="bannerText">

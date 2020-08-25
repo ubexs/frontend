@@ -15,7 +15,8 @@ export class ReportAbuseController extends base {
     public reportUserStatus(
         @PathParams('userStatusId', Number) userStatusId: number,
     ) {
-        return new model.WWWTemplate({
+        userStatusId = base.ValidateId(userStatusId);
+        return new model.WWWTemplate<any>({
             title: 'Report Abuse',
             page: {
                 userStatusId: userStatusId,

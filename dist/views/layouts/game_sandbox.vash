@@ -44,6 +44,7 @@
         </style>
 </head>
 <body>
+    <div id="meta" data-api-base-url="@model.apiBaseUrl"></div>
     <script nonce="@model.nonce">
         function inIframe () {
             try {

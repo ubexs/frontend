@@ -23,6 +23,14 @@ export default class Users extends base {
     }
 
     /**
+     * Get ban data for the authenticated user, or 404
+     */
+    public async getBanData(): Promise<model.Users.ModerationAction> {
+        const info = await this.v1.get('/auth/ban');
+        return info.data;
+    }
+
+    /**
      * Get the authenticated user session info
      */
     public async getAuthenticatedUserInfo(): Promise<model.Users.AuthenticatedInfo> {

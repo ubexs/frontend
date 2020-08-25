@@ -1,8 +1,21 @@
 import base from '../base';
-import {Controller, Get, Header, HeaderParams, Render, Use, Res, Locals, PathParams} from '@tsed/common';
+import {
+    Controller,
+    Get,
+    Header,
+    HeaderParams,
+    Render,
+    Use,
+    Res,
+    Locals,
+    PathParams,
+    Required,
+    QueryParams
+} from '@tsed/common';
 import * as model from '../../models/index';
+import * as viewModel from '../../viewmodels';
 import * as middleware from '../../middleware/v1';
-import {Summary} from "@tsed/swagger";
+import { Summary } from "@tsed/swagger";
 
 @Controller('/users')
 export class UsersController extends base {
@@ -20,18 +33,13 @@ export class UsersController extends base {
     @Summary("Get the {userId}'s profile, or 404 if N/A")
     @Render('users/profile')
     public async profile(
-        @PathParams('userId', Number) userId: number
+        @Required()
+        @PathParams('userId') userId: number
     ) {
+        userId = base.ValidateId(userId);
         // Grab user info
         let userData = await this.Users.getInfo(userId);
-        let ViewData = new model.WWWTemplate({ title: userData.username+`'s Profile` });
-        // If deleted, throw 404
-        // we don't need this anymore since the above will throw 404 if the user is deleted anyway...
-        /*
-        if (userData.accountStatus === model.Users.accountStatus.deleted) {
-            throw new this.NotFound('InvalidUserId');
-        }
-         */
+        let ViewData = new model.WWWTemplate<viewModel.Users.Profile>({ title: userData.username + `'s Profile` });
         // Grab username changes (if any)
         let usernameChanges = await this.Users.getPastUsernames(userId);
         let filteredBlurb = '';
@@ -63,23 +71,22 @@ export class UsersController extends base {
         const forumData = await this.Forums.multiGetUserForumInfo([
             userData.userId,
         ]);
-        // Setup View Info
-        ViewData.page.userId = userData.userId;
-        ViewData.page.username = userData.username;
-        ViewData.page.blurb = filteredBlurb;
-        ViewData.page.forumPostCount = forumData[0].postCount;
-        ViewData.page.status = userData.status;
-        ViewData.page.tradingEnabled = userData.tradingEnabled;
-        ViewData.page.staff = userData.staff;
-        ViewData.page.usernameChanges = usernameChanges;
-        // If deleted, mark as deleted
-        if (userData.banned !== 0) {
-            ViewData.page.deleted = true;
+        // Setup ViewModel
+        ViewData.page = {
+            userId: userData.userId,
+            username: userData.username,
+            blurb: filteredBlurb,
+            forumPostCount: forumData[0].postCount,
+            status: userData.status,
+            tradingEnabled: userData.tradingEnabled,
+            staff: userData.staff,
+            usernameChanges,
+            deleted: userData.banned !== 0,
+            joinDate: this.moment(userData.joinDate),
+            lastOnline: this.moment(userData.lastOnline),
+            // Show user as online if active in last 3 minutes
+            online: this.moment(userData.lastOnline).isSameOrAfter(this.moment().subtract(3, 'minutes')),
         }
-        ViewData.page.joinDate = this.moment(userData.joinDate);
-        ViewData.page.lastOnline = this.moment(userData.lastOnline);
-        // Show user as online if active in last 3 minutes
-        ViewData.page.online = this.moment(userData.lastOnline).isSameOrAfter(this.moment().subtract(3, 'minutes'));
         return ViewData;
     }
 
@@ -89,9 +96,10 @@ export class UsersController extends base {
     public async inventory(
         @PathParams('userId', Number) userId: number
     ) {
+        userId = base.ValidateId(userId);
         // Grab user info
         let userData = await this.Users.getInfo(userId);
-        return new model.WWWTemplate({
+        return new model.WWWTemplate<model.Users.Info>({
             title: userData.username + "'s Inventory",
             page: userData,
         })
@@ -103,9 +111,10 @@ export class UsersController extends base {
     public async friends(
         @PathParams('userId', Number) userId: number
     ) {
+        userId = base.ValidateId(userId);
         // Grab user info
         let userData = await this.Users.getInfo(userId);
-        return new model.WWWTemplate({
+        return new model.WWWTemplate<model.Users.Info>({
             title: userData.username + "'s Friends",
             page: userData,
         })
@@ -117,9 +126,10 @@ export class UsersController extends base {
     public async groups(
         @PathParams('userId', Number) userId: number
     ) {
+        userId = base.ValidateId(userId);
         // Grab user info
         let userData = await this.Users.getInfo(userId);
-        return new model.WWWTemplate({
+        return new model.WWWTemplate<model.Users.Info>({
             title: userData.username + "'s Groups",
             page: userData,
         })
@@ -131,9 +141,10 @@ export class UsersController extends base {
     public async games(
         @PathParams('userId', Number) userId: number
     ) {
+        userId = base.ValidateId(userId);
         // Grab user info
         let userData = await this.Users.getInfo(userId);
-        return new model.WWWTemplate({
+        return new model.WWWTemplate<model.Users.Info>({
             title: userData.username + "'s Games",
             page: userData,
         })
@@ -145,13 +156,14 @@ export class UsersController extends base {
     public async trade(
         @PathParams('userId', Number) userId: number
     ) {
+        userId = base.ValidateId(userId);
         // Grab user info
         let userData = await this.Users.getInfo(userId);
         if (userData.tradingEnabled !== 1) {
             throw new this.Conflict('UserCannotBeTradedWith');
         }
-        return new model.WWWTemplate({
-            title: userData.username + "'s Games",
+        return new model.WWWTemplate<model.Users.Info>({
+            title: 'Trade with ' + userData.username,
             page: userData,
         })
     }

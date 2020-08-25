@@ -16,6 +16,14 @@ interface IWebsiteConfig {
     port?: number;
     env?: string;
     backendAuthorization: string;
+    recaptcha: {
+        v3: {
+            public: string;
+        };
+        v2: {
+            public: string;
+        };
+    };
 }
 if (typeof config.env === 'string') {
     config.env = config.env.toLowerCase();
@@ -32,3 +40,9 @@ strictEqual(typeof config.baseUrl.frontend, 'string');
 strictEqual(typeof config.baseUrl.backend, 'string');
 strictEqual(typeof config.baseUrl.play, 'string');
 strictEqual(typeof config.backendAuthorization, 'string');
+strictEqual(typeof config.recaptcha, 'object');
+strictEqual(typeof config.recaptcha.v2, 'object');
+strictEqual(typeof config.recaptcha.v3, 'object');
+strictEqual(typeof config.recaptcha.v2.public, 'string');
+strictEqual(typeof config.recaptcha.v3.public, 'string');
+

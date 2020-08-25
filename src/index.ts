@@ -7,6 +7,7 @@ async function bootstrap() {
         $log.debug("Start server...");
         const platform = await PlatformExpress.bootstrap(Server, {
             // extra settings
+            mergeParams: true
         });
 
         await platform.listen();
