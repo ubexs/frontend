@@ -131,4 +131,3 @@ exports.SearchResults = SearchResults;
 class LowestPriceCollectibleItems {
 }
 exports.LowestPriceCollectibleItems = LowestPriceCollectibleItems;
-//# sourceMappingURL=Catalog.js.map

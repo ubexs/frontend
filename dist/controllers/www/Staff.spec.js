@@ -108,4 +108,3 @@ describe('StaffController.modifyUserInventory()', () => {
         chai_1.expect(results.page.profileData.userId).to.equal(userId);
     });
 });
-//# sourceMappingURL=Staff.spec.js.map

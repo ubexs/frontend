@@ -27,7 +27,6 @@ let GroupsController = class GroupsController extends base_1.default {
         return new model.WWWTemplate({ 'title': 'Create a Group' });
     }
     async redirectToGroupPage(res, groupId) {
-        groupId = base_1.default.ValidateId(groupId);
         let groupData = await this.Groups.getInfo(groupId);
         let encodedName;
         if (groupData.groupStatus !== model.Groups.groupStatus.ok) {
@@ -39,7 +38,6 @@ let GroupsController = class GroupsController extends base_1.default {
         return res.redirect("/groups/" + groupId + "/" + encodedName);
     }
     async GroupPage(groupId, groupName) {
-        groupId = base_1.default.ValidateId(groupId);
         let groupData = await this.Groups.getInfo(groupId);
         let viewData = new model.WWWTemplate({ 'title': groupData.groupName || 'Locked Group' });
         if (groupData.groupStatus === model.Groups.groupStatus.locked) {
@@ -61,7 +59,6 @@ let GroupsController = class GroupsController extends base_1.default {
         return viewData;
     }
     async groupCatalogItemCreate(res, userInfo, groupId, groupName) {
-        groupId = base_1.default.ValidateId(groupId);
         let groupData = await this.Groups.getInfo(groupId);
         if (groupData.groupStatus === model.Groups.groupStatus.locked) {
             throw new this.NotFound('InvalidGroupId');
@@ -80,7 +77,6 @@ let GroupsController = class GroupsController extends base_1.default {
         return viewData;
     }
     async groupManage(userInfo, res, groupId, groupName) {
-        groupId = base_1.default.ValidateId(groupId);
         let groupData = await this.Groups.getInfo(groupId);
         if (groupData.groupStatus === model.Groups.groupStatus.locked) {
             throw new this.NotFound('InvalidGroupId');
@@ -169,4 +165,3 @@ GroupsController = __decorate([
     common_1.Controller('/groups')
 ], GroupsController);
 exports.GroupsController = GroupsController;
-//# sourceMappingURL=Groups.js.map

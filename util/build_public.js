@@ -1,4 +1,9 @@
-const fs = require('fs');
+const fs = require('fs-extra');
+try {
+    fs.copySync('./src/public', './dist/public');
+} catch (err) {
+
+}
 const babelrc = JSON.parse(fs.readFileSync('./.babelrc').toString());
 
 let bundleDir = './src/public/js/bundle';
@@ -16,7 +21,7 @@ for (const file of bundleFiles) {
     }
 }
 
-const {DynamicPool} = require("node-worker-threads-pool");
+const { DynamicPool } = require("node-worker-threads-pool");
 const pool = new DynamicPool(8);
 
 console.log('bundle these guys', filesToBundle);
@@ -44,7 +49,7 @@ const handleBundle = (workerData) => {
             .on('close', d => {
                 console.log(bundle, 'created. minifying it...');
 
-                const {code} = minify(fs.readFileSync(finalizedPath).toString(), {
+                const { code } = minify(fs.readFileSync(finalizedPath).toString(), {
                     booleans: true,
                     builtIns: true,
                     consecutiveAdds: true,

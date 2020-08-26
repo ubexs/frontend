@@ -10,4 +10,3 @@ exports.init = () => {
     Sentry.init({ dsn: 'https://dccc8567d5714c75a7b884ffd1d73843@sentry.io/2506252' });
     _isEnabled = true;
 };
-//# sourceMappingURL=sentry.js.map

@@ -117,4 +117,3 @@ NotFoundMiddleware = __decorate([
     common_1.Middleware()
 ], NotFoundMiddleware);
 exports.NotFoundMiddleware = NotFoundMiddleware;
-//# sourceMappingURL=ErrorHandle.js.map

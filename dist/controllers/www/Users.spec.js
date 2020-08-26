@@ -175,4 +175,3 @@ describe('UsersController().profile', () => {
         chai_1.expect(result.page.username).to.equal(username);
     });
 });
-//# sourceMappingURL=Users.spec.js.map

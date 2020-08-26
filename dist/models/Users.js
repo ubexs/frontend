@@ -113,4 +113,3 @@ var terminated;
     terminated[terminated["true"] = 1] = "true";
     terminated[terminated["false"] = 0] = "false";
 })(terminated = exports.terminated || (exports.terminated = {}));
-//# sourceMappingURL=Users.js.map

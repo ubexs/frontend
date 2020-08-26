@@ -61,7 +61,6 @@ let ForumsController = class ForumsController extends base_1.default {
         });
     }
     async forumThreadCreate(userData, numericId) {
-        numericId = base_1.default.ValidateId(numericId);
         let rank = userData.staff;
         if (!numericId) {
             throw new this.BadRequest('InvalidSubCategoryId');
@@ -80,7 +79,6 @@ let ForumsController = class ForumsController extends base_1.default {
         return ViewData;
     }
     async forumPostCreate(userData, numericId, page) {
-        numericId = base_1.default.ValidateId(numericId);
         let rank = userData.staff;
         let threadInfo;
         try {
@@ -103,7 +101,6 @@ let ForumsController = class ForumsController extends base_1.default {
         return ViewData;
     }
     async thread(res, userData, numericId, page) {
-        numericId = base_1.default.ValidateId(numericId);
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -156,7 +153,6 @@ let ForumsController = class ForumsController extends base_1.default {
         return ViewData;
     }
     async subCategory(res, userData, numericId, page) {
-        numericId = base_1.default.ValidateId(numericId);
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -265,4 +261,3 @@ ForumsController = __decorate([
     common_1.Controller('/forum')
 ], ForumsController);
 exports.ForumsController = ForumsController;
-//# sourceMappingURL=Forums.js.map

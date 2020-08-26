@@ -16,4 +16,3 @@ class UserReferral extends base_1.default {
     }
 }
 exports.default = UserReferral;
-//# sourceMappingURL=User-Referral.js.map

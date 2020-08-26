@@ -50,4 +50,3 @@ __decorate([
     __metadata("design:type", String)
 ], PostSnippet.prototype, "dateCreated", void 0);
 exports.PostSnippet = PostSnippet;
-//# sourceMappingURL=Forums.js.map

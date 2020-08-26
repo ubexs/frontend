@@ -31,4 +31,3 @@ var Permission;
     Permission[Permission["ManageForumCategories"] = 27] = "ManageForumCategories";
     Permission[Permission["ManageCurrencyProducts"] = 28] = "ManageCurrencyProducts";
 })(Permission = exports.Permission || (exports.Permission = {}));
-//# sourceMappingURL=Staff.js.map

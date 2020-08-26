@@ -26,4 +26,3 @@ assert_1.strictEqual(typeof config.recaptcha.v2, 'object');
 assert_1.strictEqual(typeof config.recaptcha.v3, 'object');
 assert_1.strictEqual(typeof config.recaptcha.v2.public, 'string');
 assert_1.strictEqual(typeof config.recaptcha.v3.public, 'string');
-//# sourceMappingURL=config.js.map

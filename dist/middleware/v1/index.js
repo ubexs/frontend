@@ -4,4 +4,3 @@ const auth = require("./Auth");
 exports.auth = auth;
 const staff = require("./Staff");
 exports.staff = staff;
-//# sourceMappingURL=index.js.map

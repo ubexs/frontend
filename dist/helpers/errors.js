@@ -11,4 +11,3 @@ class HTTPErrorsBase {
     }
 }
 exports.default = HTTPErrorsBase;
-//# sourceMappingURL=errors.js.map

@@ -38,4 +38,3 @@ CurrencyExchangeController = __decorate([
     __metadata("design:paramtypes", [])
 ], CurrencyExchangeController);
 exports.CurrencyExchangeController = CurrencyExchangeController;
-//# sourceMappingURL=Currency-Exchange.js.map

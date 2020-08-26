@@ -20,4 +20,3 @@ class Games extends base_1.default {
     }
 }
 exports.default = Games;
-//# sourceMappingURL=Games.js.map

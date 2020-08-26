@@ -20,4 +20,3 @@ class Groups extends base_1.default {
     }
 }
 exports.default = Groups;
-//# sourceMappingURL=Groups.js.map

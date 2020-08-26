@@ -20,7 +20,6 @@ export class WWWGameController extends base {
         @PathParams('gameId', Number) gameId: number,
         @Res() res: Res,
     ) {
-        gameId = base.ValidateId(gameId);
         // todo: confirm with game team that this URL is valid
         res.redirect(config.baseUrl.play + '/' + gameId + '/edit');
     }
@@ -40,7 +39,6 @@ export class WWWGameController extends base {
         @Res() res: Res,
         @PathParams('gameId', Number) gameId: number,
     ) {
-        gameId = base.ValidateId(gameId)
         // todo: confirm with game team that this URL is valid
         res.redirect(config.baseUrl.play + '/' + gameId + '/play');
     }
@@ -72,7 +70,6 @@ export class WWWGameController extends base {
     public async gamePage(
         @PathParams('gameId', Number) gameId: number,
     ) {
-        gameId = base.ValidateId(gameId);
         let gameInfo: model.Games.GameInfo;
         let gameThumb: model.Games.GameThumbnail;
         try {

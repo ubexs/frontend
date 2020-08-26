@@ -23,4 +23,3 @@ class ServiceBase extends errors_1.default {
     }
 }
 exports.default = ServiceBase;
-//# sourceMappingURL=base.js.map

@@ -74,4 +74,3 @@ DevApiProxy = __decorate([
     common_1.Controller('/api/v1/')
 ], DevApiProxy);
 exports.DevApiProxy = DevApiProxy;
-//# sourceMappingURL=dev-api-proxy.js.map

@@ -20,4 +20,3 @@ class Support extends base_1.default {
     }
 }
 exports.default = Support;
-//# sourceMappingURL=Support.js.map

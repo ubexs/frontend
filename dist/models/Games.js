@@ -142,4 +142,3 @@ __decorate([
     __metadata("design:type", Number)
 ], GameInfo.prototype, "genre", void 0);
 exports.GameInfo = GameInfo;
-//# sourceMappingURL=Games.js.map

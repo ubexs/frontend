@@ -69,4 +69,3 @@ class Forums extends base_1.default {
     }
 }
 exports.default = Forums;
-//# sourceMappingURL=Forums.js.map

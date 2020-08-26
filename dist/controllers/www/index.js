@@ -366,4 +366,3 @@ GenericWWWController = __decorate([
     common_1.Controller('/')
 ], GenericWWWController);
 exports.GenericWWWController = GenericWWWController;
-//# sourceMappingURL=index.js.map

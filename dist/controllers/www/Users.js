@@ -166,4 +166,3 @@ UsersController = __decorate([
     common_1.Controller('/users')
 ], UsersController);
 exports.UsersController = UsersController;
-//# sourceMappingURL=Users.js.map

@@ -21,4 +21,3 @@ class Catalog extends base_1.default {
     }
 }
 exports.default = Catalog;
-//# sourceMappingURL=Catalog.js.map

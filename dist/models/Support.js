@@ -13,4 +13,3 @@ var TicketStatus;
 class SupportTicketReply {
 }
 exports.SupportTicketReply = SupportTicketReply;
-//# sourceMappingURL=Support.js.map

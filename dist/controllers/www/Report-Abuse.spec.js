@@ -20,4 +20,3 @@ describe('ra.reportUserStatus()', () => {
         chai_1.expect(res.page.userStatusId).to.equal(userStatusId);
     });
 });
-//# sourceMappingURL=Report-Abuse.spec.js.map

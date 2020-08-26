@@ -11,4 +11,3 @@ exports.default = (version, configOptions = {}) => {
     configOptions.headers['server-authorization'] = config_1.default.backendAuthorization;
     return axios_1.default.create(configOptions);
 };
-//# sourceMappingURL=axios.js.map

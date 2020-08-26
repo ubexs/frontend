@@ -23,4 +23,3 @@ class Staff extends base_1.default {
     }
 }
 exports.default = Staff;
-//# sourceMappingURL=Staff.js.map

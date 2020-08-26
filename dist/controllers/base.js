@@ -45,4 +45,3 @@ class ControllerBase extends errors_1.default {
     }
 }
 exports.default = ControllerBase;
-//# sourceMappingURL=base.js.map

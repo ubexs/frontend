@@ -39,7 +39,6 @@ export class CatalogController extends base {
         @Locals('userInfo') userInfo: model.UserSession,
         @PathParams('catalogId', Number) catalogId: number
     ) {
-        catalogId = base.ValidateId(catalogId);
         let ViewData = new model.WWWTemplate<any>({ 'title': '' });
         let catalogData;
         let salesCount = 0;
@@ -93,7 +92,6 @@ export class CatalogController extends base {
         @Res() res: Res,
         @PathParams('catalogId') catalogId: any,
     ) {
-        catalogId = base.ValidateId(catalogId);
         let catalogData = await this.Catalog.getInfo(catalogId);
         const encodedName = model.urlEncode(catalogData.catalogName);
         return res.redirect("/catalog/" + catalogId + "/" + encodedName);
@@ -106,7 +104,6 @@ export class CatalogController extends base {
         @PathParams('catalogId') catalogId: number,
         @Req() req: Req,
     ) {
-        catalogId = base.ValidateId(catalogId);
         let catalogData = await this.Catalog.getInfo(catalogId);
         let _salesData = await this.Catalog.countSales(catalogId);
         let salesCount = _salesData.sales;

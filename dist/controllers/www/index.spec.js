@@ -223,4 +223,3 @@ describe('www.signup', () => {
         chai_1.expect(redirectCalls).to.equal(1);
     });
 });
-//# sourceMappingURL=index.spec.js.map

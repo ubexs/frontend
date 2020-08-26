@@ -5,4 +5,3 @@ var AdDisplayType;
     AdDisplayType[AdDisplayType["Leaderboard"] = 1] = "Leaderboard";
     AdDisplayType[AdDisplayType["Skyscraper"] = 2] = "Skyscraper";
 })(AdDisplayType = exports.AdDisplayType || (exports.AdDisplayType = {}));
-//# sourceMappingURL=Ads.js.map

@@ -68,7 +68,6 @@ export class ForumsController extends base {
         @Locals('userInfo') userData: model.UserSession,
         @QueryParams('subid', Number) numericId: number
     ) {
-        numericId = base.ValidateId(numericId);
         let rank = userData.staff;
         if (!numericId) {
             throw new this.BadRequest('InvalidSubCategoryId');
@@ -95,7 +94,6 @@ export class ForumsController extends base {
         @QueryParams('threadId', Number) numericId: number,
         @QueryParams('page', Number) page?: number,
     ) {
-        numericId = base.ValidateId(numericId);
         let rank = userData.staff;
         let threadInfo;
         try {
@@ -126,7 +124,6 @@ export class ForumsController extends base {
         @PathParams('id', Number) numericId: number,
         @QueryParams('page', Number) page?: number,
     ) {
-        numericId = base.ValidateId(numericId);
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -188,7 +185,6 @@ export class ForumsController extends base {
         @PathParams('subCategoryId', Number) numericId: number,
         @QueryParams('page', Number) page?: number,
     ) {
-        numericId = base.ValidateId(numericId);
         let rank = 0;
         if (userData) {
             rank = userData.staff;

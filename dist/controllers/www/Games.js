@@ -25,7 +25,6 @@ let WWWGameController = class WWWGameController extends base_1.default {
         super();
     }
     redirectEditPage(gameId, res) {
-        gameId = base_1.default.ValidateId(gameId);
         res.redirect(config_1.default.baseUrl.play + '/' + gameId + '/edit');
     }
     async gameCreate() {
@@ -34,7 +33,6 @@ let WWWGameController = class WWWGameController extends base_1.default {
         return ViewData;
     }
     redirectToNewPlay(res, gameId) {
-        gameId = base_1.default.ValidateId(gameId);
         res.redirect(config_1.default.baseUrl.play + '/' + gameId + '/play');
     }
     play(genre) {
@@ -55,7 +53,6 @@ let WWWGameController = class WWWGameController extends base_1.default {
         });
     }
     async gamePage(gameId) {
-        gameId = base_1.default.ValidateId(gameId);
         let gameInfo;
         let gameThumb;
         try {
@@ -181,4 +178,3 @@ WWWGameController = __decorate([
     __metadata("design:paramtypes", [])
 ], WWWGameController);
 exports.WWWGameController = WWWGameController;
-//# sourceMappingURL=Games.js.map

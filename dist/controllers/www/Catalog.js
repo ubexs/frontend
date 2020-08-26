@@ -32,7 +32,6 @@ let CatalogController = class CatalogController extends base_1.default {
         });
     }
     async catalogItemEdit(userInfo, catalogId) {
-        catalogId = base_1.default.ValidateId(catalogId);
         let ViewData = new model.WWWTemplate({ 'title': '' });
         let catalogData;
         let salesCount = 0;
@@ -79,13 +78,11 @@ let CatalogController = class CatalogController extends base_1.default {
         return ViewData;
     }
     async redirectToCatalogItem(res, catalogId) {
-        catalogId = base_1.default.ValidateId(catalogId);
         let catalogData = await this.Catalog.getInfo(catalogId);
         const encodedName = model.urlEncode(catalogData.catalogName);
         return res.redirect("/catalog/" + catalogId + "/" + encodedName);
     }
     async catalogItem(catalogId, req) {
-        catalogId = base_1.default.ValidateId(catalogId);
         let catalogData = await this.Catalog.getInfo(catalogId);
         let _salesData = await this.Catalog.countSales(catalogId);
         let salesCount = _salesData.sales;
@@ -168,4 +165,3 @@ CatalogController = __decorate([
     common_1.Controller('/catalog')
 ], CatalogController);
 exports.CatalogController = CatalogController;
-//# sourceMappingURL=Catalog.js.map

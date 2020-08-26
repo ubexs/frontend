@@ -24,7 +24,6 @@ let AdsWWWController = class AdsWWWController extends base_1.default {
         });
     }
     async createCatalogAd(userInfo, catalogId) {
-        catalogId = base_1.default.ValidateId(catalogId);
         let info = await this.Catalog.getInfo(catalogId);
         if (info.creatorType === model.Catalog.creatorType.User && info.creatorId !== userInfo.userId) {
             throw new this.BadRequest('InvalidCatalogId');
@@ -43,7 +42,6 @@ let AdsWWWController = class AdsWWWController extends base_1.default {
         });
     }
     async createGroupAd(userInfo, groupId) {
-        groupId = base_1.default.ValidateId(groupId);
         let info = await this.Groups.getInfo(groupId);
         if (info.groupStatus === model.Groups.groupStatus.locked || info.groupOwnerUserId !== userInfo.userId) {
             throw new this.BadRequest('InvalidGroupId');
@@ -56,7 +54,6 @@ let AdsWWWController = class AdsWWWController extends base_1.default {
         });
     }
     async createThreadAd(userInfo, threadId) {
-        threadId = base_1.default.ValidateId(threadId);
         let info = await this.Forums.getThreadById(threadId);
         if (info.userId !== userInfo.userId) {
             throw new this.BadRequest('InvalidThreadId');
@@ -114,4 +111,3 @@ AdsWWWController = __decorate([
     common_1.Controller('/ads')
 ], AdsWWWController);
 exports.AdsWWWController = AdsWWWController;
-//# sourceMappingURL=Ads.js.map

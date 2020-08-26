@@ -98,4 +98,3 @@ exports.urlEncode = (string) => {
     }
     return string;
 };
-//# sourceMappingURL=index.js.map

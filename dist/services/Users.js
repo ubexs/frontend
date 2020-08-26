@@ -34,4 +34,3 @@ class Users extends base_1.default {
     }
 }
 exports.default = Users;
-//# sourceMappingURL=Users.js.map

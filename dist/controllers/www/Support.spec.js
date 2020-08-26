@@ -176,4 +176,3 @@ describe('SupportController.AdSystemSupport()', () => {
         chai_1.expect(typeof res.page.article).to.equal('string');
     });
 });
-//# sourceMappingURL=Support.spec.js.map

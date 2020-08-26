@@ -30,7 +30,6 @@ export class GroupsController extends base {
         @Res() res: Res,
         @PathParams('groupId', Number) groupId: number
     ): Promise<void> {
-        groupId = base.ValidateId(groupId);
         let groupData = await this.Groups.getInfo(groupId);
         let encodedName: string;
         if (groupData.groupStatus !== model.Groups.groupStatus.ok) {
@@ -48,7 +47,6 @@ export class GroupsController extends base {
         @PathParams('groupId', Number) groupId: number,
         @PathParams('groupName', String) groupName: string,
     ) {
-        groupId = base.ValidateId(groupId);
         let groupData = await this.Groups.getInfo(groupId);
         let viewData = new model.WWWTemplate<any>({ 'title': groupData.groupName || 'Locked Group' });
         if (groupData.groupStatus === model.Groups.groupStatus.locked) {
@@ -82,7 +80,6 @@ export class GroupsController extends base {
         @PathParams('groupId', Number) groupId: number,
         @PathParams('groupName', String) groupName: string
     ) {
-        groupId = base.ValidateId(groupId);
         let groupData = await this.Groups.getInfo(groupId);
         // If locked (aka banned), redirect to 404
         if (groupData.groupStatus === model.Groups.groupStatus.locked) {
@@ -113,7 +110,6 @@ export class GroupsController extends base {
         @PathParams('groupId', Number) groupId: number,
         @PathParams('groupName', String) groupName: string
     ) {
-        groupId = base.ValidateId(groupId);
         let groupData = await this.Groups.getInfo(groupId);
         // If locked (aka banned), redirect to 404
         if (groupData.groupStatus === model.Groups.groupStatus.locked) {
