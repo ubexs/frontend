@@ -1,6 +1,8 @@
 const fs = require('fs-extra');
 try {
     fs.copySync('./src/public', './dist/public');
+    fs.copySync('./src/views', './dist/views');
+
 } catch (err) {
 
 }

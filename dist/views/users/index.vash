@@ -1,0 +1,48 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Search Users</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="searchForUserInput" placeholder="Search Users">
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3 text-right">
+                    <form>
+                        <div class="form-group">
+                            <select class="form-control" id="newSortOrder">
+                                <option value="1">Creation Date (Oldest to Newest)</option>
+                                <option value="2">Creation Date (Newest to Oldest)</option>
+                                <option value="3">Last Online</option>
+                            </select>
+                        </div>
+                    </form>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="form-group">
+                    <button type="button" class="btn btn-success" style="width: 100%;" id="searchForUserClick">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-10">
+                <div class="row" id="userSearchResultsDiv">
+
+                </div>
+            </div>
+            <div class="col-2 skyscraper-ads d-none d-lg-block"></div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-6 offset-sm-3" style="margin-bottom:1rem;margin-top: 1rem;">
+                <button type="button" class="btn btn-small btn-success loadMorePlayer" style="margin:0 auto;display: none;width:100%;">Load More Players</button>
+            </div>
+        </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/users/index.js?v=@model.v"></script>
+  })
+})

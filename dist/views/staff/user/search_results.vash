@@ -1,0 +1,38 @@
+@html.extend('layouts/staff', function(model) {
+  @html.block('content', function(model) {
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Search Results</h1>
+                </div>
+            </div>
+            @if (model.page.results.length === 0) {
+                <div class="row">
+                    <div class="col-12">
+                        <p>Your search query for @model.page.column "@model.page.query" returned 0 results.</p>
+                    </div>
+                </div>
+            }else{
+                @for (const user of model.page.results) {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                            <div class="card-body">
+                            <p style="font-weight:600;">@user.username</p>
+                            <a href="/staff/user/profile?userId=@user.userId">
+                                <p>Click to view mod profile</p>
+                            </a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="row">
+
+            </div>
+
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/staff/user/search.js?v=@model.v"></script>
+  })
+})

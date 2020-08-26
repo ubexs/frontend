@@ -1,0 +1,16 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+        <div class="row" style="margin-bottom:1rem;">
+            <div class="col-sm-12">
+                <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Staff</h1>
+                <p>These are the website's administrators. If someone ever claims to work for us, but isn't on this list, then they are lying to you.</p>
+            </div>
+        </div>
+        <div class="row" id="userSearchResultsDiv">
+
+        </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/staff_users.js?v=@model.v"></script>
+  })
+})

@@ -1,0 +1,80 @@
+@html.extend('layouts/banned', function(model) {
+    @html.block('content', function(model) {
+        @if (typeof model.userInfo === 'undefined') {
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card" style="margin-top:1rem;">
+                        <div class="card-body">
+                            <div class="row" style="margin-bottom:1rem;">
+                                <div class="col-sm-12">
+                                    <h1 class="card-title">Contact Support</h1>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <p>To contact support, please email us at support@@blockshub.net
+                                        <br>
+                                        If your question is regarding a specific account, please login and visit this page so you can submit a ticket. We only allow signed in users to create tickets for privacy reasons.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }else{
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card" style="margin-top:1rem;">
+                        <div class="card-body">
+                            <div class="row" style="margin-bottom:1rem;">
+                                <div class="col-sm-12">
+                                    <h1 class="card-title">Contact Support</h1>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <textarea class="form-control" id="title" rows="2" placeholder="Short title regarding why you are contacting support" maxlength="255"></textarea>
+                                    </div>
+                                </div>  
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-control" id="body" rows="6" placeholder="Describe the reason you wish to contact support here. Include any relevent information, such as error messages or where the issue is occurring." maxlength="4096"></textarea>
+                                    </div>
+                                </div>  
+                                <div class="col-12">
+                                    @if (model.theme === 1) {
+                                        <div data-theme="dark" class="g-recaptcha" id="rcaptcha" data-sitekey="@model.captchakey"></div>
+                                    }else{
+                                        <div class="g-recaptcha" id="rcaptcha" data-sitekey="@model.captchakey"></div>
+                                    }
+                                </div>
+                                <div class="col-12" style="margin-top:1rem;">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-success" style="width: 100%;" id="createReply">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:1rem;">
+                                <div class="col-sm-12">
+                                    <h1 class="card-title">Existing Tickets</h1>
+                                </div>
+                                <div class="col-12" id="existing-tickets" style="margin-top:1rem;">
+                                    <p>Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/support.js?v=@model.v"></script>
+    })
+})

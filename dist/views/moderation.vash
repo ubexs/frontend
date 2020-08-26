@@ -1,0 +1,22 @@
+@html.extend('layouts/default', function(model) {
+    @html.block('content', function(model) {
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Your Moderation History</h1>
+                <p>View warnings, bans, and terminations that have been applied to your account.</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top:1rem;">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" id="moderation-history">
+                        <div class="spinner-border" role="status" style="margin:0 auto;display:block;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/moderation.js?v=@model.v"></script>
+    })
+})

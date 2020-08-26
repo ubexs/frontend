@@ -1,0 +1,30 @@
+@html.extend('layouts/default', function(model) {
+  @html.block('content', function(model) {
+    <div class="row justify-content-center" style="padding:1rem 0 1rem 0">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">Terms of Service</h1>
+                    <p>By using our website, you agree to the following Terms and Conditions:</p>
+                    <ul>
+                        <li>You must be at least 13 Years of Age to have an account on our website</li>
+                        <li>We use cookies for analyitical and authentication purposes. If you are not comfortable with this, leave this website</li>
+                        <li>When uploading content to BlocksHub, you give us the right to use this content in any way we want. Including, but not limited to, adverising & monetary purposes</li>
+                        <li>It is your responsibility to keep your account secure. In the event that it is compromised, it is unlikely we will be able to help you retrieve lost digital items, such as in-game hats or currency</li>
+                        <li>Currencies and in-game assets (Including Hats, Shirts, Gears, Clothing, and any other asset categories) have no equivilent real-world value. Damages and losses cannot occur from events such as account banning, account termination, account compromises, and other potential events.</li>
+                        <li>Exchanging virtual items/currency for services or money outside of BlocksHub will result in account termination</li>
+                        <li>Willingly uploading content that is not appropriate for all ages, copyrighted, or otherwise not allowed on our website will result in moderation action taken on your account. This can include a warning, a ban, or account termination</li>
+                        <li>All purchases are final and will not be refunded. Read our <a href="/support/refund-policy">refund policy</a> for more info</li>
+                        <li>To comply with GDRP data deletion laws, you are free to ask us to delete your account. It must be a written request provided via our <a href="/support">support page</a>. Your request will be honored within 72 hours. We will also need to verify you are the true owner of your account, and if unable to do so, we will be unable to assist you</li>
+                        <li>We reserve the right to terminate your account at any time, for any reason</li>
+                        <li>You are not allowed to modify, distribute, or take advantage of any code distributed by BlocksHub</li>
+                        <li>We reserve the right to modify these terms at any time without notice</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  })
+  @html.block('js', function(model) {
+  })
+})

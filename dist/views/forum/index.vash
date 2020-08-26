@@ -1,0 +1,157 @@
+@html.extend('layouts/default', function(model) {
+    @html.block('content', function(model) {
+        <div class="row" style="padding:1rem 0 1rem 0">
+            <div class="col-6">
+                <h1>Forums</h1>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-8 col-md-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="searchForForumInput" placeholder="Search Forum" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" style="width: 100%;" id="searchForumPostClick">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-8">
+            @for (const cat of model.page.cats) {
+                if (cat.subCategories.length === 0) {
+                    continue;
+                }
+                <div class="row forumcategories" style="margin-top:1rem;">
+                    <div class="col-12">
+                        <div class="card bg-success" style="color:white;border-radius:0;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 style="margin-bottom:0;font-size:1rem;">@cat.title</h5>
+                                    </div>
+                                    <div class="col-2 d-none d-md-block text-center">
+                                        <h5 style="margin-bottom:0;font-size:1rem;">Threads</h5>
+                                    </div>
+                                    <div class="col-2 d-none d-lg-block text-center">
+                                        <h5 style="margin-bottom:0;font-size:1rem;">Posts</h5>
+                                    </div>
+                                    <div class="col-6 col-md-4 col-lg-2 text-center">
+                                        <h5 style="margin-bottom:0;font-size:1rem;">Last Post</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @for (const sub of cat.subCategories) {
+                        <div class="col-12 forumSubCategory" data-id="@sub.subCategoryId">
+                            <div class="card" style="border-radius:0;border:none;box-shadow:none;border-bottom: 1px solid rgba(0,0,0,.125);">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="/forum/@sub.subCategoryId?page=1" class="normal">
+                                                <h5 style="margin-bottom:0;font-size:1.05rem;">@sub.title</h5>
+                                                <p style="    
+                                                margin-bottom: 0;
+                                                font-size: 0.75rem;
+                                                line-height: normal;
+                                                height: 1.95rem;
+                                                text-overflow: ellipsis;
+                                                max-height: 1.85rem;
+                                                overflow: hidden;
+                                                ">@sub.description</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-2 d-none d-md-block vertical-align-text text-center">
+                                            <h6 style="margin-bottom:0;margin-top:0.75rem;font-size:0.95rem;">
+                                                @sub.totalThreads
+                                            </h6>
+                                        </div>
+                                        <div class="col-2 d-none d-lg-block vertical-align-text text-center">
+                                            <h6 style="margin-bottom:0;margin-top:0.75rem;font-size:0.95rem;">
+                                                @sub.totalPosts
+                                            </h6>
+                                        </div>
+                                        <div class="col-6 col-md-4 col-lg-2 vertical-align-text text-center">
+                                            <h6 style="margin-bottom:0;margin-top:0.75rem;">
+                                                @if (!sub.latestPost) {
+                                                    <span>N/A</span>
+                                                }else{
+                                                    <div>
+                                                        <p class="text-truncate" style="font-size:0.75rem;">
+                                                            <a href="/forum/thread/@sub.latestPost.threadId">
+                                                                <span class="formatDateFromNow" data-date="@sub.latestPost.dateCreated"></span>
+                                                            </a>
+                                                        </p>
+                                                        <p class="text-truncate" style="font-size:0.65rem;">
+                                                            By <a href="/users/@sub.latestPost.userId/profile">
+                                                                <span data-userid="@sub.latestPost.userId" class="setUserName">...</span>
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                }
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            </div>
+            
+            <div class="col-12 col-xl-4" style="margin-top:1rem;">
+                <div class="row forumlatestposts">
+                    <div class="col-12">
+                        <div class="card" style="color:white;border-radius:0;border-bottom: 1px solid rgba(105,222,124,1);">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 style="margin-bottom:0;font-size:1rem;background: linear-gradient(90deg, rgba(71,195,91,1) 0%, rgba(105,222,124,1) 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">Latest Threads</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @for (const thread of model.page.latestThreads) {
+                        <div class="col-12 forumLatestPost">
+                            <div class="card" style="border-radius:0;border:none;box-shadow:none;border-bottom: 1px solid rgba(0,0,0,.125);">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="/forum/thread/@thread.threadId?page=1" class="normal">
+                                                <h5 style="margin-bottom:0;font-size:0.75rem;">@thread.title</h5>
+                                            </a>
+                                        </div>
+                                        <div class="col-6 vertical-align-text text-center">
+                                            <h6 style="margin-bottom:0;">
+
+                                                    <div>
+                                                        <p class="text-truncate" style="font-size:0.75rem;">
+                                                            <a href="/forum/thread/@thread.threadId?page=1">
+                                                                <span class="formatDateFromNow" data-date="@thread.dateCreated"></span>
+                                                            </a>
+                                                        </p>
+                                                        <p class="text-truncate" style="font-size:0.65rem;">
+                                                            By <a href="/users/@thread.userId/profile">
+                                                                <span data-userid="@thread.userId" class="setUserName">...</span>
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/forum/index.js?v=@model.v"></script>
+    })
+})

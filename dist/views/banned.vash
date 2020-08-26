@@ -1,0 +1,59 @@
+@html.extend('layouts/banned', function(model) {
+  @html.block('content', function(model) {
+    <div class="row" style="padding:1rem 0 1rem 0">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    @if (model.page.terminated === 1) {
+                        <h5 class="card-title" style="margin-bottom: .75rem;">Account Deleted</h5>
+                    }else{
+                        <h5 class="card-title" style="margin-bottom: .75rem;">Account Banned</h5>
+                    }
+                    <p style="padding-bottom:1rem;">Our moderators have determined that your behavior has been in violation of our Terms of Service.</p>
+                    <div class="row">
+                        <div class="col">
+                            <p><span style="font-weight:600;">Reviewed: </span>@model.page.date</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p><span style="font-weight:600;">Moderator Note: </span>@model.page.reason</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                        <hr />
+                        @if (model.page.terminated === 1) {
+                            <p>If you wish to appeal, you <a href="/support">fill out a support ticket here</a>.</p>
+                        }else{
+                            @if (model.page.unlock === false) {
+                                <p>You will be able to unlock your account on or after <span style="font-weight:600;">@model.page.untilUnbanned.</span></p>
+                                <br>
+                                <p>If you wish to appeal, you may email us at <span style="font-weight:600;">appeals@@@model.domain</span>. If your account does not have a valid email attached to it, we will be unable to assist you.</p>
+                            }else{
+                                <p style="margin-bottom:1rem;">You may unlock your account by clicking the button below. Note that further violations may lead to account deletion.</p>
+                                <form>
+                                    <div class="form-group">
+                                        <button type="button" id="unlockAccount" class="btn btn-success" style="width:100%;">Unlock Account</button>
+                                    </div>
+                                </form>
+                            }
+                        }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="text-align:center;font-size:0.85rem;margin-top:0.95rem;">
+                            <a style="color:rgba(0,0,0,0.75);" id="logoutAClick" href="#"><i class="fas fa-sign-out-alt"></i> Click here to sign out.</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  })
+  @html.block('js', function(model) {
+      <script nonce="@model.nonce" src="/js/pages/banned.js?v=@model.v"></script>
+  })
+})

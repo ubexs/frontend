@@ -83,7 +83,10 @@ let GlobalErrorHandler = class GlobalErrorHandler extends common_1.GlobalErrorHa
                 Sentry.Sentry.captureException(e);
             }
         }
-        return super.use(error, request, response);
+        if (process.env.NODE_ENV === 'development') {
+            return super.use(error, request, response);
+        }
+        return response.status(500).send(ErrorTemplate('500: Internal Server Error', 'BlocksHub seems to be experiencing some issues right now. Please try again later.')).end();
     }
 };
 __decorate([

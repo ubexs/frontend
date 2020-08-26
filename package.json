@@ -17,6 +17,7 @@
     "dependencies": {
         "@babel/preset-env": "^7.11.0",
         "@sentry/browser": "^5.21.4",
+        "@sentry/node": "^5.21.4",
         "@tsed/common": "^5.62.6",
         "@tsed/core": "^5.62.6",
         "@tsed/di": "^5.62.6",
@@ -33,8 +34,10 @@
         "@types/morgan": "^1.9.1",
         "@types/swagger-schema-official": "^2.0.21",
         "apexcharts": "^3.20.0",
+        "axios": "^0.20.0",
         "babel-minify": "^0.5.1",
         "babelify": "^10.0.0",
+        "body-parser": "^1.19.0",
         "bootstrap": "^4.5.2",
         "browserify": "^16.5.2",
         "chai": "^4.2.0",

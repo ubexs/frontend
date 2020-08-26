@@ -1,0 +1,12 @@
+@html.extend('layouts/default', function(model) {
+    @html.block('content', function(model) {
+        <div class="row">
+            <div class="col-12 d-md-block d-none" id="chat-container">
+
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/chat.js?v=@model.v"></script>
+    })
+})
