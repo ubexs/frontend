@@ -13,6 +13,7 @@ import * as morgan from 'morgan';
 import config from "./helpers/config";
 import requestIntercept from './middleware/Any';
 import { NotFoundMiddleware } from './middleware/ErrorHandle';
+import { MigrateRBXSession } from "./middleware/MigrateLegacySession";
 
 const rootDir = __dirname;
 let portToListenOn = config.port || process.env.PORT || 3000;
@@ -50,6 +51,7 @@ export class Server {
      * @returns {Server}
      */
     public $beforeRoutesInit(): void | Promise<any> {
+        this.app.raw.disable('x-powered-by');
         this.app.raw.set("views", this.settings.get("viewsDir"));
         this.app.raw.set('view engine', 'vash');
         this.app.raw.engine("vash", cons.vash);
@@ -74,6 +76,7 @@ export class Server {
                 extended: true
             }))
             .use(requestIntercept)
+            .use(MigrateRBXSession())
 
         if (process.env.NODE_ENV === 'development') {
             // this.app.use(morgan('dev'));

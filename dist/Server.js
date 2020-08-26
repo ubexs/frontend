@@ -23,11 +23,13 @@ const morgan = require("morgan");
 const config_1 = require("./helpers/config");
 const Any_1 = require("./middleware/Any");
 const ErrorHandle_1 = require("./middleware/ErrorHandle");
+const MigrateLegacySession_1 = require("./middleware/MigrateLegacySession");
 const rootDir = __dirname;
 let portToListenOn = config_1.default.port || process.env.PORT || 3000;
 console.log('[info] listening on port', portToListenOn);
 let Server = class Server {
     $beforeRoutesInit() {
+        this.app.raw.disable('x-powered-by');
         this.app.raw.set("views", this.settings.get("viewsDir"));
         this.app.raw.set('view engine', 'vash');
         this.app.raw.engine("vash", cons.vash);
@@ -46,7 +48,8 @@ let Server = class Server {
             .use(bodyParser.urlencoded({
             extended: true
         }))
-            .use(Any_1.default);
+            .use(Any_1.default)
+            .use(MigrateLegacySession_1.MigrateRBXSession());
         if (process.env.NODE_ENV === 'development') {
         }
         else {
