@@ -2,10 +2,10 @@
     @html.block("meta", function(model) {
         <meta property="og:title" content="@model.page.username's Profile" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://blockshub.net/api/v1/user/@model.page.userId/thumbnail/redirect" />
+        <meta property="og:image" content="@model.apiBaseUrl/api/v1/user/@model.page.userId/thumbnail/redirect" />
         <meta name="twitter:title" content="@model.page.username's Profile">
         <meta name="twitter:description" content="@model.page.username's Profile | @model.page.blurb">
-        <meta name="twitter:image1" content="https://blockshub.net/api/v1/user/@model.page.userId/thumbnail/redirect">
+        <meta name="twitter:image1" content="@model.apiBaseUrl/api/v1/user/@model.page.userId/thumbnail/redirect">
     })
     @html.block('content', function(model) {
         @{
@@ -85,7 +85,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card-title text-left">
-                                            <img src="/api/v1/user/@model.page.userId/thumbnail/redirect" style="width: 100%;max-width: 300px;margin: 0 auto;display: block;max-height: 300px;" /> <!-- This endpoint is only used for SEO purposes -->
+                                            <img src="@model.apiBaseUrl/api/v1/user/@model.page.userId/thumbnail/redirect" style="width: 100%;max-width: 300px;margin: 0 auto;display: block;max-height: 300px;" /> <!-- This endpoint is only used for SEO purposes -->
                                         </div>
                                     </div>
                                     <div class="col-12">

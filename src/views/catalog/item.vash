@@ -2,10 +2,10 @@
     @html.block("meta", function(model) {
         <meta property="og:title" content="@model.page.catalogName - BlocksHub" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://blockshub.net/api/v1/catalog/@model.page.catalogId/thumbnail/redirect" />
+        <meta property="og:image" content="@model.apiBaseUrl/api/v1/catalog/@model.page.catalogId/thumbnail/redirect" />
         <meta name="twitter:title" content="@model.page.catalogName - BlocksHub">
         <meta name="twitter:description" content="@model.page.catalogName | @model.page.description">
-        <meta name="twitter:image1" content="https://blockshub.net/api/v1/catalog/@model.page.catalogId/thumbnail/redirect"> 
+        <meta name="twitter:image1" content="@model.apiBaseUrl/api/v1/catalog/@model.page.catalogId/thumbnail/redirect"> 
     }) 
     @html.block('content', function(model) {
         <div id="catalogdata" data-id="@model.page.catalogId" data-name="@model.page.catalogName" data-creatorid="@model.page.creatorId" data-creatoruserid="@model.page.userId" data-creatortype="@model.page.creatorType" data-collectible="@model.page.collectible" data-isunique="@model.page.unique" data-isforsale="@model.page.forSale" data-encoded-name="@model.page.catalogEncodedName"></div>
@@ -33,7 +33,7 @@
                                     </p>
                                     <h1 style="font-size:1.75rem;">@model.page.catalogName</h1>
                                 </div>
-                                <img src="/api/v1/catalog/@model.page.catalogId/thumbnail/redirect" style="width: 100%;" />
+                                <img src="@model.apiBaseUrl/api/v1/catalog/@model.page.catalogId/thumbnail/redirect" style="width: 100%;" />
                                 <!-- This endpoint is only used for SEO purposes -->
 
 
