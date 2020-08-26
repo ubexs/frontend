@@ -3,13 +3,13 @@
     <div class="row" style="padding:1rem 0 1rem 0">
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card">
-                <img src="/api/v1/user/@model.userInfo.userId/thumbnail/redirect" class="card-img-top d-none d-md-block" style="width: 100%;" alt="@model.userInfo.username">
+                <img src="@model.apiBaseUrl/api/v1/user/@model.userInfo.userId/thumbnail/redirect" class="card-img-top d-none d-md-block" style="width: 100%;" alt="@model.userInfo.username">
                 <div class="card-body">
                     <h5 class="card-title text-margin" style="margin-bottom:0;">@model.userInfo.username</h5>
                     <div class="d-block d-md-none">
                         <div class="row">
                             <div class="col-6">
-                                <img src="/api/v1/user/@model.userInfo.userId/thumbnail/redirect" class="card-img-top" style="width:100%;margin:0 auto;" alt="@model.userInfo.username">
+                                <img src="@model.apiBaseUrl/api/v1/user/@model.userInfo.userId/thumbnail/redirect" class="card-img-top" style="width:100%;margin:0 auto;" alt="@model.userInfo.username">
                             </div>
                             <div class="col-6">
                                 <a href="/notifications" class="normal">

@@ -40,7 +40,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <img src="/api/v1/catalog/@model.page.groupIconCatalogId/thumbnail/redirect" style="width:100%;" />
+                                            <img src="@model.apiBaseUrl/api/v1/catalog/@model.page.groupIconCatalogId/thumbnail/redirect" style="width:100%;" />
                                         </div>
                                         <div class="col-sm-8">
                                             <h1 class="card-title" style="font-size:1.75rem;">@model.page.groupName</h1>
