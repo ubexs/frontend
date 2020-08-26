@@ -3,7 +3,7 @@ window.subsitutionimageurl = "https://cdn.blockshub.net/thumbnails/d8f9737603db2
 var userData = $('#userdata');
 
 const xss = (str) => {
-    return filterXSS(str, {whiteList: {}});
+    return filterXSS(str, { whiteList: {} });
 }
 
 function urlencode(string) {
@@ -51,7 +51,7 @@ setInterval(() => {
 }, 2500);
 */
 
-$(document).on('error', 'img', function(ev) {
+$(document).on('error', 'img', function (ev) {
     console.log('Image load error');
 });
 
@@ -74,7 +74,7 @@ $('.formatDateFromNow').each(function () {
     $(this).html(localDate.fromNow());
 });
 let _userIdsToSet = [];
-$('.setUserName').each(function() {
+$('.setUserName').each(function () {
     _userIdsToSet.push($(this).attr('data-userid'));
 });
 setUserNames(_userIdsToSet);
@@ -88,9 +88,9 @@ function formatDate(dat) {
 function formatCurrency(cur, heightData = '1rem') {
     if (cur === 1) {
         // return '<span style="color:#28a745;"><i class="far fa-money-bill-alt"></i> </span>';
-        return '<span style="color:#28a745;"><img alt="$" style="height: '+heightData+';" src="https://cdn.blockshub.net/static/money-green-2.svg"/> </span>';
+        return '<span style="color:#28a745;"><img alt="$" style="height: ' + heightData + ';" src="https://cdn.blockshub.net/static/money-green-2.svg"/> </span>';
     } else {
-        return '<span style="color:#ffc107;"><img alt="$" style="height: '+heightData+';" src="https://cdn.blockshub.net/static/coin-stack-yellow.svg"/> </span>';
+        return '<span style="color:#ffc107;"><img alt="$" style="height: ' + heightData + ';" src="https://cdn.blockshub.net/static/coin-stack-yellow.svg"/> </span>';
     }
 }
 
@@ -260,8 +260,8 @@ if (userData.attr("data-authenticated") === "true") {
             }
             if (d === '0') {
 
-            }else{
-                $('#notificationCount').html('<span class="badge badge-danger">'+d+'</span>');
+            } else {
+                $('#notificationCount').html('<span class="badge badge-danger">' + d + '</span>');
                 $('#notifications-dropdown').empty().append(`
                 <div class="row" style="padding-left: 0.5rem;padding-right: 0.5rem;">
                     <div class="col-sm-12">
@@ -275,11 +275,11 @@ if (userData.attr("data-authenticated") === "true") {
                 </div>
                 `);
                 let notificationMessagesLoaded = false;
-                $('#dropdownNotifications').on('click', function(e) {
+                $('#dropdownNotifications').on('click', function (e) {
                     if (!notificationMessagesLoaded) {
                         notificationMessagesLoaded = true;
                         $('#notifications-area').empty().append(`<div class="spinner-border" role="status" style="margin: 2rem auto 0 auto;display:block;"></div>`);
-                        
+
                         request('/notifications/messages', 'GET').then(d => {
                             $('#notifications-area').empty()
                             let userIds = [];
@@ -310,25 +310,25 @@ if (userData.attr("data-authenticated") === "true") {
                             setUserNames(userIds);
                             setUserThumbs(userIds);
                         })
-                        .catch(e => {
-                            console.error(e);
-                            $('#notifications-area').empty().append(`<p style="margin-top:3rem;font-size:0.75rem;text-align:center;">Oops, lets try that again.</p>`);
-                            notificationMessagesLoaded = false;
-                        })
+                            .catch(e => {
+                                console.error(e);
+                                $('#notifications-area').empty().append(`<p style="margin-top:3rem;font-size:0.75rem;text-align:center;">Oops, lets try that again.</p>`);
+                                notificationMessagesLoaded = false;
+                            })
                     }
                 });
             }
 
-            $(document).on('click',"#notifications-dropdown a", ev => {ev.stopPropagation()});
+            $(document).on('click', "#notifications-dropdown a", ev => { ev.stopPropagation() });
 
             let clearNotifsPending = false;
-            $(document).on('click', '#clear-notifications', function(e) {
+            $(document).on('click', '#clear-notifications', function (e) {
                 e.preventDefault();
                 if (clearNotifsPending || unreadNotificationIds.length === 0) {
                     return;
                 }
                 clearNotifsPending = true;
-                $('#notifications-dropdown').children().css('opacity','0.5');
+                $('#notifications-dropdown').children().css('opacity', '0.5');
 
                 // do web request
                 request('/notifications/message/multi-mark-as-read', 'POST', {
@@ -342,9 +342,9 @@ if (userData.attr("data-authenticated") === "true") {
                     </div>`);
                     $('#notificationCount').html('0');
                 })
-                .catch(e => {
-                    console.error(e);
-                })
+                    .catch(e => {
+                        console.error(e);
+                    })
             });
         })
         .catch(function (e) {
@@ -599,12 +599,12 @@ function setNames(type, idsarray) {
             .then(function (ids) {
                 $.each(ids, function (index, value) {
                     if (value.username) {
-                        setDivs(value.userId, value.username, {whiteList: {}});
+                        setDivs(value.userId, value.username, { whiteList: {} });
                         global[value.userId] = value.username;
                     } else if (value.catalogName) {
                         setDivs(value.catalogId, value.catalogName);
                         global[value.catalogId] = value.catalogName;
-                    }else if (value.groupName) {
+                    } else if (value.groupName) {
                         setDivs(value.groupId, value.groupName);
                         global[value.groupId] = value.groupName;
                     } else {
@@ -849,7 +849,7 @@ function setThumbs(type, idsUnInit) {
     var sub = window.subsitutionimageurl;
     // Only supports catalog and user for now
     if (type !== "user" && type !== "catalog" && type !== 'game') {
-        console.warn('warning: invalid type passed to setThumbs: '+type);
+        console.warn('warning: invalid type passed to setThumbs: ' + type);
         return false;
     }
     // Setup Globals
@@ -1217,30 +1217,31 @@ $(document).on('click', '.onClickShowTabs', function (e) {
 });
 
 
+let apiBaseUrl = $('#meta').attr('data-api-base-url');
 /**
  *  load ads
  */
-$('.leaderboard-ad').each(function(e) {
+$('.leaderboard-ad').each(function (e) {
     request('/ad/random/1', 'GET')
-    .then(d => {
-        $(this).append(`
+        .then(d => {
+            $(this).append(`
         <div class="col-12" style="margin-top:1rem;">
             <div style="display:block;margin:0 auto;max-width:728px;">
-                <a href="/api/v1/ad/${d.adId}/click">
+                <a href="${apiBaseUrl}/api/v1/ad/${d.adId}/click">
                     <img style="width:100%;" src="${d.imageUrl}" title="${xss(d.title)}" />
                     <p class="ad-alert-text" style="color: rgba(33, 37, 41, 0.95);"><i class="fas fa-ad"></i></p>
                 </a>
             </div>
         </div>
         `);
-        $(this).find('img').on('load', () => {
-            console.log('ad image loaded');
-            $(this).find('.whitespace-ad').remove();
-        });
-    })
-    .catch(e => {
-        // default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
-        $(this).append(`
+            $(this).find('img').on('load', () => {
+                console.log('ad image loaded');
+                $(this).find('.whitespace-ad').remove();
+            });
+        })
+        .catch(e => {
+            // default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
+            $(this).append(`
         <div class="col-12" style="margin-top:1rem;">
             <div style="display:block;margin:0 auto;max-width:728px;">
                 <a href="/ads">
@@ -1250,38 +1251,38 @@ $('.leaderboard-ad').each(function(e) {
             </div>
         </div>
         `);
-        $(this).find('img').on('load', () => {
-            console.log('ad image loaded');
-            $(this).find('.whitespace-ad').remove();
+            $(this).find('img').on('load', () => {
+                console.log('ad image loaded');
+                $(this).find('.whitespace-ad').remove();
+            });
+
         });
-        
-    });
 });
 if (window.innerWidth > 991) {
-    $('.skyscraper-ads').each(function(e) {
+    $('.skyscraper-ads').each(function (e) {
         request('/ad/random/2', 'GET')
-        .then(d => {
-            $(this).append(`
-                    <a href="/api/v1/ad/${d.adId}/click">
+            .then(d => {
+                $(this).append(`
+                    <a href="${apiBaseUrl}/api/v1/ad/${d.adId}/click">
                         <img style="width:160px;height:600px;" src="${d.imageUrl}" title="${xss(d.title)}" />
                         <p class="ad-alert-text" style="color: rgba(33, 37, 41, 0.95);"><i class="fas fa-ad"></i></p>
                     </a>
             `);
-        })
-        .catch(e => {
-            // default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
-            $(this).append(`
+            })
+            .catch(e => {
+                // default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
+                $(this).append(`
                     <a href="/ads">
                         <img style="width:160px;height:600px;" src="https://cdn.blockshub.net/thumbnails/81082ace029ca2526b6a54e6f2d9914b2397a22c3d4e3260de402f872e093f97.png" />
                         <p class="ad-alert-text"><i class="fas fa-ad"></i></p>
                     </a>
             `);
-            $(this).find('img').on('load', () => {
-                console.log('ad image loaded');
-                $(this).find('.whitespace-ad').remove();
+                $(this).find('img').on('load', () => {
+                    console.log('ad image loaded');
+                    $(this).find('.whitespace-ad').remove();
+                });
+
             });
-            
-        });
     });
 }
 
