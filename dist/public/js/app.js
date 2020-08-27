@@ -1293,3 +1293,11 @@ function getTheme() {
     let currentTheme = $('#userdata').attr('data-theme');
     return parseInt(currentTheme);
 }
+
+// handler for mobile menu
+$(document).on('click', '#expand-more-mobile', function (e) {
+    e.preventDefault();
+    $('#more-expanded').fadeToggle({
+        duration: 100
+    });
+});

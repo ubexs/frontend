@@ -77,6 +77,80 @@
             </div>
         </div>
         }
+        <div class="navBarMobileBottom fixed-bottom">
+            <div class="row" id="more-expanded" style="display:none;">
+                <div class="col-7">
+
+                </div>
+                <div class="col-5">
+                    <p style="text-align:left;padding-top:0.5rem;font-size:1.5rem;"><i class="fas fa-angle-double-right"></i> MORE</p>
+                    <div style="text-align:left;font-weight:700;padding-bottom: 1rem;padding-top:0.5rem;">
+                        <p>
+                            <a href="/groups">
+                                Groups
+                            </a>
+                            <br>
+                            <a href="/users">
+                                Users
+                            </a>
+                            <br>
+                            <a href="/forum">
+                                Forum
+                            </a>
+                            <br>
+                            <a href="/shop">
+                                Currency Shop
+                            </a>
+                            <br>
+                            <a href="/discord">
+                                Discord
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row bottom-row-mobile">
+                <div class="col-3 border-right">
+                    <p>
+                        <a href="/play">
+                            <i class="fas fa-play"></i>
+                            <br>PLAY
+                        </a>
+                    </p>
+                </div>
+                <div class="col-3 border-right">
+                    <p>
+                        @if (typeof model.userInfo !== 'undefined') {
+                            <a href="/dashboard">
+                                <i class="fas fa-home"></i>
+                                <br>HOME
+                            </a>
+                        }else{
+                            <a href="/signup">
+                                <i class="fas fa-door-open"></i>
+                                <br>JOIN
+                            </a>
+                        }
+                    </p>
+                </div>
+                <div class="col-3 border-right">
+                    <p>
+                        <a href="/catalog">
+                            <i class="fas fa-shopping-basket"></i>
+                            <br>SHOP
+                        </a>
+                    </p>
+                </div>
+                <div class="col-3">
+                    <p>
+                        <a href="#" id="expand-more-mobile">
+                            <i class="fas fa-angle-double-up"></i>
+                            <br>MORE
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
         <nav class="navbar navbar-expand-lg sticky-top @model._extraCssClass">
             <div class="container">
                 <h3 style="margin:0;padding:0;font-weight:600;">

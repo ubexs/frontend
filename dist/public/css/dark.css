@@ -193,3 +193,14 @@ div.game-profile-card:hover {
     background-color: #161a20;
     transition: all 0.15s;
 }
+
+div.navBarMobileBottom > div.bottom-row-mobile {
+    background: #161a20;
+    color: #ffffff;
+}
+div.navBarMobileBottom > div > div > p > a {
+    color: #ffffff;
+}
+div#more-expanded > div.col-5 {
+    background: #161a20;
+}

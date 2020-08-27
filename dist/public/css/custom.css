@@ -409,7 +409,7 @@ pre > code {
     }
 }
 
-@media only screen and (min-width: 1680px) {
+@media (min-width: 1680px) {
     div.staff-sidebar {
         display: block!important;
         z-index: 2;
@@ -703,4 +703,48 @@ div#roleset-selection p {
 }
 button.navbar-toggler {
     border: none;
+}
+
+/*
+new nav bar stuff
+*/
+@media (min-width: 991px) {
+    div.navBarMobileBottom {
+        display: none;
+    }
+}
+
+div.navBarMobileBottom > div.bottom-row-mobile {
+    border-top: 2px solid rgba(71,195,91,1);
+    background: #ffffff;
+    padding: 1rem 1rem;
+}
+div.navBarMobileBottom > div > div {
+    text-align: center;
+}
+
+div.navBarMobileBottom > div > div > p {
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+div.navBarMobileBottom > div > div > p > a > i {
+    font-size: 2rem;
+}
+div.navBarMobileBottom > div > div > p > a {
+    color: #212529;
+}
+div.navBarMobileBottom > div > div > p > a:hover {
+    color: rgba(0, 0, 0, 0.6);
+    transition: all 0.15s;
+    text-decoration: none;
+}
+div.navBarMobileBottom > div > div > p > a {
+    transition: all 0.15s;
+    text-decoration: none;
+}
+div.navBarMobileBottom > div.border-right {
+    border-right: 1px solid #212529;
+}
+div#more-expanded > div.col-5 {
+    background: #ffffff;
 }
