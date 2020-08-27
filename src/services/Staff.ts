@@ -16,7 +16,7 @@ export default class Staff extends base {
      * @param userId
      */
     public async getPermissions(userId: number): Promise<number[]> {
-        const info = await this.v1.get('/staff/permissions/'+userId);
+        const info = await this.v1.get('/staff/permissions/' + userId);
         let permissionArray: number[] = [];
         for (let perm in info.data) {
             let num = parseInt(perm, 10);
@@ -26,5 +26,19 @@ export default class Staff extends base {
         }
         return permissionArray;
     }
+
+    public getModerationHistory(userId: number): Promise<model.Staff.ModerationHistory[]> {
+        return this.v1.get('/staff/user/moderation-history?userId=' + userId).then(d => { return d.data });
+    }
+
+    public getUserEmail(userId: number): Promise<model.Staff.EmailModel | undefined> {
+        return this.v1.get('/staff/user/email?userId=' + userId).then(d => { return d.data });
+    }
+
+    public getUserEmails(userId: number): Promise<model.Staff.EmailModel[]> {
+        return this.v1.get('/staff/user/emails?userId=' + userId).then(d => { return d.data });
+    }
+
+
 
 }

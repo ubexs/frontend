@@ -21,5 +21,14 @@ class Staff extends base_1.default {
         }
         return permissionArray;
     }
+    getModerationHistory(userId) {
+        return this.v1.get('/staff/user/moderation-history?userId=' + userId).then(d => { return d.data; });
+    }
+    getUserEmail(userId) {
+        return this.v1.get('/staff/user/email?userId=' + userId).then(d => { return d.data; });
+    }
+    getUserEmails(userId) {
+        return this.v1.get('/staff/user/emails?userId=' + userId).then(d => { return d.data; });
+    }
 }
 exports.default = Staff;

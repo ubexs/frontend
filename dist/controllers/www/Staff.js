@@ -66,13 +66,13 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
     editBanner() {
         return new model.WWWTemplate({ title: 'Edit Banner' });
     }
-    async moderationProfile(localUserData, userId) {
-        userId = base_1.default.ValidateId(userId);
+    async moderationProfile(localUserData, userId, req) {
         const staff = localUserData.staff > 1;
         if (!staff) {
             throw new this.BadRequest('InvalidPermissions');
         }
-        let userInfo = await this.Users.getInfo(userId);
+        let s = new base_1.default({ cookie: req.headers['cookie'] });
+        let userInfo = await s.Users.getInfo(userId);
         let moderationHistory;
         let isOnline = false;
         let isOver13 = false;
@@ -80,14 +80,31 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
         let userEmails = [];
         let twoFactorEnabled = false;
         let allStaffPermissionTypes = model.Staff.Permission;
-        let alreadySelectedPermissions = await this.Staff.getPermissions(userId);
+        let alreadySelectedPermissions = await s.Staff.getPermissions(userId);
         try {
+            userInfo = await s.Users.getInfo(userId, ['accountStatus', 'userId', 'username', 'primaryBalance', 'secondaryBalance', 'blurb', 'staff', 'birthDate', 'dailyAward', 'lastOnline', 'status', 'joinDate', 'forumSignature', '2faEnabled', 'isDeveloper']);
+            if (userInfo['2faEnabled'] === 1) {
+                twoFactorEnabled = true;
+            }
+            if (this.moment().isSameOrAfter(this.moment(userInfo.birthDate).add(13, 'years'))) {
+                isOver13 = true;
+            }
+            if (this.moment(userInfo.lastOnline).isSameOrAfter(this.moment().subtract(5, 'minutes'))) {
+                isOnline = true;
+            }
+            moderationHistory = await s.Staff.getModerationHistory(userId);
+            const emailInfo = await s.Staff.getUserEmail(userId);
+            if (emailInfo && emailInfo.status === 1) {
+                isEmailVerified = true;
+            }
+            userEmails = await s.Staff.getUserEmails(userId);
         }
         catch (e) {
             console.log(e);
             throw new this.BadRequest('InvalidUserId');
         }
         let ViewData = new model.WWWTemplate({ 'title': userInfo.username + "'s Moderation Profile" });
+        ViewData.page = {};
         ViewData.page.online = isOnline;
         ViewData.page.isOver13 = isOver13;
         ViewData.page.isEmailVerified = isEmailVerified;
@@ -96,7 +113,7 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
         ViewData.page.userEmails = userEmails;
         ViewData.page.twoFactorEnabled = twoFactorEnabled;
         const staffPermissionSelect = [];
-        let currentUserInfo = await this.Staff.getPermissions(userInfo.userId);
+        let currentUserInfo = await s.Staff.getPermissions(userInfo.userId);
         if (currentUserInfo.includes(model.Staff.Permission.ManageStaff) || localUserData.staff >= 100) {
             for (const perm of alreadySelectedPermissions) {
                 let int = parseInt(perm, 10);
@@ -275,8 +292,9 @@ __decorate([
     common_1.Render('staff/user/profile'),
     __param(0, common_1.Locals('userInfo')),
     __param(1, common_1.QueryParams('userId')),
+    __param(2, common_1.Req()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [model.UserSession, Object]),
+    __metadata("design:paramtypes", [model.UserSession, Object, Object]),
     __metadata("design:returntype", Promise)
 ], WWWStaffController.prototype, "moderationProfile", null);
 __decorate([

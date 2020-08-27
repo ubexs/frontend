@@ -113,3 +113,8 @@ var terminated;
     terminated[terminated["true"] = 1] = "true";
     terminated[terminated["false"] = 0] = "false";
 })(terminated = exports.terminated || (exports.terminated = {}));
+var emailVerificationType;
+(function (emailVerificationType) {
+    emailVerificationType[emailVerificationType["true"] = 1] = "true";
+    emailVerificationType[emailVerificationType["false"] = 0] = "false";
+})(emailVerificationType = exports.emailVerificationType || (exports.emailVerificationType = {}));

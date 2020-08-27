@@ -513,7 +513,7 @@
 
         @html.raw(model.javascript)
 
-        @if (model.impersonateUserId) {
+        @if (model.userInfo && model.userInfo.isImpersonating) {
                                 <div class="col-12">
                                     <p id="leave-impersonate">Exit Impersonation</p>
                                 </div>

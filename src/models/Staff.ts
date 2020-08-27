@@ -1,109 +1,128 @@
-
+import * as Users from './Users';
 export enum Permission {
     /**
      * Ban a user
      */
-        'BanUser' = 1,
+    'BanUser' = 1,
     /**
      * Unban a user
      */
-        'UnbanUser',
+    'UnbanUser',
     /**
      * Lock/unlock groups
      */
-        'ManageGroup',
+    'ManageGroup',
     /**
      * View emails for multiple users at once
      */
-        'ViewEmail',
+    'ViewEmail',
     /**
      * View payment information for all users
      */
-        'ViewPaymentInformation',
+    'ViewPaymentInformation',
     /**
      * Manage other staff
      */
-        'ManageStaff',
+    'ManageStaff',
     /**
      * Impersonate users
      */
-        'ImpersonateUser',
+    'ImpersonateUser',
     /**
      * Manage support tickets
      */
-        'ManageSupportTickets',
+    'ManageSupportTickets',
     /**
      * Review and manage items awaiting staff review
      */
-        'ReviewPendingItems',
+    'ReviewPendingItems',
     /**
      * Review and manage abuse reports
      */
-        'ReviewAbuseReports',
+    'ReviewAbuseReports',
     /**
      * Review information of all users, such as through the search functions
      */
-        'ReviewUserInformation',
+    'ReviewUserInformation',
     /**
      * Upload staff assets to the system account, such as hats
      */
-        'UploadStaffAssets',
+    'UploadStaffAssets',
     /**
      * Allows user to manage other staff, as well as their self
      */
-        'ManageSelf',
+    'ManageSelf',
     /**
      * Reset the password for a user
      */
-        'ResetPassword',
+    'ResetPassword',
     /**
      * Give item(s) to a user
      */
-        'GiveItemToUser',
+    'GiveItemToUser',
     /**
      * Give currency to a user
      */
-        'GiveCurrencyToUser',
+    'GiveCurrencyToUser',
     /**
      * Take item(s) from a user
      */
-        'TakeItemFromUser',
+    'TakeItemFromUser',
     /**
      * Take currency from a user
      */
-        'TakeCurrencyFromUser',
+    'TakeCurrencyFromUser',
     /**
      * Manage assets not owned by the current user
      */
-        'ManageAssets',
+    'ManageAssets',
     /**
      * Force a thumbnail to be regenerated
      */
-        'RegenerateThumbnails',
+    'RegenerateThumbnails',
     /**
      * Enable, edit, and disable the banner
      */
-        'ManageBanner',
+    'ManageBanner',
     /**
      * Manage/view public user information, such as the username, trades, transactions, etc
      */
-        'ManagePublicUserInfo',
+    'ManagePublicUserInfo',
     /**
      * Manage/view private user information, such as emails, two factor enable/disable, etc
      */
-        'ManagePrivateUserInfo',
+    'ManagePrivateUserInfo',
     /**
      * Manage/view web services like secrets, system status, reload servers, logs, deploy stuff
      */
-        'ManageWeb',
+    'ManageWeb',
     'ManageGameServer',
     'ManageGameClient',
     /**
      * Enable, disable, create, update, and delete forum categories
      */
-        'ManageForumCategories',
+    'ManageForumCategories',
     /**
      * Create, update, and delete currency products
      */
-        'ManageCurrencyProducts',
+    'ManageCurrencyProducts',
+}
+
+export interface ModerationHistory {
+    userId: number;
+    reason: string;
+    date: string;
+    untilUnbanned: string;
+    isTerminated: 0 | 1;
+    privateReason: string;
+    actorUserId: number;
+}
+
+export interface EmailModel {
+    id: number;
+    userId: number;
+    email: string | null;
+    verificationCode: string;
+    status: Users.emailVerificationType;
+    date: Record<string, any>;
 }

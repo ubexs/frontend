@@ -117,14 +117,15 @@ export class WWWStaffController extends base {
     @Render('staff/user/profile')
     public async moderationProfile(
         @Locals('userInfo') localUserData: model.UserSession,
-        @QueryParams('userId') userId: any
+        @QueryParams('userId') userId: any,
+        @Req() req: Req,
     ) {
-        userId = base.ValidateId(userId);
         const staff = localUserData.staff > 1;
         if (!staff) {
             throw new this.BadRequest('InvalidPermissions');
         }
-        let userInfo = await this.Users.getInfo(userId);
+        let s = new base({ cookie: req.headers['cookie'] });
+        let userInfo: any = await s.Users.getInfo(userId);
         let moderationHistory;
         let isOnline = false;
         let isOver13 = false;
@@ -132,32 +133,33 @@ export class WWWStaffController extends base {
         let userEmails: any[] = [];
         let twoFactorEnabled = false;
         let allStaffPermissionTypes = model.Staff.Permission;
-        let alreadySelectedPermissions = await this.Staff.getPermissions(userId);
+        let alreadySelectedPermissions = await s.Staff.getPermissions(userId);
         try {
-            /*
-            userInfo = await this.Users.getInfo(userId, ['accountStatus','userId','username','primaryBalance','secondaryBalance','blurb','staff','birthDate','dailyAward','lastOnline','status','joinDate','forumSignature', '2faEnabled', 'isDeveloper']);
+
+            userInfo = await s.Users.getInfo(userId, ['accountStatus', 'userId', 'username', 'primaryBalance', 'secondaryBalance', 'blurb', 'staff', 'birthDate', 'dailyAward', 'lastOnline', 'status', 'joinDate', 'forumSignature', '2faEnabled', 'isDeveloper']);
             if (userInfo['2faEnabled'] === 1) {
                 twoFactorEnabled = true;
             }
-            if (moment().isSameOrAfter(moment(userInfo.birthDate).add(13, 'years'))) {
+            if (this.moment().isSameOrAfter(this.moment(userInfo.birthDate).add(13, 'years'))) {
                 isOver13 = true;
             }
-            if (moment(userInfo.lastOnline).isSameOrAfter(moment().subtract(5, 'minutes'))) {
+            if (this.moment(userInfo.lastOnline).isSameOrAfter(this.moment().subtract(5, 'minutes'))) {
                 isOnline = true;
             }
-            moderationHistory = await this.staff.getModerationHistory(userId);
+            moderationHistory = await s.Staff.getModerationHistory(userId);
 
-            const emailInfo = await this.settings.getUserEmail(userId);
-            if (emailInfo && emailInfo.status === model.user.emailVerificationType.true) {
+            const emailInfo = await s.Staff.getUserEmail(userId);
+            if (emailInfo && emailInfo.status === 1) {
                 isEmailVerified = true;
             }
-            userEmails = await this.settings.getUserEmails(userId);
-             */
+            userEmails = await s.Staff.getUserEmails(userId);
+
         } catch (e) {
             console.log(e);
             throw new this.BadRequest('InvalidUserId');
         }
         let ViewData = new model.WWWTemplate<any>({ 'title': userInfo.username + "'s Moderation Profile" });
+        ViewData.page = {};
         ViewData.page.online = isOnline;
         ViewData.page.isOver13 = isOver13;
         ViewData.page.isEmailVerified = isEmailVerified;
@@ -167,7 +169,7 @@ export class WWWStaffController extends base {
         ViewData.page.twoFactorEnabled = twoFactorEnabled;
 
         const staffPermissionSelect: { string: string; selected: boolean }[] = [];
-        let currentUserInfo = await this.Staff.getPermissions(userInfo.userId);
+        let currentUserInfo = await s.Staff.getPermissions(userInfo.userId);
         if (currentUserInfo.includes(model.Staff.Permission.ManageStaff) || localUserData.staff >= 100) {
             for (const perm of alreadySelectedPermissions) {
                 let int = parseInt(perm as any, 10);

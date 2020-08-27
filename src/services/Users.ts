@@ -17,8 +17,8 @@ export default class Users extends base {
      * Get info for the {userId}
      * @param userId 
      */
-    public async getInfo(userId: number): Promise<model.Users.Info> {
-        const info = await this.v1.get('/user/'+userId+'/info');
+    public async getInfo(userId: number, specificColums: string[] = []): Promise<model.Users.Info> {
+        const info = await this.v1.get('/user/' + userId + '/info?columns=' + specificColums.join(','));
         return info.data;
     }
 
@@ -43,9 +43,9 @@ export default class Users extends base {
      * @param userId
      */
     public async getPastUsernames(userId: number): Promise<string[]> {
-        const results = await this.v1.get('/user/'+userId+'/past-usernames');
+        const results = await this.v1.get('/user/' + userId + '/past-usernames');
         let pastNames: string[] = [];
-        for (const name of results.data as {username: string}[]) {
+        for (const name of results.data as { username: string }[]) {
             pastNames.push(name.username);
         }
         // todo: we might have to reverse this? check with backend to see what order it's in

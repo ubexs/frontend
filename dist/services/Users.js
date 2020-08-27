@@ -12,8 +12,8 @@ class Users extends base_1.default {
             this.v2 = updatedBase.v2;
         }
     }
-    async getInfo(userId) {
-        const info = await this.v1.get('/user/' + userId + '/info');
+    async getInfo(userId, specificColums = []) {
+        const info = await this.v1.get('/user/' + userId + '/info?columns=' + specificColums.join(','));
         return info.data;
     }
     async getBanData() {

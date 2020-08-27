@@ -1,4 +1,4 @@
-import {AllowTypes, Required} from "@tsed/common";
+import { AllowTypes, Required } from "@tsed/common";
 
 export enum banned {
     'true' = 1,
@@ -21,21 +21,21 @@ export class Info {
     @Required()
     username: string;
     @Required()
-    @AllowTypes('string','null')
-    status: string|null;
+    @AllowTypes('string', 'null')
+    status: string | null;
     @Required()
     joinDate: string;
     @Required()
     @AllowTypes('string', 'null')
-    blurb: string|null;
+    blurb: string | null;
     @Required()
-    banned: 0|1;
+    banned: 0 | 1;
     @Required()
     lastOnline: string;
     @Required()
-    tradingEnabled: 0|1;
+    tradingEnabled: 0 | 1;
     @Required()
-    staff: 0|1;
+    staff: 0 | 1;
     @Required()
     accountStatus: 0;
 }
@@ -44,7 +44,7 @@ export class AuthenticatedInfo {
     userId: number;
     username: string;
     passwordChanged: number;
-    banned: 0|1;
+    banned: 0 | 1;
     theme: number;
     primaryBalance: number;
     secondaryBalance: number;
@@ -74,6 +74,14 @@ export class ModerationAction {
  * If a ban terminates a user's account
  */
 export enum terminated {
+    true = 1,
+    false = 0,
+}
+
+/**
+ * Is a user's email verified?
+ */
+export enum emailVerificationType {
     true = 1,
     false = 0,
 }
