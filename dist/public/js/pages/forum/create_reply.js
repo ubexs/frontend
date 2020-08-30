@@ -1,14 +1,1 @@
-$(document).on('click', '#createReply', function () {
-    var body = $('#replyBody').val();
-    var replyId = $('#forumdata').attr("data-threadid");
-    request("/forum/thread/"+replyId+"/reply", "PUT", JSON.stringify({
-        "body": body,
-    }))
-        .then(function (d) {
-            window.location.href = "/forum/thread/"+replyId+"?page=1";
-        })
-        .catch(function (e) {
-            console.log(e);
-            warning(e.responseJSON.message);
-        });
-});
+"use strict";$(document).on("click","#createReply",function(){var a=$("#replyBody").val(),b=$("#forumdata").attr("data-threadid");request("/forum/thread/"+b+"/reply","PUT",JSON.stringify({body:a})).then(function(){window.location.href="/forum/thread/"+b+"?page=1"})["catch"](function(a){console.log(a),warning(a.responseJSON.message)})});

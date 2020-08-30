@@ -1,20 +1,4 @@
-// jquery
-const jQueryLib = require('jquery');
-window.jQuery = jQueryLib;
-window.$ = jQueryLib;
-window.jquery = jQueryLib;
-
-// Linkify and linkify jquery
-const linkify = require('linkifyjs');
-const linkifyJquery = require('linkifyjs/jquery');
-linkifyJquery($);
-// jquery auto grow
-require('jquery.ns-autogrow');
-
-// bootstrap
-
-const Popper = require('popper.js');
-window.Popper = Popper;
-
-const bootstrap = require('bootstrap');
-window.bootstrap = bootstrap;
+"use strict";// jquery
+var jQueryLib=require("jquery");window.jQuery=jQueryLib,window.$=jQueryLib,window.jquery=jQueryLib;// Linkify and linkify jquery
+var linkify=require("linkifyjs"),linkifyJquery=require("linkifyjs/jquery");linkifyJquery($),require("jquery.ns-autogrow");// bootstrap
+var Popper=require("popper.js");window.Popper=Popper;var bootstrap=require("bootstrap");window.bootstrap=bootstrap;

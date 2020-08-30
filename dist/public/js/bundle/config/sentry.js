@@ -1,3 +1,2 @@
-// Sentry
-const Sentry = require('@sentry/browser');
-window.Sentry = Sentry;
+"use strict";// Sentry
+var Sentry=require("@sentry/browser");window.Sentry=Sentry;

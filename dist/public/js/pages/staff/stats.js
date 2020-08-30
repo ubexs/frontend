@@ -61,4 +61,4 @@ request('/staff/status/web', 'GET')
         // err
         console.log(e);
     });
-    */
+    */"use strict";

@@ -25,4 +25,4 @@ $(window).scroll(function(){
         
     }
 });
-*/
+*/"use strict";

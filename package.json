@@ -7,7 +7,7 @@
         "test": "nyc mocha --require ts-node/register --exit **/*.spec.ts",
         "build": "npm run build:rm && npm run build:server && npm run build:public",
         "build:rm": "node util/delete_dist.js",
-        "build:public": "node util/build_public.js",
+        "build:public": "node util/build_bundle.js && babel src/public/ -d dist/public/ --copy-files",
         "build:server": "tsc",
         "start:dev": "nodemon -r --ignore --exec ts-node-dev src/index.ts"
     },
@@ -65,5 +65,9 @@
         "ts-node-dev": "^1.0.0-pre.60",
         "vash": "^0.13.0",
         "xss": "^1.0.8"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.10.5",
+        "@babel/core": "^7.11.4"
     }
 }
