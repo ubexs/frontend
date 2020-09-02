@@ -87,7 +87,7 @@ let WWWSupportController = class WWWSupportController extends base_1.default {
     }
     SignupHelpSupport() {
         return new model.WWWTemplate({
-            title: 'Help Signing Upp',
+            title: 'Help Signing Up',
             page: {
                 article: `
                 <h1>Signup Help</h1>

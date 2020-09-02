@@ -124,7 +124,7 @@ export class WWWSupportController extends base {
     @Render('support_article')
     public SignupHelpSupport() {
         return new model.WWWTemplate({
-            title: 'Help Signing Upp',
+            title: 'Help Signing Up',
             page: {
                 article: `
                 <h1>Signup Help</h1>
