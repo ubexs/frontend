@@ -156,9 +156,10 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
         };
         return ViewData;
     }
-    async modifyForums() {
-        let cats = await this.Forums.getCategories();
-        let subs = await this.Forums.getSubCategories();
+    async modifyForums(userData, cookie) {
+        let s = new base_1.default({ cookie });
+        let cats = await s.Forums.getCategories();
+        let subs = await s.Forums.getSubCategories(userData.staff);
         for (const sub of subs) {
             for (const cat of cats) {
                 if (sub.categoryId === cat.categoryId) {
@@ -311,8 +312,10 @@ __decorate([
     common_1.Get('/staff/forums'),
     common_1.Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManageForumCategories)),
     common_1.Render('staff/forums'),
+    __param(0, common_1.Locals('userInfo')),
+    __param(1, common_1.HeaderParams('cookie')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [model.UserSession, String]),
     __metadata("design:returntype", Promise)
 ], WWWStaffController.prototype, "modifyForums", null);
 __decorate([

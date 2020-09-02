@@ -1,5 +1,5 @@
-import {WWWStaffController} from './Staff';
-import {expect} from 'chai';
+import { WWWStaffController } from './Staff';
+import { expect } from 'chai';
 import * as model from '../../models';
 import * as viewModel from '../../viewmodels';
 const staff = new WWWStaffController();
@@ -31,7 +31,7 @@ describe('StaffController.almost everything()', () => {
         'listOfStaff',
     ];
     for (const method of methods) {
-        it('Should return WWWTemplate ('+method+')', () => {
+        it('Should return WWWTemplate (' + method + ')', () => {
             // @ts-ignore
             const res = staff[method]();
             expect(res).to.be.instanceOf(model.WWWTemplate);
@@ -40,40 +40,41 @@ describe('StaffController.almost everything()', () => {
 });
 
 describe('StaffController.modifyForums()', () => {
-   it('Should resolve with wwwtemplate and forum cats/subcats', async () => {
-       const cats = [
-           {
-               categoryId: 1,
-           },
-           {
-               categoryId: 2,
-           }
-       ];
-       const subs = [
-           {
-               categoryId: 1,
-           },
-           {
-               categoryId: 2,
-           }
-       ]
-       staff.Forums = {
-           getCategories: async () => {
+    it('Should resolve with wwwtemplate and forum cats/subcats', async () => {
+        const cats = [
+            {
+                categoryId: 1,
+            },
+            {
+                categoryId: 2,
+            }
+        ];
+        const subs = [
+            {
+                categoryId: 1,
+            },
+            {
+                categoryId: 2,
+            }
+        ]
+        staff.Forums = {
+            getCategories: async () => {
                 return cats;
-           },
-           getSubCategories: async () => {
+            },
+            getSubCategories: async () => {
                 return subs;
-           },
-       } as any;
+            },
+        } as any;
 
-       const results = await staff.modifyForums();
-       expect(results).to.be.instanceOf(model.WWWTemplate);
-       if (!results.page) {
-           throw new Error('Page is undefined');
-       }
-       expect(results.page.cats).to.be.an('array');
-       expect(results.page.subs).to.be.an('array');
-   });
+        // @ts-ignore
+        const results = await staff.modifyForums({ userId: 1, username: 'hello' }, '');
+        expect(results).to.be.instanceOf(model.WWWTemplate);
+        if (!results.page) {
+            throw new Error('Page is undefined');
+        }
+        expect(results.page.cats).to.be.an('array');
+        expect(results.page.subs).to.be.an('array');
+    });
 });
 
 describe('StaffController.moderationGroup()', () => {

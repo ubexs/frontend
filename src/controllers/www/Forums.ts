@@ -10,21 +10,23 @@ export class ForumsController extends base {
     @Render('forum/index')
     @Get('/')
     public async index(
-        @Locals('userInfo') userInfo: model.UserSession,
+        @HeaderParams('cookie') cookie: string,
+        @Locals('userInfo') userInfo?: model.UserSession,
     ) {
+        let s = new base({ cookie })
         let subs: any;
         if (!userInfo) {
-            subs = await this.Forums.getSubCategories();
+            subs = await s.Forums.getSubCategories();
         } else {
-            subs = await this.Forums.getSubCategories(userInfo.staff);
+            subs = await s.Forums.getSubCategories(userInfo.staff);
         }
         for (const item of subs) {
-            item.latestPost = await this.Forums.getLatestPost(item.subCategoryId);
-            let counts = await this.Forums.getThreadAndPostCount(item.subCategoryId);
+            item.latestPost = await s.Forums.getLatestPost(item.subCategoryId);
+            let counts = await s.Forums.getThreadAndPostCount(item.subCategoryId);
             item.totalThreads = counts.threads;
             item.totalPosts = counts.posts;
         }
-        let cats: any[] = await this.Forums.getCategories();
+        let cats: any[] = await s.Forums.getCategories();
         for (const cat of cats) {
             if (!cat['subCategories']) {
                 cat['subCategories'] = [];
@@ -37,7 +39,7 @@ export class ForumsController extends base {
         }
         // grab the latest threads.
         // at most, it will return 5 or the current amount of subcategories there are (whichever is smaller)
-        let latestThreads = await this.Forums.getLatestThreads(subs.length >= 5 ? 5 : subs.length);
+        let latestThreads = await s.Forums.getLatestThreads(subs.length >= 5 ? 5 : subs.length);
         return new model.WWWTemplate({
             title: 'Forum',
             page: {
@@ -65,18 +67,20 @@ export class ForumsController extends base {
     @Get('/thread/thread')
     @Use(middleware.auth.YesAuth)
     public async forumThreadCreate(
+        @HeaderParams('cookie') cookie: string,
         @Locals('userInfo') userData: model.UserSession,
         @QueryParams('subid', Number) numericId: number
     ) {
+        let s = new base({ cookie });
         let rank = userData.staff;
         if (!numericId) {
             throw new this.BadRequest('InvalidSubCategoryId');
         }
-        let forumSubCategory = await this.Forums.getSubCategoryById(numericId);
+        let forumSubCategory = await s.Forums.getSubCategoryById(numericId);
         if (forumSubCategory.permissions.post > rank) {
             throw new this.Conflict('InvalidPermissions')
         }
-        let allForumSubCategories = await this.Forums.getSubCategories(rank);
+        let allForumSubCategories = await s.Forums.getSubCategories(rank);
         let ViewData = new model.WWWTemplate<any>({ 'title': 'Create a thread' });
         ViewData.title = "Create a Thread";
         ViewData.page = {};
@@ -90,18 +94,20 @@ export class ForumsController extends base {
     @Get('/thread/thread')
     @Use(middleware.auth.YesAuth)
     public async forumPostCreate(
+        @HeaderParams('cookie') cookie: string,
         @Locals('userInfo') userData: model.UserSession,
         @QueryParams('threadId', Number) numericId: number,
         @QueryParams('page', Number) page?: number,
     ) {
+        let s = new base({ cookie });
         let rank = userData.staff;
         let threadInfo;
         try {
-            threadInfo = await this.Forums.getThreadById(numericId);
+            threadInfo = await s.Forums.getThreadById(numericId);
         } catch (e) {
             throw new this.BadRequest('InvalidThreadId');
         }
-        let forumSubCategory = await this.Forums.getSubCategoryById(threadInfo.subCategoryId);
+        let forumSubCategory = await s.Forums.getSubCategoryById(threadInfo.subCategoryId);
         if (forumSubCategory.permissions.read > rank) {
             throw new this.Conflict('InvalidPermissions');
         }

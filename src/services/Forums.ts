@@ -16,7 +16,7 @@ export default class Forums extends base {
      * @param userId
      */
     public async multiGetUserForumInfo(userId: number[]): Promise<model.Forums.UserForumsInfo[]> {
-        const info = await this.v1.get('/user/forum?ids='+encodeURIComponent(userId.join(',')));
+        const info = await this.v1.get('/user/forum?ids=' + encodeURIComponent(userId.join(',')));
         return info.data;
     }
 
@@ -25,7 +25,7 @@ export default class Forums extends base {
      * @param threadId
      */
     public async getThreadById(threadId: number): Promise<model.Forums.Thread> {
-        const info = await this.v1.get('/forum/thread/'+threadId+'/info');
+        const info = await this.v1.get('/forum/thread/' + threadId + '/info');
         return info.data;
     }
 
@@ -69,7 +69,7 @@ export default class Forums extends base {
     }
 
     public async getSubCategoryById(subCategoryId: number): Promise<model.Forums.SubCategories> {
-        const subs = await this.getSubCategories();
+        const subs = await this.getSubCategories(Number.MAX_SAFE_INTEGER);
         let found: any = undefined;
         for (const sub of subs) {
             if (sub.subCategoryId === subCategoryId) {
@@ -87,7 +87,7 @@ export default class Forums extends base {
      * @param subCategoryId
      */
     public async getLatestPost(subCategoryId: number): Promise<model.Forums.PostSnippet | undefined> {
-        const info = await this.v1.get('/forum/'+subCategoryId+'/latest-post');
+        const info = await this.v1.get('/forum/' + subCategoryId + '/latest-post');
         return info.data;
     }
 
@@ -95,8 +95,8 @@ export default class Forums extends base {
      * Count the threads and posts for the {subCategoryId}
      * @param subCategoryId
      */
-    public async getThreadAndPostCount(subCategoryId: number): Promise<{threads: number; posts: number;}> {
-        const info = await this.v1.get('/forum/'+subCategoryId+'/count');
+    public async getThreadAndPostCount(subCategoryId: number): Promise<{ threads: number; posts: number; }> {
+        const info = await this.v1.get('/forum/' + subCategoryId + '/count');
         return info.data;
     }
 
@@ -105,7 +105,7 @@ export default class Forums extends base {
      * @param subCategoryId
      */
     public async getLatestThreads(subCategoryId: number): Promise<model.Forums.Thread[]> {
-        const info = await this.v1.get('/forum/'+subCategoryId+'/latest-threads');
+        const info = await this.v1.get('/forum/' + subCategoryId + '/latest-threads');
         return info.data;
     }
 

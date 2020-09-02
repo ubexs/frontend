@@ -59,7 +59,7 @@ describe('StaffController.modifyForums()', () => {
                 return subs;
             },
         };
-        const results = await staff.modifyForums();
+        const results = await staff.modifyForums({ userId: 1, username: 'hello' }, '');
         chai_1.expect(results).to.be.instanceOf(model.WWWTemplate);
         if (!results.page) {
             throw new Error('Page is undefined');

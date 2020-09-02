@@ -43,7 +43,7 @@ class Forums extends base_1.default {
         return info.data;
     }
     async getSubCategoryById(subCategoryId) {
-        const subs = await this.getSubCategories();
+        const subs = await this.getSubCategories(Number.MAX_SAFE_INTEGER);
         let found = undefined;
         for (const sub of subs) {
             if (sub.subCategoryId === subCategoryId) {

@@ -17,21 +17,22 @@ const common_1 = require("@tsed/common");
 const model = require("../../models/index");
 const middleware = require("../../middleware/v1");
 let ForumsController = class ForumsController extends base_1.default {
-    async index(userInfo) {
+    async index(cookie, userInfo) {
+        let s = new base_1.default({ cookie });
         let subs;
         if (!userInfo) {
-            subs = await this.Forums.getSubCategories();
+            subs = await s.Forums.getSubCategories();
         }
         else {
-            subs = await this.Forums.getSubCategories(userInfo.staff);
+            subs = await s.Forums.getSubCategories(userInfo.staff);
         }
         for (const item of subs) {
-            item.latestPost = await this.Forums.getLatestPost(item.subCategoryId);
-            let counts = await this.Forums.getThreadAndPostCount(item.subCategoryId);
+            item.latestPost = await s.Forums.getLatestPost(item.subCategoryId);
+            let counts = await s.Forums.getThreadAndPostCount(item.subCategoryId);
             item.totalThreads = counts.threads;
             item.totalPosts = counts.posts;
         }
-        let cats = await this.Forums.getCategories();
+        let cats = await s.Forums.getCategories();
         for (const cat of cats) {
             if (!cat['subCategories']) {
                 cat['subCategories'] = [];
@@ -42,7 +43,7 @@ let ForumsController = class ForumsController extends base_1.default {
                 }
             }
         }
-        let latestThreads = await this.Forums.getLatestThreads(subs.length >= 5 ? 5 : subs.length);
+        let latestThreads = await s.Forums.getLatestThreads(subs.length >= 5 ? 5 : subs.length);
         return new model.WWWTemplate({
             title: 'Forum',
             page: {
@@ -60,16 +61,17 @@ let ForumsController = class ForumsController extends base_1.default {
             }
         });
     }
-    async forumThreadCreate(userData, numericId) {
+    async forumThreadCreate(cookie, userData, numericId) {
+        let s = new base_1.default({ cookie });
         let rank = userData.staff;
         if (!numericId) {
             throw new this.BadRequest('InvalidSubCategoryId');
         }
-        let forumSubCategory = await this.Forums.getSubCategoryById(numericId);
+        let forumSubCategory = await s.Forums.getSubCategoryById(numericId);
         if (forumSubCategory.permissions.post > rank) {
             throw new this.Conflict('InvalidPermissions');
         }
-        let allForumSubCategories = await this.Forums.getSubCategories(rank);
+        let allForumSubCategories = await s.Forums.getSubCategories(rank);
         let ViewData = new model.WWWTemplate({ 'title': 'Create a thread' });
         ViewData.title = "Create a Thread";
         ViewData.page = {};
@@ -78,16 +80,17 @@ let ForumsController = class ForumsController extends base_1.default {
         ViewData.page.subCategories = allForumSubCategories;
         return ViewData;
     }
-    async forumPostCreate(userData, numericId, page) {
+    async forumPostCreate(cookie, userData, numericId, page) {
+        let s = new base_1.default({ cookie });
         let rank = userData.staff;
         let threadInfo;
         try {
-            threadInfo = await this.Forums.getThreadById(numericId);
+            threadInfo = await s.Forums.getThreadById(numericId);
         }
         catch (e) {
             throw new this.BadRequest('InvalidThreadId');
         }
-        let forumSubCategory = await this.Forums.getSubCategoryById(threadInfo.subCategoryId);
+        let forumSubCategory = await s.Forums.getSubCategoryById(threadInfo.subCategoryId);
         if (forumSubCategory.permissions.read > rank) {
             throw new this.Conflict('InvalidPermissions');
         }
@@ -207,9 +210,10 @@ let ForumsController = class ForumsController extends base_1.default {
 __decorate([
     common_1.Render('forum/index'),
     common_1.Get('/'),
-    __param(0, common_1.Locals('userInfo')),
+    __param(0, common_1.HeaderParams('cookie')),
+    __param(1, common_1.Locals('userInfo')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [model.UserSession]),
+    __metadata("design:paramtypes", [String, model.UserSession]),
     __metadata("design:returntype", Promise)
 ], ForumsController.prototype, "index", null);
 __decorate([
@@ -224,21 +228,23 @@ __decorate([
     common_1.Render('forum/thread_create'),
     common_1.Get('/thread/thread'),
     common_1.Use(middleware.auth.YesAuth),
-    __param(0, common_1.Locals('userInfo')),
-    __param(1, common_1.QueryParams('subid', Number)),
+    __param(0, common_1.HeaderParams('cookie')),
+    __param(1, common_1.Locals('userInfo')),
+    __param(2, common_1.QueryParams('subid', Number)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [model.UserSession, Number]),
+    __metadata("design:paramtypes", [String, model.UserSession, Number]),
     __metadata("design:returntype", Promise)
 ], ForumsController.prototype, "forumThreadCreate", null);
 __decorate([
     common_1.Render('forum/create_reply'),
     common_1.Get('/thread/thread'),
     common_1.Use(middleware.auth.YesAuth),
-    __param(0, common_1.Locals('userInfo')),
-    __param(1, common_1.QueryParams('threadId', Number)),
-    __param(2, common_1.QueryParams('page', Number)),
+    __param(0, common_1.HeaderParams('cookie')),
+    __param(1, common_1.Locals('userInfo')),
+    __param(2, common_1.QueryParams('threadId', Number)),
+    __param(3, common_1.QueryParams('page', Number)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [model.UserSession, Number, Number]),
+    __metadata("design:paramtypes", [String, model.UserSession, Number, Number]),
     __metadata("design:returntype", Promise)
 ], ForumsController.prototype, "forumPostCreate", null);
 __decorate([

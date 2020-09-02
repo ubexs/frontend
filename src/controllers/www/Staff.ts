@@ -1,4 +1,4 @@
-import { Controller, Get, All, Next, Req, Res, UseBefore, Render, QueryParams, PathParams, Redirect, Response, Request, Locals, UseAfter, Required, Use, UseBeforeEach } from "@tsed/common";
+import { Controller, Get, All, Next, Req, Res, UseBefore, Render, QueryParams, PathParams, Redirect, Response, Request, Locals, UseAfter, Required, Use, UseBeforeEach, HeaderParams } from "@tsed/common";
 import base from '../base'
 // Models
 import * as model from '../../models'
@@ -224,9 +224,13 @@ export class WWWStaffController extends base {
     @Get('/staff/forums')
     @Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManageForumCategories))
     @Render('staff/forums')
-    public async modifyForums() {
-        let cats: any = await this.Forums.getCategories();
-        let subs: any = await this.Forums.getSubCategories();
+    public async modifyForums(
+        @Locals('userInfo') userData: model.UserSession,
+        @HeaderParams('cookie') cookie: string,
+    ) {
+        let s = new base({ cookie });
+        let cats: any = await s.Forums.getCategories();
+        let subs: any = await s.Forums.getSubCategories(userData.staff);
         for (const sub of subs) {
             for (const cat of cats) {
                 if (sub.categoryId === cat.categoryId) {
