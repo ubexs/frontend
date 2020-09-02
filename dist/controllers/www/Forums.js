@@ -100,7 +100,7 @@ let ForumsController = class ForumsController extends base_1.default {
         ViewData.page.threadId = threadInfo.threadId;
         return ViewData;
     }
-    async thread(res, userData, numericId, page) {
+    async thread(res, userData, cookie, numericId, page) {
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -109,10 +109,13 @@ let ForumsController = class ForumsController extends base_1.default {
             throw new this.BadRequest('InvalidThreadId');
         }
         let ViewData = new model.WWWTemplate({ title: 'Thread' });
+        let s = new base_1.default({
+            cookie,
+        });
         let threadInfo;
         ViewData.page = {};
         try {
-            threadInfo = await this.Forums.getThreadById(numericId);
+            threadInfo = await s.Forums.getThreadById(numericId);
             if (threadInfo.threadDeleted === model.Forums.threadDeleted.true) {
                 threadInfo.title = '[ Deleted ' + threadInfo.threadId + ' ]';
                 ViewData.page.deleted = true;
@@ -123,7 +126,7 @@ let ForumsController = class ForumsController extends base_1.default {
         }
         let forumSubCategory;
         try {
-            forumSubCategory = await this.Forums.getSubCategoryById(threadInfo.subCategoryId);
+            forumSubCategory = await s.Forums.getSubCategoryById(threadInfo.subCategoryId);
             if (forumSubCategory.permissions.read > rank) {
                 throw false;
             }
@@ -133,7 +136,7 @@ let ForumsController = class ForumsController extends base_1.default {
         }
         let forumCategory;
         try {
-            forumCategory = await this.Forums.getCategoryById(forumSubCategory.categoryId);
+            forumCategory = await s.Forums.getCategoryById(forumSubCategory.categoryId);
         }
         catch (e) {
             throw new this.BadRequest('InvalidThreadId');
@@ -152,7 +155,10 @@ let ForumsController = class ForumsController extends base_1.default {
         ViewData.page.threadPinned = threadInfo.threadPinned;
         return ViewData;
     }
-    async subCategory(res, userData, numericId, page) {
+    async subCategory(res, userData, numericId, cookie, page) {
+        let s = new base_1.default({
+            cookie,
+        });
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -162,7 +168,7 @@ let ForumsController = class ForumsController extends base_1.default {
         }
         let forumSubCategory;
         try {
-            forumSubCategory = await this.Forums.getSubCategoryById(numericId);
+            forumSubCategory = await s.Forums.getSubCategoryById(numericId);
             if (forumSubCategory.permissions.read > rank) {
                 throw false;
             }
@@ -172,14 +178,14 @@ let ForumsController = class ForumsController extends base_1.default {
         }
         let forumCategory;
         try {
-            forumCategory = await this.Forums.getCategoryById(forumSubCategory.categoryId);
+            forumCategory = await s.Forums.getCategoryById(forumSubCategory.categoryId);
         }
         catch (e) {
             throw new this.BadRequest('InvalidCategoryId');
         }
         let allForumSubCategories;
         try {
-            allForumSubCategories = await this.Forums.getSubCategories(rank);
+            allForumSubCategories = await s.Forums.getSubCategories(rank);
         }
         catch (e) {
             throw new this.BadRequest('InvalidSubCategoryId');
@@ -240,10 +246,11 @@ __decorate([
     common_1.Get('/thread/:id'),
     __param(0, common_1.Res()),
     __param(1, common_1.Locals('userInfo')),
-    __param(2, common_1.PathParams('id', Number)),
-    __param(3, common_1.QueryParams('page', Number)),
+    __param(2, common_1.HeaderParams('cookie')),
+    __param(3, common_1.PathParams('id', Number)),
+    __param(4, common_1.QueryParams('page', Number)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, model.UserSession, Number, Number]),
+    __metadata("design:paramtypes", [Object, model.UserSession, String, Number, Number]),
     __metadata("design:returntype", Promise)
 ], ForumsController.prototype, "thread", null);
 __decorate([
@@ -252,9 +259,10 @@ __decorate([
     __param(0, common_1.Res()),
     __param(1, common_1.Locals('userInfo')),
     __param(2, common_1.PathParams('subCategoryId', Number)),
-    __param(3, common_1.QueryParams('page', Number)),
+    __param(3, common_1.HeaderParams('cookie')),
+    __param(4, common_1.QueryParams('page', Number)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, model.UserSession, Number, Number]),
+    __metadata("design:paramtypes", [Object, model.UserSession, Number, String, Number]),
     __metadata("design:returntype", Promise)
 ], ForumsController.prototype, "subCategory", null);
 ForumsController = __decorate([

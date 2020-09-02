@@ -121,6 +121,7 @@ export class ForumsController extends base {
     public async thread(
         @Res() res: Res,
         @Locals('userInfo') userData: model.UserSession,
+        @HeaderParams('cookie') cookie: string,
         @PathParams('id', Number) numericId: number,
         @QueryParams('page', Number) page?: number,
     ) {
@@ -132,10 +133,13 @@ export class ForumsController extends base {
             throw new this.BadRequest('InvalidThreadId');
         }
         let ViewData = new model.WWWTemplate<any>({ title: 'Thread' });
+        let s = new base({
+            cookie,
+        });
         let threadInfo;
         ViewData.page = {};
         try {
-            threadInfo = await this.Forums.getThreadById(numericId);
+            threadInfo = await s.Forums.getThreadById(numericId);
             if (threadInfo.threadDeleted === model.Forums.threadDeleted.true) {
                 threadInfo.title = '[ Deleted ' + threadInfo.threadId + ' ]';
                 ViewData.page.deleted = true;
@@ -145,7 +149,7 @@ export class ForumsController extends base {
         }
         let forumSubCategory: model.Forums.SubCategories;
         try {
-            forumSubCategory = await this.Forums.getSubCategoryById(threadInfo.subCategoryId);
+            forumSubCategory = await s.Forums.getSubCategoryById(threadInfo.subCategoryId);
             if (forumSubCategory.permissions.read > rank) {
                 throw false;
             }
@@ -154,7 +158,7 @@ export class ForumsController extends base {
         }
         let forumCategory: model.Forums.Categories;
         try {
-            forumCategory = await this.Forums.getCategoryById(forumSubCategory.categoryId);
+            forumCategory = await s.Forums.getCategoryById(forumSubCategory.categoryId);
         } catch (e) {
             throw new this.BadRequest('InvalidThreadId');
         }
@@ -183,8 +187,12 @@ export class ForumsController extends base {
         @Res() res: Res,
         @Locals('userInfo') userData: model.UserSession,
         @PathParams('subCategoryId', Number) numericId: number,
+        @HeaderParams('cookie') cookie: string,
         @QueryParams('page', Number) page?: number,
     ) {
+        let s = new base({
+            cookie,
+        });
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -194,7 +202,7 @@ export class ForumsController extends base {
         }
         let forumSubCategory: model.Forums.SubCategories;
         try {
-            forumSubCategory = await this.Forums.getSubCategoryById(numericId);
+            forumSubCategory = await s.Forums.getSubCategoryById(numericId);
             if (forumSubCategory.permissions.read > rank) {
                 throw false;
             }
@@ -204,13 +212,13 @@ export class ForumsController extends base {
         // grab category info
         let forumCategory;
         try {
-            forumCategory = await this.Forums.getCategoryById(forumSubCategory.categoryId);
+            forumCategory = await s.Forums.getCategoryById(forumSubCategory.categoryId);
         } catch (e) {
             throw new this.BadRequest('InvalidCategoryId');
         }
         let allForumSubCategories: model.Forums.SubCategories[];
         try {
-            allForumSubCategories = await this.Forums.getSubCategories(rank);
+            allForumSubCategories = await s.Forums.getSubCategories(rank);
         } catch (e) {
             throw new this.BadRequest('InvalidSubCategoryId');
         }
