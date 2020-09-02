@@ -37,7 +37,10 @@ const errorTransform = (errCode) => {
             return 'Your username must be at least 3 characters.';
         }
         case 'OneAccountPerIP': {
-            return 'Sorry! You can\'t signup right now. Please try again later.';
+            return 'Sorry! You can\'t signup right now. Please try again later. Error Code: OneAccountPerIP';
+        }
+        case 'RequestDisallowed': {
+            return 'Sorry! You can\'t do this right now. Error Code: RequestDisallowed';
         }
         case 'CannotSendRequest': {
             return 'You cannot send this request right now.';
@@ -112,7 +115,7 @@ const errorTransform = (errCode) => {
             return 'The option specified is invalid.';
         }
         case 'CaptchaValidationFailed': {
-            return 'Captcha Validation Failed. Please fill out the captcha.';
+            return 'Captcha Validation Failed. Please fill out the captcha. Code: CaptchaValidationFailed';
         }
         case 'InvalidGroupPermissions': {
             return 'You do not have permission to perform this action.';

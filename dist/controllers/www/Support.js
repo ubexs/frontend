@@ -85,6 +85,57 @@ let WWWSupportController = class WWWSupportController extends base_1.default {
             }
         });
     }
+    SignupHelpSupport() {
+        return new model.WWWTemplate({
+            title: 'Help Signing Upp',
+            page: {
+                article: `
+                <h1>Signup Help</h1>
+                <br>
+                <p>We're really sorry for the inconvenience you may be experiencing right now. You should read through this article and try any of the troubleshooting steps provided. If nothing matches your problem, or nothing fixes your problem, you can <a href="/support">create a support ticket here</a>.</p>
+
+                <div style="margin-top:1rem;"></div>
+
+                <h3>Error Code "RequestDisallowed"</h3>
+                <p>If you get the "RequestDisallowed" error code, there are a variety of fixes you can try:</p>
+                <ul>
+                    <li>Confirm you are not using any VPN or IP spoofing software</li>
+                    <li>If you are on a mobile network (such as LTE), try connecting to wifi (or vice-versa)</li>
+                    <li>If you are on public WiFi, such as at a store or coffee shop, try signing up on your own WiFi network at your home</li>
+                    <li>Try rebooting your router. The easiest way to do this is by unplugging your router, waiting about 1 minute, then plugging it back in</li>
+                    <li>Try a different web browser or device (if possible)</li>
+                    <li>Run a virus scan on your computer and any other devices connected to your network</li>
+                </ul>
+                <p>If nothing above works, it may be neccesary to contact support.</p>
+
+                <div style="margin-top:1rem;"></div>
+
+                <h3>Error Code "OneAccountPerIP"</h3>
+                <p>This error code means that either you, or someone else on your network, recently signed up on BlocksHub. To prevent abuse, we limit the amount of times a user can register an account every 24 hours. You can try some of the fixes below to see if they help:</p>
+                <ul>
+                    <li>Confirm you are not using any VPN or IP spoofing software</li>
+                    <li>If you are on a mobile network (such as LTE), try connecting to wifi (or vice-versa)</li>
+                    <li>If you are on public WiFi, such as at a store or coffee shop, try signing up on your own WiFi network at your home</li>
+                    <li>Try rebooting your router. The easiest way to do this is by unplugging your router, waiting about 1 minute, then plugging it back in</li>
+                </ul>
+                <p>If nothing above works, your best option is to wait a day or two and then try to signup again.</p>
+
+                <div style="margin-top:1rem;"></div>
+                
+                <h3>Error Code "CaptchaValidationFailed"</h3>
+                <p>This error code means that the captcha you solved seems to be invalid or otherwise not quite right. It's possible that your device or network appears to be malicious, so there are some related fixes you can try:</p>
+                <ul>
+                    <li>Confirm you are not using any VPN or IP spoofing software</li>
+                    <li>If you are on a mobile network (such as LTE), try connecting to wifi (or vice-versa)</li>
+                    <li>If you are on public WiFi, such as at a store or coffee shop, try signing up on your own WiFi network at your home</li>
+                    <li>Try rebooting your router. The easiest way to do this is by unplugging your router, waiting about 1 minute, then plugging it back in</li>
+                </ul>
+                <p>If nothing above works, it may be neccesary to contact support.</p>
+                
+                `,
+            }
+        });
+    }
     GameHelpSupport() {
         return new model.WWWTemplate({
             title: 'Help Playing Games',
@@ -312,6 +363,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], WWWSupportController.prototype, "BrowserNotCompatible", null);
+__decorate([
+    common_1.Get('/signup-help'),
+    common_1.Render('support_article'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], WWWSupportController.prototype, "SignupHelpSupport", null);
 __decorate([
     common_1.Get('/game-help'),
     common_1.Render('support_article'),

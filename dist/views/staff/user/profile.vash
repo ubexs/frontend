@@ -13,7 +13,7 @@
                                 <h5><p><a href="/users/@model.page.userInfo.userId/profile">Profile</a></p></h5>
                             </div>
                             <div class="col-12">
-                                <img src="/api/v1/user/@model.page.userInfo.userId/thumbnail/redirect" style="width:100%;display:block;margin:0 auto;" />
+                                <img src="@model.apiBaseUrl/api/v1/user/@model.page.userInfo.userId/thumbnail/redirect" style="width:100%;display:block;margin:0 auto;" />
                             </div>
                             <div class="col-12">
                                 @if (model.page.online) {
