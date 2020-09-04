@@ -103,7 +103,7 @@ let ForumsController = class ForumsController extends base_1.default {
         ViewData.page.threadId = threadInfo.threadId;
         return ViewData;
     }
-    async thread(res, userData, cookie, numericId, page) {
+    async thread(userData, cookie, numericId, page) {
         let rank = 0;
         if (userData) {
             rank = userData.staff;
@@ -250,13 +250,12 @@ __decorate([
 __decorate([
     common_1.Render('forum/thread'),
     common_1.Get('/thread/:id'),
-    __param(0, common_1.Res()),
-    __param(1, common_1.Locals('userInfo')),
-    __param(2, common_1.HeaderParams('cookie')),
-    __param(3, common_1.PathParams('id', Number)),
-    __param(4, common_1.QueryParams('page', Number)),
+    __param(0, common_1.Locals('userInfo')),
+    __param(1, common_1.HeaderParams('cookie')),
+    __param(2, common_1.PathParams('id', Number)),
+    __param(3, common_1.QueryParams('page', Number)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, model.UserSession, String, Number, Number]),
+    __metadata("design:paramtypes", [model.UserSession, String, Number, Number]),
     __metadata("design:returntype", Promise)
 ], ForumsController.prototype, "thread", null);
 __decorate([

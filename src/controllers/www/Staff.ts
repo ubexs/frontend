@@ -3,6 +3,7 @@ import base from '../base'
 // Models
 import * as model from '../../models'
 import * as middleware from '../../middleware/v1';
+import { Summary } from "@tsed/swagger";
 const { YesAuth, NoAuth } = middleware.auth;
 
 
@@ -252,6 +253,17 @@ export class WWWStaffController extends base {
     @Render('staff/tickets')
     public staffTickets() {
         return new model.WWWTemplate({ title: 'View Tickets Awaiting Response' });
+    }
+
+    @Get('/staff/tickets/:ticketId')
+    @Summary('Ticket manager')
+    @Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManageSupportTickets))
+    @Render('staff/ticket')
+    public staffTicket(
+        @PathParams('ticketId', Number) ticketId: number
+    ) {
+        console.log(ticketId);
+        return new model.WWWTemplate({ title: 'Loading...' });
     }
 
     @Get('/staff/user/search')

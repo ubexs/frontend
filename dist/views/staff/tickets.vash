@@ -1,22 +1,19 @@
 @html.extend('layouts/staff', function(model) {
     @html.block('content', function(model) {
         <div class="row">
-            <div class="col-12">
-                <h2>Open Tickets</h2>
-                <p>All tickets awaiting customer support response.</p>
-                <hr />
+            <div class="col-12 col-md-6" >
+                <h2>Support Tickets</h2>
+            </div>
+            <div class="col-6 col-md-6">
+                <select class="form-control ticket-search-mode">
+                    <option value="1" selected="selected">Awaiting CS Response</option>
+                    <option value="2">Awaiting Customer Response</option>
+                    <option value="3">Closed</option>
+                    <option value="4">Requires More Time</option>
+                    <option value="all">All</option>
+                </select>
             </div>
             <div class="col-12" id="tickets">
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12" >
-                <h2>Latest Tickets</h2>
-                <p>Latest tickets that are in a state other than awaiting CS response (closed, awaiting processing, etc).</p>
-                <hr />
-            </div>
-            <div class="col-12" id="tickets-any-state">
 
             </div>
         </div>

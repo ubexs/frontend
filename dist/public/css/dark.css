@@ -204,3 +204,12 @@ div.navBarMobileBottom > div > div > p > a {
 div#more-expanded > div.col-5 {
     background: #161a20;
 }
+.support-ticket-text-box {
+    background: #0e1215;
+}
+a.ticket-click {
+    color: #FFFFFF;
+}
+a.ticket-click:hover {
+    color: #FFFFFF;
+}

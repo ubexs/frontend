@@ -125,7 +125,6 @@ export class ForumsController extends base {
     @Render('forum/thread')
     @Get('/thread/:id')
     public async thread(
-        @Res() res: Res,
         @Locals('userInfo') userData: model.UserSession,
         @HeaderParams('cookie') cookie: string,
         @PathParams('id', Number) numericId: number,

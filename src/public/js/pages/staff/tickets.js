@@ -1,3 +1,196 @@
+
+const statuses = {
+    1: `<span class="badge badge-warning">Pending Support Response</span>`,
+    2: `<span class="badge badge-dark">Pending Customer Response</span>`,
+    3: `<span class="badge badge-success">Closed</span>`,
+    4: `<span class="badge badge-warning">Staff Need More Time</span>`,
+}
+let searchStatus = $('.ticket-search-mode').val();
+const sleep = (amt) => {
+    return new Promise(res => {
+        setTimeout(res, amt);
+    })
+}
+
+$(document).on('change', '.ticket-search-mode', function (e) {
+    e.preventDefault();
+    let val = $(this).val();
+    searchStatus = val;
+    loadTickets();
+});
+let currentTicketsResponse = [];
+const loadTickets = () => {
+    let url = '/staff/support/tickets?status=' + searchStatus;
+    request(url, 'GET')
+        .then(d => {
+            currentTicketsResponse = d;
+            let t = $('#tickets').empty();
+            if (d.length === 0) {
+                return t.append(`<p>Thare are no tickets at this time.</p>`);
+            }
+            let ids = [];
+            for (const ticket of d) {
+                ids.push(ticket.userId);
+                t.append(`
+                <div class="row" style="margin-bottom:0.5rem;">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="#" class="ticket-click" data-ticket-id="${ticket.ticketId}" data-open="false">
+                                    <div class="row">
+                                        <div class="col-8 ticket-overview">
+                                            <p style="font-weight: bold">${ticket.ticketTitle}</p>
+                                            <p style="font-size:0.75rem;">Created ${moment(ticket.createdAt).fromNow()}</p>
+                                            <p style="font-size:0.75rem;">By <span data-userid="${ticket.userId}">Loading...</span></p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p style="text-align:right;">${statuses[ticket.ticketStatus]}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row ticket-data-row"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                
+                `);
+            }
+            setUserNames(ids);
+        }).catch(e => {
+            console.error('fetch tickets error', e);
+        });
+}
+loadTickets();
+$(document).on('click', '.ticket-close', function (e) {
+    e.preventDefault();
+    let par = $(this).parent().parent().parent();
+    if ($(par).attr('data-loading') === 'true') {
+        console.log('loading');
+        return;
+    }
+    if ($(par).attr('data-open') === 'true') {
+        console.log('empty');
+        $(par).find('div.row.ticket-data-row').first().empty();
+        $(par).attr('data-open', 'false');
+        $(par).attr('data-loading', 'true');
+        setTimeout(() => {
+            $(par).attr('data-loading', 'false');
+        }, 500);
+        $(par).css('cursor', 'pointer');
+        $(this).remove();
+    }
+});
+$(document).on('click', '.ticket-click', function (e) {
+    e.preventDefault();
+    console.log('ticket click');
+    let ticketId = parseInt($(this).attr('data-ticket-id'), 10);
+    let ticketInfo = currentTicketsResponse.filter(val => {
+        return val.ticketId === ticketId;
+    })[0] || {};
+    if ($(this).attr('data-loading') === 'true') {
+        return;
+    }
+    let isOpen = $(this).attr('data-open') === 'true';
+    if (isOpen) {
+        return;
+        // Close it
+        $(this).find('div.row.ticket-data-row').first().empty();
+        $(this).attr('data-open', 'false');
+    } else {
+        $(this).css('cursor', 'default');
+        $(this).find('.ticket-overview').first().append(`<span class="badge badge-warning ticket-close" style="cursor:pointer;">Hide Replies</span>`);
+        // Open it
+        $(this).css('opacity', '0.5').attr('data-open', 'true').attr('data-loading', 'true');
+        let dat = $(this).find('div.row.ticket-data-row').first();
+        let ticketMeta = dat.append(`<div class="col-12 ticket-meta" style="margin-top:1rem;"></div>`).find(`.ticket-meta`);
+        ticketMeta.append(`
+        
+            <p class="support-ticket-text-box">${ticketInfo.ticketBody}</p>
+            <hr />
+        
+        `);
+        let ticketReplies = dat.append(`<div class="col-12 ticket-replies"></div>`).find(`.ticket-replies`);
+        Promise.all([
+            sleep(250),
+            request('/staff/support/ticket/' + ticketId + '/replies', 'GET').then(d => {
+                if (d.length === 0) {
+                    ticketReplies.append(`
+                            <p>There are 0 replies to this ticket.</p>
+                    `);
+                } else {
+                    let ids = [];
+                    for (const reply of d) {
+                        ids.push(reply.userId);
+                        ticketReplies.append(`
+                        
+                        <p style="font-weight:bold;font-size:0.85rem;margin-bottom:0.5rem;"><span data-userid="${reply.userId}">Loading...</span> on ${moment(reply.createdAt).format('MMM DD YYYY')}:</p>
+                        <p class="support-ticket-text-box" style="margin:1rem;">${reply.ticketBody}</p>
+                        <hr />
+                        
+                        `);
+                    }
+                    setUserNames(ids);
+                }
+                ticketReplies.append(`
+                <br>
+                <h4>REPLY</h4>
+                <textarea class="form-control reply-body" data-id="${ticketId}" rows="4" placeholder="Reply Text." maxlength="4096"></textarea>
+                <div class="row" style="margin-top:1rem;">
+                    <div class="col-6">
+                        <p style="font-weight:bold;font-size:0.85rem;">Reply Mode<p>
+                        <select class="form-control hide-reply" data-id="${ticketId}">
+                            <option value="true">Show Reply to customer</option>
+                            <option value="false">Hide Reply from customer</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <p style="font-weight:bold;font-size:0.85rem;">Ticket Status<p>
+                        <select class="form-control reply-mode-on-ticket" data-id="${ticketId}">
+                            <option value="2">Require Customer Response</option>
+                            <option value="4">Require More Time</option>
+                            <option value="3">Close</option>
+                        </select>
+                    </div>
+                    <div class="col-12" style="margin-top:1rem">
+                        <button class="btn btn-success submit-reply" data-id="${ticketId}">Submit</button>
+                    </div>
+                </div>
+                
+                `);
+            }),
+        ]).finally(() => {
+            $(this).css('opacity', '1').attr('data-loading', 'false');
+        });
+    }
+});
+$(document).on('click', '.submit-reply', function (e) {
+    e.preventDefault();
+    loading();
+    let id = $(this).attr('data-id');
+    let body = $('.reply-body[data-id="' + id + '"]').val();
+    let reply = $(`.reply-mode-on-ticket[data-id="${id}"]`).val();
+    let hideReplyMode = $(`.hide-reply[data-id="${id}"]`).val();
+
+    let promises = [];
+    promises.push(request('/staff/support/ticket/' + id + '/status', 'PATCH', {
+        'status': reply,
+    }));
+    if (body) {
+        promises.push(request('/staff/support/ticket/' + id + '/reply', 'POST', {
+            body: body,
+            'visibleToClient': hideReplyMode,
+        }));
+    }
+    Promise.all(promises).then(d => {
+        window.location.reload();
+    })
+        .catch(e => {
+            warning(e.responseJSON.message);
+        })
+});
+
+/*
 $(document).on('click', '.submit-reply', function(e) {
     e.preventDefault();
     loading();
@@ -34,7 +227,7 @@ request('/staff/support/tickets-awaiting-response', 'GET')
     let ids = [];
     for (const tick of d) {
         $('#tickets').append(`
-        
+
         <div class="row">
             <div class="col-12 col-lg-6">
                 <h1 style="font-size:1rem;margin-bottom:0;">${tick.ticketTitle.escape()}</h1>
@@ -71,8 +264,8 @@ request('/staff/support/tickets-awaiting-response', 'GET')
                 <hr />
             </div>
         </div>
-        
-        
+
+
         `);
         ids.push(userId);
     }
@@ -87,7 +280,7 @@ request('/staff/support/tickets-awaiting-response', 'GET')
             for (const reply of d) {
                 userIds.push(reply.userId);
                 $(this).append(`
-                
+
                 <div class="row">
                     <div class="col-12">
                         <p><span data-userid="${reply.userId}">Loading...</span> - ${moment(reply.createdAt).fromNow()}</p>
@@ -95,7 +288,7 @@ request('/staff/support/tickets-awaiting-response', 'GET')
                         <hr />
                     </div>
                 </div>
-                
+
                 `);
             }
             setUserNames(userIds);
@@ -116,7 +309,7 @@ request('/staff/support/tickets-all', 'GET')
     let ids = [];
     for (const tick of d) {
         $('#tickets-any-state').append(`
-        
+
         <div class="row">
             <div class="col-12 col-lg-6">
                 <h1 style="font-size:1rem;margin-bottom:0;">${tick.ticketTitle.escape()}</h1>
@@ -153,8 +346,8 @@ request('/staff/support/tickets-all', 'GET')
                 <hr />
             </div>
         </div>
-        
-        
+
+
         `);
         ids.push(userId);
     }
@@ -169,7 +362,7 @@ request('/staff/support/tickets-all', 'GET')
             for (const reply of d) {
                 userIds.push(reply.userId);
                 $(this).append(`
-                
+
                 <div class="row">
                     <div class="col-12">
                         <p><span data-userid="${reply.userId}">Loading...</span> - ${moment(reply.createdAt).fromNow()}</p>
@@ -177,7 +370,7 @@ request('/staff/support/tickets-all', 'GET')
                         <hr />
                     </div>
                 </div>
-                
+
                 `);
             }
             setUserNames(userIds);
@@ -187,3 +380,4 @@ request('/staff/support/tickets-all', 'GET')
 .catch(e => {
     $('#tickets-any-state').empty().append(`<p>Thare are no tickets at this time.</p>`);
 });
+*/

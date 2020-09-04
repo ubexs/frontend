@@ -18,7 +18,7 @@ class Forums extends base_1.default {
         const info = await this.v1.get('/forum/thread/' + threadId + '/info');
         return info.data;
     }
-    async getCategories(minRank = 0) {
+    async getCategories() {
         const info = await this.v1.get('/forum/categories');
         return info.data;
     }
@@ -43,7 +43,7 @@ class Forums extends base_1.default {
         return info.data;
     }
     async getSubCategoryById(subCategoryId) {
-        const subs = await this.getSubCategories(Number.MAX_SAFE_INTEGER);
+        const subs = await this.getSubCategories();
         let found = undefined;
         for (const sub of subs) {
             if (sub.subCategoryId === subCategoryId) {

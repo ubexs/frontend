@@ -31,9 +31,8 @@ export default class Forums extends base {
 
     /**
      * Get all categories
-     * @param minRank Minimum rank to read a post in the category. Defaults to 0
      */
-    public async getCategories(minRank: number = 0): Promise<model.Forums.Categories[]> {
+    public async getCategories(): Promise<model.Forums.Categories[]> {
         const info = await this.v1.get('/forum/categories');
         return info.data;
     }
@@ -69,7 +68,7 @@ export default class Forums extends base {
     }
 
     public async getSubCategoryById(subCategoryId: number): Promise<model.Forums.SubCategories> {
-        const subs = await this.getSubCategories(Number.MAX_SAFE_INTEGER);
+        const subs = await this.getSubCategories();
         let found: any = undefined;
         for (const sub of subs) {
             if (sub.subCategoryId === subCategoryId) {

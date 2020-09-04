@@ -748,3 +748,18 @@ div.navBarMobileBottom > div.border-right {
 div#more-expanded > div.col-5 {
     background: #ffffff;
 }
+
+.support-ticket-text-box {
+    padding: 0.5rem 0.65rem;
+    height: 10rem;
+    overflow-x:auto;
+    white-space: pre-wrap;
+}
+a.ticket-click {
+    text-decoration: none;
+    color: #212529;
+}
+a.ticket-click:hover {
+    text-decoration: none;
+    color: #212529;
+}
