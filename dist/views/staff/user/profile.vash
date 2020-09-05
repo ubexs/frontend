@@ -140,7 +140,7 @@
                             </div>
                             <div class="col-4">
                                 <p>Auto Fill</p>
-                                @['Swearing','Harassment','Dating','Offsite Links','Bad Image','Scamming','Account Theft'].forEach(function(reason, index) {
+                                @['Swearing','Harassment','Dating','Offsite Links','Bad Image','Scamming','Account Theft'].forEach((reason, index) => {
                                     <div class="row" style="padding-bottom:0.5rem;">
                                         <div class="col-12">
                                             <button type="button" class="btn btn-secondary autofill-reason" data-id="@index" style="width:100%;">@reason</button>
@@ -482,9 +482,12 @@
                         <div class="card-body">
                             <h3>Staff Permissions</h3>
                             @for (const item of model.page.staffPermissionSelect) {
+                                @{
+                                    item.displaySelected = (item.selected === true ? 'checked' : '');
+                                }
                                 @{item.id=Math.floor((Math.random() + 100) * 100000)}
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input update-permissions-checkbox" @(item.selected === true ? 'checked' : '') id="checkbox-auto-id-@item.string-@item.id" data-permission="@item.string">
+                                    <input autocomplete="off" type="checkbox" class="form-check-input update-permissions-checkbox" @html.raw(item.displaySelected) id="checkbox-auto-id-@item.string-@item.id" data-permission="@item.string">
                                     <label class="form-check-label" for="checkbox-auto-id-@item.string-@item.id">@item.string</label>
                                 </div>
                             }

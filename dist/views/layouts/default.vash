@@ -252,7 +252,7 @@
                         <div class="dropdown-menu dropdown-menu-right fade" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/dashboard"><i class="fas fa-home"></i> Home</a>
                             @if (model.userInfo && model.userInfo.staff >= 1) {
-                                <a class="dropdown-item staff-sidebar-button" href="#"><i class="fas fa-lock"></i> Staff</a>
+                                <a class="dropdown-item" href="/staff/directory"><i class="fas fa-lock"></i> Staff</a>
                             }
                             @html.block('extraNavItemBelowHome')
                             <a class="dropdown-item" href="/users/@model.userInfo.userId/profile"><i class="fas fa-id-card"></i> My Profile</a>
@@ -330,93 +330,7 @@
         }
 
 
-        @if (model.userInfo && model.userInfo.staff >= 1 && model.hasPerm) {
-            <div class="staff-sidebar">
-                <div class="card" style="height:100%;min-height: 100vh;">
-                    <div class="card-body" style="height:100%;">
-                        <h3 style="font-size:1rem;">GENERAL</h3>
-                        @if (model.hasPerm('ReviewPendingItems')) {
-                            <a class="normal" href="/staff/catalog">
-                                <p class="staff-item">PENDING ITEMS</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('ManageBanner')) {
-                            <a class="normal" href="/staff/banner">
-                                <p class="staff-item">BANNER</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('ManageSupportTickets')) {
-                            <a class="normal" href="/staff/tickets">
-                                <p class="staff-item">VIEW TICKETS</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('ManageSupportTickets')) {
-                            <a class="normal" href="/staff/create">
-                                <p class="staff-item">CREATE ITEM</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('ManageForumCategories')) {
-                            <a class="normal" href="/staff/forums">
-                                <p class="staff-item">FORUMS</p>
-                            </a>
-                        }
-
-                        @if (model.hasPerm('ReviewAbuseReports')) {
-                            <div class="seperator-staff"></div>
-
-                            <h3 style="font-size:1rem;">ABUSE REPORTS</h3>
-                            <a class="normal" href="/staff/report-abuse/user-status">
-                                <p class="staff-item">USER STATUS</p>
-                            </a>
-                        }
-
-                        <div class="seperator-staff"></div>
-
-                        <h3 style="font-size:1rem;">USER</h3>
-                        @if (model.hasPerm('ManagePublicUserInfo')) {
-                            <a class="normal" href="/staff/user/search">
-                                <p class="staff-item">SEARCH</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('BanUser')) {
-                            <a class="normal" href="/staff/ban">
-                                <p class="staff-item">BAN</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('UnbanUser')) {
-                            <a class="normal" href="/staff/unban">
-                                <p class="staff-item">UNBAN</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('ResetPassword')) {
-                            <a class="normal" href="/staff/password">
-                                <p class="staff-item">RESET PASSWORD</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('GiveItemToUser')) {
-                            <a class="normal" href="/staff/give">
-                                <p class="staff-item">GIVE ITEM</p>
-                            </a>
-                        }
-                        @if (model.hasPerm('GiveCurrencyToUser')) {
-                            <a class="normal" href="/staff/give/currency">
-                                <p class="staff-item">GIVE CURRENCY</p>
-                            </a>
-                        }
-
-                        @if (model.hasPerm('ManageCurrencyProducts')) {
-                            <div class="seperator-staff"></div>
-
-                            <h3 style="font-size:1rem;">ECONOMY</h3>
-                            <a class="normal" href="/staff/currency-product">
-                                <p class="staff-item">CURRENCY PRODUCTS</p>
-                            </a>
-                        }
-
-                    </div>
-                </div>
-            </div>
-        }
+    
 
 
         @html.block('aboveLeaderboardAd')

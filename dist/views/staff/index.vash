@@ -2,56 +2,85 @@
   @html.block('content', function(model) {
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Staff Index</h1>
-                    <p>I'll make this look better eventually ;-;</p>
+                    <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">Hello, @model.userInfo.username</h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                <h5>Links</h5>
-                    <ul>
-                    @{
-                        const pages = [
-                            [
-                                'ban',
-                                'Ban a User',
-                            ],
-                            [
-                                'unban',
-                                'Unban a User',
-                            ],
-                            [
-                                'password',
-                                'Reset someone\'s password',
-                            ],
-                            [
-                                'give',
-                                'Give an Item to a user',
-                            ],
-                            [
-                                'give/currency',
-                                'Give Currency to a user',
-                            ],
-                            [
-                                'create',
-                                'Create a Catalog Item',
-                            ],
-                            [
-                                'catalog/',
-                                'View and Moderate Pending Catalog Items'
-                            ]
-                        ]
-                        function capitalizeFirstLetter(string) {
-                            let uppercased = string.charAt(0).toUpperCase() + string.slice(1);
-                            uppercased = uppercased.replace(new RegExp('\/'), ' ');
-                            return uppercased;
-                        }
-                        pages.forEach((el) => {
-                            <li><a href="@el[0]">@capitalizeFirstLetter(el[0])</a> - @el[1]</li>
-                        })
+            @{
+                // 0 = name, 1 = url, 2 = font awesome class, 3 = required permission
+                model.links = [
+                    [
+                        'PENDING ITEMS',
+                        '/staff/catalog',
+                        'fas fa-smile',
+                        'ReviewPendingItems',
+                    ],
+                    [
+                        'SITE BANNER',
+                        '/staff/banner',
+                        'fas fa-exclamation-triangle',
+                        'ManageBanner',
+                    ],
+                    [
+                        'SUPPORT TICKETS',
+                        '/staff/tickets',
+                        'fas fa-envelope',
+                        'ManageSupportTickets',
+                    ],
+                    [
+                        'CREATE ITEM',
+                        '/staff/create',
+                        'fas fa-hat-cowboy',
+                    ],
+                    [
+                        'FORUMS',
+                        '/staff/forums',
+                        'fas fa-user-tie',
+                        'ManageForumCategories',
+                    ],
+                    [
+                        'ABUSE REPORTS',
+                        '/staff/report-abuse/user-status',
+                        'fas fa-flag',
+                        'ReviewAbuseReports',
+                    ],
+                    [
+                        'SEARCH USERS',
+                        '/staff/user/search',
+                        'fas fa-user',
+                        'ManagePublicUserInfo',
+                    ],
+                    [
+                        'CURRENCY PRODUCTS',
+                        '/staff/currency-product',
+                        'fas fa-money-bill-wave-alt',
+                        'ManageCurrencyProducts',
+                    ]
+                ].filter(val => {
+                    return model.hasPerm(val[3]);
+                })
+            }
+            <div class="row" style="margin-top:1rem;">
+                @if (model.links.length === 0) {
+                    <div class="col-12">
+                        <p>Oops, it looks like you don't have access to anything.</p>
+                    </div>
+                }else{
+                    for (const item of model.links) {
+                        <div class="col-md-4 col-6" style="margin-bottom:1rem;">
+                            <div class="card staff-card-index">
+                                <div class="card-body">
+                                    <a href="@item[1]">
+                                        <h5 class="text-truncate">
+                                            <i class="@item[2]"></i>
+                                            <br>
+                                            @item[0]
+                                        </h5>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     }
-                    </ul>
-                </div>
+                }
             </div>
   })
   @html.block('js', function(model) {
