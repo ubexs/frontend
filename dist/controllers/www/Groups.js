@@ -12,6 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GroupsController = void 0;
 const base_1 = require("../base");
 const common_1 = require("@tsed/common");
 const model = require("../../models/index");
@@ -110,7 +111,7 @@ __decorate([
 __decorate([
     common_1.Get('/create'),
     swagger_1.Summary('Create group page'),
-    common_1.Render('group_create'),
+    common_1.Render('groups/create'),
     common_1.Use(middleware.auth.YesAuth),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),

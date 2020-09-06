@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.validate = exports.AddPermissionsToLocals = void 0;
 const model = require("../../models");
 const base_1 = require("../../controllers/base");
 exports.AddPermissionsToLocals = async (req, res, next) => {

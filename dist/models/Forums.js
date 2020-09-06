@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PostSnippet = exports.UserForumsInfo = exports.threadPinned = exports.threadLocked = exports.threadDeleted = exports.postDeleted = void 0;
 const common_1 = require("@tsed/common");
 var postDeleted;
 (function (postDeleted) {

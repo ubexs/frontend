@@ -12,6 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ForumsController = void 0;
 const base_1 = require("../base");
 const common_1 = require("@tsed/common");
 const model = require("../../models/index");
@@ -225,7 +226,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ForumsController.prototype, "search", null);
 __decorate([
-    common_1.Render('forum/thread_create'),
+    common_1.Render('forum/create_thread'),
     common_1.Get('/thread/thread'),
     common_1.Use(middleware.auth.YesAuth),
     __param(0, common_1.HeaderParams('cookie')),

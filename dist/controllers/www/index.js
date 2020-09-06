@@ -12,6 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GenericWWWController = void 0;
 const base_1 = require("../base");
 const common_1 = require("@tsed/common");
 const model = require("../../models/index");
@@ -76,11 +77,6 @@ let GenericWWWController = class GenericWWWController extends base_1.default {
     transactions() {
         return new model.WWWTemplate({
             title: 'Transactions',
-        });
-    }
-    ads() {
-        return new model.WWWTemplate({
-            title: 'Ads',
         });
     }
     settings() {
@@ -265,15 +261,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], GenericWWWController.prototype, "transactions", null);
-__decorate([
-    common_1.Get('/ads'),
-    swagger_1.Summary('User ads manage page/overview'),
-    common_1.Render('ad/dashboard'),
-    common_1.Use(middleware.auth.YesAuth),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], GenericWWWController.prototype, "ads", null);
 __decorate([
     common_1.Get('/settings'),
     swagger_1.Summary('User account settings'),

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MigrateRBXSession = void 0;
 exports.MigrateRBXSession = () => {
     return (req, res, next) => {
         if (typeof req.cookies === 'object' && req.cookies !== null) {

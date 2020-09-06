@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SupportTicketReply = exports.TicketStatus = exports.TicketInfo = void 0;
 class TicketInfo {
 }
 exports.TicketInfo = TicketInfo;

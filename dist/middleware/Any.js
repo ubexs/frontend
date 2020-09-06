@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getJavascript = exports.getIp = exports.generateCspWithNonce = exports.version = exports.lbOrigin = exports.getCspString = exports.hostName = exports.environment = exports.processId = exports.csp = void 0;
 const crypto = require("crypto");
 const os = require("os");
 const moment = require("moment");

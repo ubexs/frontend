@@ -18,7 +18,7 @@ export class GroupsController extends base {
 
     @Get('/create')
     @Summary('Create group page')
-    @Render('group_create')
+    @Render('groups/create')
     @Use(middleware.auth.YesAuth)
     public groupCreate() {
         return new model.WWWTemplate({ 'title': 'Create a Group' });

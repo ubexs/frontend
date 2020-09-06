@@ -124,16 +124,6 @@ export class GenericWWWController extends base {
         })
     }
 
-    @Get('/ads')
-    @Summary('User ads manage page/overview')
-    @Render('ad/dashboard')
-    @Use(middleware.auth.YesAuth)
-    public ads() {
-        return new model.WWWTemplate({
-            title: 'Ads',
-        })
-    }
-
     @Get('/settings')
     @Summary('User account settings')
     @Render('settings')

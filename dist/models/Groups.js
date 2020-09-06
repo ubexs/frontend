@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GroupJoinRequest = exports.GroupOwnershipChangeEntry = exports.GroupOwnershipChangeType = exports.groupShout = exports.roleInfo = exports.MultiGetNames = exports.groupDetails = exports.groupStatus = exports.GroupMemberApprovalStatus = exports.groupPermissions = exports.GroupCreationFee = exports.GROUP_CREATION_COST = exports.ROLE_DESCRIPTION_MIN_LENGTH = exports.ROLE_DESCRIPTION_MAX_LENGTH = exports.ROLE_NAME_MIN_LENGTH = exports.ROLE_NAME_MAX_LENGTH = exports.MIN_RANK_VALUE = exports.MAX_RANK_VALUE = exports.MAX_GROUP_ROLES = exports.MAX_GROUPS = void 0;
 const common_1 = require("@tsed/common");
 const swagger_1 = require("@tsed/swagger");
 exports.MAX_GROUPS = 100;

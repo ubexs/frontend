@@ -12,6 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WWWGameController = void 0;
 const common_1 = require("@tsed/common");
 const swagger_1 = require("@tsed/swagger");
 const model = require("../../models/index");

@@ -12,11 +12,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WWWStaffController = void 0;
 const common_1 = require("@tsed/common");
 const base_1 = require("../base");
 const model = require("../../models");
 const middleware = require("../../middleware/v1");
-const swagger_1 = require("@tsed/swagger");
 const { YesAuth, NoAuth } = middleware.auth;
 let WWWStaffController = class WWWStaffController extends base_1.default {
     constructor() {
@@ -68,10 +68,6 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
         return new model.WWWTemplate({ title: 'Edit Banner' });
     }
     async moderationProfile(localUserData, userId, req) {
-        const staff = localUserData.staff > 1;
-        if (!staff) {
-            throw new this.BadRequest('InvalidPermissions');
-        }
         let s = new base_1.default({ cookie: req.headers['cookie'] });
         let userInfo = await s.Users.getInfo(userId);
         let moderationHistory;
@@ -178,10 +174,6 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
     }
     staffTickets() {
         return new model.WWWTemplate({ title: 'View Tickets Awaiting Response' });
-    }
-    staffTicket(ticketId) {
-        console.log(ticketId);
-        return new model.WWWTemplate({ title: 'Loading...' });
     }
     searchUsers() {
         return new model.WWWTemplate({ title: 'Search Users' });
@@ -331,16 +323,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], WWWStaffController.prototype, "staffTickets", null);
-__decorate([
-    common_1.Get('/staff/tickets/:ticketId'),
-    swagger_1.Summary('Ticket manager'),
-    common_1.Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManageSupportTickets)),
-    common_1.Render('staff/ticket'),
-    __param(0, common_1.PathParams('ticketId', Number)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], WWWStaffController.prototype, "staffTicket", null);
 __decorate([
     common_1.Get('/staff/user/search'),
     common_1.Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ReviewUserInformation)),

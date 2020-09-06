@@ -63,7 +63,7 @@ export class ForumsController extends base {
         });
     }
 
-    @Render('forum/thread_create')
+    @Render('forum/create_thread')
     @Get('/thread/thread')
     @Use(middleware.auth.YesAuth)
     public async forumThreadCreate(

@@ -121,10 +121,6 @@ export class WWWStaffController extends base {
         @QueryParams('userId') userId: any,
         @Req() req: Req,
     ) {
-        const staff = localUserData.staff > 1;
-        if (!staff) {
-            throw new this.BadRequest('InvalidPermissions');
-        }
         let s = new base({ cookie: req.headers['cookie'] });
         let userInfo: any = await s.Users.getInfo(userId);
         let moderationHistory;
@@ -253,17 +249,6 @@ export class WWWStaffController extends base {
     @Render('staff/tickets')
     public staffTickets() {
         return new model.WWWTemplate({ title: 'View Tickets Awaiting Response' });
-    }
-
-    @Get('/staff/tickets/:ticketId')
-    @Summary('Ticket manager')
-    @Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManageSupportTickets))
-    @Render('staff/ticket')
-    public staffTicket(
-        @PathParams('ticketId', Number) ticketId: number
-    ) {
-        console.log(ticketId);
-        return new model.WWWTemplate({ title: 'Loading...' });
     }
 
     @Get('/staff/user/search')

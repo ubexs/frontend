@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Sentry = exports.init = exports.isEnabled = void 0;
 const Sentry = require("@sentry/node");
 exports.Sentry = Sentry;
 let _isEnabled = false;
