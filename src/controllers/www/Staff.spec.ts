@@ -113,7 +113,7 @@ describe('StaffController.modifyUserInventory()', () => {
             }
         } as any;
 
-        const results = await staff.modifyUserInventory(userId);
+        const results = await staff.modifyUserInventory(userId, '');
         expect(results).to.be.instanceOf(model.WWWTemplate);
         if (!results.page) {
             throw new Error('Page is undefined');

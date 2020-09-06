@@ -55,9 +55,9 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
     giveCurrency() {
         return new model.WWWTemplate({ title: 'Give Currency' });
     }
-    async modifyUserInventory(userId) {
-        userId = base_1.default.ValidateId(userId);
-        let infoOfUserToEdit = await this.Users.getInfo(userId);
+    async modifyUserInventory(userId, cookie) {
+        let s = new base_1.default({ cookie });
+        let infoOfUserToEdit = await s.Users.getInfo(userId);
         return new model.WWWTemplate({
             title: 'Modify User Inventory', page: {
                 profileData: infoOfUserToEdit
@@ -272,8 +272,9 @@ __decorate([
     common_1.Render('staff/user/inventory'),
     __param(0, common_1.Required()),
     __param(0, common_1.QueryParams('userId', Number)),
+    __param(1, common_1.HeaderParams('cookie')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, String]),
     __metadata("design:returntype", Promise)
 ], WWWStaffController.prototype, "modifyUserInventory", null);
 __decorate([

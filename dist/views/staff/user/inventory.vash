@@ -1,4 +1,4 @@
-@html.extend('layouts/default', function(model) {
+@html.extend('layouts/staff', function(model) {
     @html.block('content', function(model) {
         <div id="profile-info" data-userid="@model.page.profileData.userId"></div>
         <div class="row" style="margin-top:1rem;">

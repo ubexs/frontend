@@ -1,4 +1,4 @@
-import { Controller, Get, All, Next, Req, Res, UseBefore, Render, QueryParams, PathParams, Redirect, Response, Request, Locals, UseAfter, Required, Use, UseBeforeEach, HeaderParams } from "@tsed/common";
+import { Controller, Get, All, Next, Req, Res, UseBefore, Render, QueryParams, PathParams, Redirect, Response, Request, Locals, UseAfter, Required, Use, UseBeforeEach, HeaderParams, Cookies } from "@tsed/common";
 import base from '../base'
 // Models
 import * as model from '../../models'
@@ -96,9 +96,10 @@ export class WWWStaffController extends base {
     public async modifyUserInventory(
         @Required()
         @QueryParams('userId', Number) userId: number,
+        @HeaderParams('cookie') cookie: string,
     ) {
-        userId = base.ValidateId(userId);
-        let infoOfUserToEdit = await this.Users.getInfo(userId);
+        let s = new base({ cookie })
+        let infoOfUserToEdit = await s.Users.getInfo(userId);
         return new model.WWWTemplate<any>({
             title: 'Modify User Inventory', page: {
                 profileData: infoOfUserToEdit
