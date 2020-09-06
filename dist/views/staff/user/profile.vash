@@ -500,26 +500,6 @@
                 </div>
             </div>
         }
-        <div class="row" style="padding-top:1rem;">
-                    <div class="col-sm-12"><h1>Transactions</h1></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody id="transactionsBodyDisplay">
-                            
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
     })
     @html.block('js', function(model) {
         @*
@@ -533,7 +513,6 @@
         <script nonce="@model.nonce" src="/js/pages/staff/password.js?v=@model.v"></script>
         <script nonce="@model.nonce" src="/js/pages/staff/stats.js?v=@model.v"></script>
         <script nonce="@model.nonce" src="/js/pages/staff/changerank.js?v=@model.v"></script>
-        <script nonce="@model.nonce" src="/js/pages/staff/transactions.js?v=@model.v"></script>
         <script nonce="@model.nonce" src="/js/impersonate.js?v=@model.v"></script>
     })
 })
