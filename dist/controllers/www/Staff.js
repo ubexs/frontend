@@ -178,6 +178,36 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
     searchUsers() {
         return new model.WWWTemplate({ title: 'Search Users' });
     }
+    async searchUsersResults(cookie, req) {
+        let q = {};
+        let column = '';
+        let query = '';
+        if (typeof req.query.userId === 'string') {
+            q.userId = req.query.userId;
+            query = q.userId;
+            column = 'userId';
+        }
+        else if (typeof req.query.email === 'string') {
+            q.email = req.query.email;
+            query = q.email;
+            column = 'email';
+        }
+        else if (typeof req.query.username === 'string') {
+            q.username = req.query.username;
+            query = q.username;
+            column = 'username';
+        }
+        let s = new base_1.default({ cookie });
+        let results = await s.Staff.searchUsers(q);
+        return new model.WWWTemplate({
+            title: 'Search Users',
+            page: {
+                results: results,
+                column,
+                query,
+            }
+        });
+    }
 };
 __decorate([
     common_1.Get('/staff'),
@@ -332,6 +362,16 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], WWWStaffController.prototype, "searchUsers", null);
+__decorate([
+    common_1.Get('/staff/user/search_results'),
+    common_1.Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManagePublicUserInfo)),
+    common_1.Render('staff/user/search_results'),
+    __param(0, common_1.HeaderParams('cookie')),
+    __param(1, common_1.Req()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], WWWStaffController.prototype, "searchUsersResults", null);
 WWWStaffController = __decorate([
     common_1.Controller("/"),
     common_1.UseBefore(middleware.staff.AddPermissionsToLocals),

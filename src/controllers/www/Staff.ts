@@ -259,14 +259,42 @@ export class WWWStaffController extends base {
         return new model.WWWTemplate({ title: 'Search Users' });
     }
 
-    /*
+
     @Get('/staff/user/search_results')
     @Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManagePublicUserInfo))
     @Render('staff/user/search_results')
     public async searchUsersResults(
+        @HeaderParams('cookie') cookie: string,
         @Req() req: Req,
     ) {
-        // has to be moved to json api...
+        let q: any = {}
+        let column = '';
+        let query = '';
+        if (typeof req.query.userId === 'string') {
+            q.userId = req.query.userId;
+            query = q.userId;
+            column = 'userId';
+        } else if (typeof req.query.email === 'string') {
+            q.email = req.query.email;
+            query = q.email;
+            column = 'email';
+        } else if (typeof req.query.username === 'string') {
+            q.username = req.query.username;
+            query = q.username;
+            column = 'username';
+        }
+        // constuct new base
+        let s = new base({ cookie });
+        // make the request
+        let results = await s.Staff.searchUsers(q);
+        return new model.WWWTemplate({
+            title: 'Search Users',
+            page: {
+                results: results,
+                column,
+                query,
+            }
+        });
     }
-    */
+
 }

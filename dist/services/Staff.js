@@ -30,5 +30,8 @@ class Staff extends base_1.default {
     getUserEmails(userId) {
         return this.v1.get('/staff/user/emails?userId=' + userId).then(d => { return d.data; });
     }
+    searchUsers(req) {
+        return this.v1.get('/staff/user/search?userId=' + (req.userId || '') + '&username=' + (req.username || '') + '&email=' + (req.email || '')).then(d => { return d.data; });
+    }
 }
 exports.default = Staff;

@@ -39,6 +39,10 @@ export default class Staff extends base {
         return this.v1.get('/staff/user/emails?userId=' + userId).then(d => { return d.data });
     }
 
+    public searchUsers(req: Partial<{ userId: number; email: string; username: string }>): Promise<{ userId: number; username: string }[]> {
+        return this.v1.get('/staff/user/search?userId=' + (req.userId || '') + '&username=' + (req.username || '') + '&email=' + (req.email || '')).then(d => { return d.data });
+    }
+
 
 
 }
