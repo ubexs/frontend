@@ -1,18 +1,33 @@
 @html.extend('layouts/staff', function(model) {
     @html.block('content', function(model) {
         <div class="row">
-            <div class="col-12 col-md-6" >
+            <div class="col-12" >
                 <h2>User Leaderboard</h2>
             </div>
-            <div class="col-6 col-md-6">
+            <div class="col-6">
+                <label style="font-weight:bold;margin-bottom:0;">Sort</label>
                 <select class="form-control users-search-mode">
-                    <option value="PrimaryCurrencyDesc" selected="selected">Top Primary Currency</option>
+                    <option value="UserIdAsc" selected="selected">UserID</option>
+                    <option value="PrimaryCurrencyDesc">Top Primary Currency</option>
                     <option value="SecondaryCurrencyDesc">Top Secondary Currency</option>
-                    <option value="UserIdAsc">UserID</option>
+                    <option value="LastOnlineAsc">Last Online (Oldest)</option>
+                    <option value="LastOnlineDesc">Last Online (Latest)</option>
                 </select>
             </div>
+            <div class="col-6">
+                <label style="font-weight:bold;margin-bottom:0;">Account Status Constraint</label>
+                <select class="form-control users-status-mode">
+                    <option value="all" selected="selected">All Accounts</option>
+                    <option value="ok">OK</option>
+                    <option value="banned">Temporary Ban</option>
+                    <option value="terminated">Terminated</option>
+                    <option value="deleted">Deleted</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
-                <div class="row" style="margin-top:1rem;margin-bottom:1rem;">
+                <div class="row" style="margin-top:2rem;margin-bottom:1rem;">
                     <div class="col-3">
                         <p style="font-weight: bold;">Username</p>
                     </div>
@@ -27,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12" id="users">
+            <div class="col-12" id="users" style="padding-bottom:6rem;">
 
             </div>
         </div>
@@ -35,9 +50,16 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12" style="margin-top:1rem;margin-bottom:1rem;z-index:9999;">
-                        <div class="card">
+                        <div class="card" style="box-shadow: 0 0 15px 1px #c3c3c3;">
                             <div class="card-body">
-                                <p id="next-page" style="cursor:pointer;">Next Page</p>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p id="previous-page" style="cursor:pointer;font-weight:bold;user-select: none;">Previous Page</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p id="next-page" style="cursor:pointer;font-weight:bold;user-select: none;">Next Page</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

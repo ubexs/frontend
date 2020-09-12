@@ -50,6 +50,12 @@
                         'ManagePublicUserInfo',
                     ],
                     [
+                        'USERS LEADERBOARD',
+                        '/staff/user/leaderboard',
+                        'fas fa-list-ol',
+                        'ReviewUserInformation',
+                    ],
+                    [
                         'CURRENCY PRODUCTS',
                         '/staff/currency-product',
                         'fas fa-money-bill-wave-alt',
@@ -81,6 +87,9 @@
                         </div>
                     }
                 }
+                <div class="col-12" style="margin-top:1rem;">
+                    <p>If you think you are missing permissions, contact beak on discord!</p>
+                </div>
             </div>
   })
   @html.block('js', function(model) {
