@@ -128,6 +128,11 @@
 
                         <h3 style="font-size:1rem;">USER</h3>
                         @if (model.hasPerm('ManagePublicUserInfo')) {
+                            <a class="normal" href="/staff/user/leaderboard">
+                                <p class="staff-item">LEADERBOARD</p>
+                            </a>
+                        }
+                        @if (model.hasPerm('ManagePublicUserInfo')) {
                             <a class="normal" href="/staff/user/search">
                                 <p class="staff-item">SEARCH</p>
                             </a>

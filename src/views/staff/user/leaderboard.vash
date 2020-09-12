@@ -1,0 +1,51 @@
+@html.extend('layouts/staff', function(model) {
+    @html.block('content', function(model) {
+        <div class="row">
+            <div class="col-12 col-md-6" >
+                <h2>User Leaderboard</h2>
+            </div>
+            <div class="col-6 col-md-6">
+                <select class="form-control users-search-mode">
+                    <option value="PrimaryCurrencyDesc" selected="selected">Top Primary Currency</option>
+                    <option value="SecondaryCurrencyDesc">Top Secondary Currency</option>
+                    <option value="UserIdAsc">UserID</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <div class="row" style="margin-top:1rem;margin-bottom:1rem;">
+                    <div class="col-3">
+                        <p style="font-weight: bold;">Username</p>
+                    </div>
+                    <div class="col-3">
+                        <p style="font-weight: bold;">Balances</p>
+                    </div>
+                    <div class="col-3">
+                        <p style="font-weight: bold;">Last Online</p>
+                    </div>
+                    <div class="col-3">
+                        <p style="font-weight: bold;">Status</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" id="users">
+
+            </div>
+        </div>
+        <div class="fixed-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" style="margin-top:1rem;margin-bottom:1rem;z-index:9999;">
+                        <div class="card">
+                            <div class="card-body">
+                                <p id="next-page" style="cursor:pointer;">Next Page</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/staff/user/leaderboard.js?v=@model.v"></script>
+    })
+})

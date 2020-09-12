@@ -175,6 +175,9 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
     staffTickets() {
         return new model.WWWTemplate({ title: 'View Tickets Awaiting Response' });
     }
+    userLeaderboard() {
+        return new model.WWWTemplate({ title: 'User Leaderboard' });
+    }
     searchUsers() {
         return new model.WWWTemplate({ title: 'Search Users' });
     }
@@ -354,6 +357,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], WWWStaffController.prototype, "staffTickets", null);
+__decorate([
+    common_1.Get('/staff/user/leaderboard'),
+    common_1.Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManagePublicUserInfo)),
+    common_1.Render('staff/user/leaderboard'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], WWWStaffController.prototype, "userLeaderboard", null);
 __decorate([
     common_1.Get('/staff/user/search'),
     common_1.Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ReviewUserInformation)),

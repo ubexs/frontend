@@ -252,6 +252,13 @@ export class WWWStaffController extends base {
         return new model.WWWTemplate({ title: 'View Tickets Awaiting Response' });
     }
 
+    @Get('/staff/user/leaderboard')
+    @Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManagePublicUserInfo))
+    @Render('staff/user/leaderboard')
+    public userLeaderboard() {
+        return new model.WWWTemplate({ title: 'User Leaderboard' });
+    }
+
     @Get('/staff/user/search')
     @Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ReviewUserInformation))
     @Render('staff/user/search')
