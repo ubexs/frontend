@@ -36,12 +36,12 @@ const loadTickets = () => {
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <a href="#" class="ticket-click" data-ticket-id="${ticket.ticketId}" data-open="false">
+                                <div class="ticket-click" data-ticket-id="${ticket.ticketId}" data-open="false" style="cursor:pointer;">
                                     <div class="row">
                                         <div class="col-8 ticket-overview">
                                             <p style="font-weight: bold">${ticket.ticketTitle}</p>
                                             <p style="font-size:0.75rem;">Created ${moment(ticket.createdAt).fromNow()}</p>
-                                            <p style="font-size:0.75rem;">By <span data-userid="${ticket.userId}">Loading...</span></p>
+                                            <p style="font-size:0.75rem;">By <a href="/staff/user/profile?userId=${ticket.userId}"><span data-userid="${ticket.userId}">Loading...</span></a></p>
                                         </div>
                                         <div class="col-4">
                                             <p style="text-align:right;">${statuses[ticket.ticketStatus]}</p>
@@ -81,8 +81,8 @@ $(document).on('click', '.ticket-close', function (e) {
         $(this).remove();
     }
 });
-$(document).on('click', '.ticket-click', function (e) {
-    e.preventDefault();
+$(document).on('click', 'div.ticket-click', function (e) {
+    // e.preventDefault();
     console.log('ticket click');
     let ticketId = parseInt($(this).attr('data-ticket-id'), 10);
     let ticketInfo = currentTicketsResponse.filter(val => {
@@ -93,11 +93,13 @@ $(document).on('click', '.ticket-click', function (e) {
     }
     let isOpen = $(this).attr('data-open') === 'true';
     if (isOpen) {
+        console.log('is open');
         return;
         // Close it
         $(this).find('div.row.ticket-data-row').first().empty();
         $(this).attr('data-open', 'false');
     } else {
+        console.log('is closed');
         $(this).css('cursor', 'default');
         $(this).find('.ticket-overview').first().append(`<span class="badge badge-warning ticket-close" style="cursor:pointer;">Hide Replies</span>`);
         // Open it
@@ -124,7 +126,8 @@ $(document).on('click', '.ticket-click', function (e) {
                         ids.push(reply.userId);
                         ticketReplies.append(`
                         
-                        <p style="font-weight:bold;font-size:0.85rem;margin-bottom:0.5rem;"><span data-userid="${reply.userId}">Loading...</span> on ${moment(reply.createdAt).format('MMM DD YYYY')}:</p>
+                        <p style="font-weight:bold;font-size:0.85rem;margin-bottom:0.5rem;">
+                        <a href="/staff/user/profile?userId=${reply.userId}"><span data-userid="${reply.userId}">Loading...</span></a> on ${moment(reply.createdAt).format('MMM DD YYYY')}:</p>
                         <p class="support-ticket-text-box" style="margin:1rem;">${reply.ticketBody}</p>
                         <hr />
                         

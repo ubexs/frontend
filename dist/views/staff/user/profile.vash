@@ -125,6 +125,7 @@
                             </div>
                             <div class="col-12">
                                 <p><a href="#" id="impersonate-user" data-userId="@model.page.userInfo.userId">Impersonate User</a></p>
+                                <p><a href="/staff/user/inventory?userId=@model.page.userInfo.userId">Manage Collectible Inventory</a></p>
                             </div>
 
                         </div>

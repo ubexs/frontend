@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-body" id="main-card">
                         <h1 style="font-size:2rem;">Edit <a href="/staff/user/profile?userId=@model.page.profileData.userId">@model.page.profileData.username</a>'s Inventory</h1>
-                        <p id="take-items">Take Items</p>
+                        <button type="button" class="btn btn-secondary" id="take-items">Take Items</button>
                         @*<p id="give-items">Give Items</p>*@
                     </div>
                 </div>

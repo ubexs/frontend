@@ -11,10 +11,19 @@ const takeItemsState = {
 }
 
 let card = $('#main-card');
-$(document).on('click', '#take-items', function(e) {
+$(document).on('click', '#take-items', function (e) {
     e.preventDefault();
     card.empty();
-    card.append(`<div class="row"><div class="col s6"><h3>Take Items</h3></div><div class="col s6"><p style="text-align: right;" id="submit-take-items-request">Submit</p></div></div></div>`);
+    card.append(`
+    <div class="row" style="margin-bottom:1rem;">
+        <div class="col s6">
+            <h3>Take Items</h3>
+            <p style="font-size:0.85rem;">Click on one or more items to select them, then press submit to continue.</p>
+        </div>
+        <div class="col s6">
+            <button style="float:right;" type="button" class="btn btn-secondary" id="submit-take-items-request">Submit</button>
+        </div>
+    </div>`);
 
     card.append(`<div class="row" id="loading"><div class="col s12">Loading...</div></div>`);
 
@@ -27,7 +36,7 @@ $(document).on('click', '#take-items', function(e) {
  */
 const getSelectedItems = () => {
     let ids = [];
-    $('.remove-item-card').each(function() {
+    $('.remove-item-card').each(function () {
         if ($(this).attr('data-selected') === 'true') {
             ids.push(parseInt($(this).attr('data-user-inventory-id'), 10));
         }
@@ -35,21 +44,21 @@ const getSelectedItems = () => {
     return ids;
 }
 
-$(document).on('click', 'div.row.load-more-items-row', function(e) {
-   e.preventDefault();
-   loadItemsToTake();
+$(document).on('click', 'div.row.load-more-items-row', function (e) {
+    e.preventDefault();
+    loadItemsToTake();
 });
 
-$(document).on('click', '#submit-take-items-request', function(e) {
+$(document).on('click', '#submit-take-items-request', function (e) {
     e.preventDefault();
     let items = getSelectedItems();
     if (items.length === 0) {
         return warning('You must select at least one item.');
     }
-    questionYesNoHtml('Please confirm the userInventoryIds are OK:<br>'+items.join('<br>'), () => {
+    questionYesNoHtml('Please confirm the userInventoryIds are OK:<br>' + items.join('<br>'), () => {
         question('Enter the username of the new owner.', user => {
             loading();
-            request('/user/username?username='+user, 'GET').then(userId => {
+            request('/user/username?username=' + user, 'GET').then(userId => {
                 let userIdToTransferTo = userId.userId;
                 request('/staff/user/inventory/transfer-item', 'PATCH', {
                     userIdTo: userIdToTransferTo,
@@ -73,17 +82,17 @@ $(document).on('click', '#submit-take-items-request', function(e) {
     });
 });
 
-$(document).on('click', '.remove-item-card', function(e) {
+$(document).on('click', '.remove-item-card', function (e) {
     e.preventDefault();
     let isSelected = $(this).attr('data-selected');
     if (isSelected === 'true') {
         // Unselect
-        $(this).attr('data-selected','false');
-        $(this).css('border','none');
-    }else{
+        $(this).attr('data-selected', 'false');
+        $(this).css('border', 'none');
+    } else {
         // Select
-        $(this).attr('data-selected',true);
-        $(this).css('border','4px solid green');
+        $(this).attr('data-selected', true);
+        $(this).css('border', '4px solid green');
     }
 });
 
@@ -104,13 +113,13 @@ const loadItemsToTake = () => {
     }
     takeItemsState.loading = true;
     loadMoreItems.hide();
-    request('/user/'+profile.userId+'/inventory/collectibles?offset='+takeItemsState.offset+'&limit='+takeItemsState.limit+'&query='+takeItemsState.query, 'GET').then(results => {
+    request('/user/' + profile.userId + '/inventory/collectibles?offset=' + takeItemsState.offset + '&limit=' + takeItemsState.limit + '&query=' + takeItemsState.query, 'GET').then(results => {
         console.log(results);
         takeItemsState.offset += 100;
         takeItemsState.canLoadMore = results.areMoreAvailable;
         if (takeItemsState.canLoadMore) {
             loadMoreItems.show();
-        }else{
+        } else {
             loadMoreItems.hide()
         }
         card.find('#loading').remove();
@@ -118,9 +127,9 @@ const loadItemsToTake = () => {
         let ids = [];
         for (const entry of results.items) {
             ids.push(entry.catalogId);
-            let serialDisplay = '<p style="font-size:0.75rem;">User Inventory ID: '+entry.userInventoryId+'</p>';
+            let serialDisplay = '<p style="font-size:0.75rem;">User Inventory ID: ' + entry.userInventoryId + '</p>';
             if (entry.serial) {
-                serialDisplay = '<p style="font-size:0.75rem;">Serial: #'+entry.serial+' ('+entry.userInventoryId+')</p>';
+                serialDisplay = '<p style="font-size:0.75rem;">Serial: #' + entry.serial + ' (' + entry.userInventoryId + ')</p>';
             }
             row.append(`
             <div class="col-6 col-md-4 col-lg-3 col-xl-2 remove-item-card" data-user-inventory-id="${entry.userInventoryId}">

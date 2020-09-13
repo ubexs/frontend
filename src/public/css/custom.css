@@ -754,6 +754,7 @@ div#more-expanded > div.col-5 {
     height: 10rem;
     overflow-x:auto;
     white-space: pre-wrap;
+    background: #f5f6f8;
 }
 a.ticket-click {
     text-decoration: none;

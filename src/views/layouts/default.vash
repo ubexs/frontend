@@ -430,7 +430,7 @@
 
         @if (model.userInfo && model.userInfo.isImpersonating) {
                                 <div class="col-12">
-                                    <p id="leave-impersonate">Exit Impersonation</p>
+                                    <button style="margin:1rem 0;" id="leave-impersonate" type="button" class="btn btn-secondary" id="submit-take-items-request">Exit Impersonation</button>
                                 </div>
                                 <script src="/js/impersonate.js?v=@model.v" nonce="@model.nonce"></script>
         }
