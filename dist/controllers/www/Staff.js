@@ -106,6 +106,7 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
         ViewData.page.isOver13 = isOver13;
         ViewData.page.isEmailVerified = isEmailVerified;
         ViewData.page.userInfo = userInfo;
+        ViewData.page.userInfo.lastOnlineFormatted = this.moment(userInfo.lastOnline).format('MMMM Do YYYY, h:mm:ss a');
         ViewData.page.ModerationHistory = moderationHistory;
         ViewData.page.userEmails = userEmails;
         ViewData.page.twoFactorEnabled = twoFactorEnabled;

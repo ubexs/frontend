@@ -1,4 +1,15 @@
-$(document).on('click', '#banUser', function() {
+$(document).on('change', '#ban-type', function (e) {
+    e.preventDefault();
+    let v = $(this).val();
+    console.log('v', v);
+    if (v === '2') {
+        $('#ban-len').show();
+    } else {
+        $('#ban-len').hide();
+    }
+});
+
+$(document).on('click', '#banUser', function () {
     var userid = $('#userId').val();
     var reason = $('#reason').val();
     var len = parseInt($('#length').val());
@@ -6,21 +17,34 @@ $(document).on('click', '#banUser', function() {
         len = 0;
     }
     var lenType = $('#lengthType').val();
-    var term = parseInt($('#isTerminated').val());
-    var del = parseInt($('#isDeleted').val());
+    var term = 0;
+    var del = 0;
     var privateReason = $('#privateNotes').val();
-    request("/staff/user/"+userid+"/ban", "POST", JSON.stringify({"reason":reason,"privateReason": privateReason,"length":len,"lengthType":lenType,"terminated":term,"deleted":del}))
-        .then(function() {
-            success("This user has been banned.", function() {
+
+    var type = $('#ban-type').val();
+    if (type !== '2') {
+        lenType = 'hours';
+        len = 0;
+    }
+    if (type === '4') {
+        del = 1;
+        term = 1;
+    }
+    if (type === '3') {
+        del = 0;
+        term = 1;
+    }
+    request("/staff/user/" + userid + "/ban", "POST", JSON.stringify({ "reason": reason, "privateReason": privateReason, "length": len, "lengthType": lenType, "terminated": term, "deleted": del }))
+        .then(function () {
+            success("This user has been banned.", function () {
             })
         })
-        .catch(function(e) {
+        .catch(function (e) {
             warning(e.responseJSON.message);
         });
 });
 
-$(document).on('click', '.autofill-reason', function(e) {
-    console.log('Click')
+$(document).on('click', '.autofill-reason', function (e) {
     e.preventDefault();
     switch (parseInt($(this).attr('data-id'), 10)) {
         case 0: {

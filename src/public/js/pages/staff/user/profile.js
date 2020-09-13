@@ -113,6 +113,44 @@ request('/staff/user/' + $('#userId').val() + '/associated-accounts')
     .catch(e => {
         $('#associatedAccountsArray').html(`<p>There was an error loading the accounts. Try again later.</p>`);
     })
+
+
+$(document).on('click', '.delete-comment', function (e) {
+    e.preventDefault();
+    let id = parseInt($(this).attr('data-comment-id'), 10);
+    console.log('delete comment', id);
+    request('/staff/user/' + $('#userId').val() + '/comments/' + id, 'DELETE', {}).then(() => {
+        window.location.reload();
+    });
+});
+
+function onMessageContent() {
+    let sub = $('#staffMessageSubject').val();
+    let msg = $('#staffMessageText').val();
+    if (msg.length >= 5 && sub.length >= 5) {
+        $('#sendStaffMessage').removeAttr('disabled');
+    } else {
+        $('#sendStaffMessage').attr('disabled', 'disabled');
+    }
+}
+$(document).on('change', '#staffMessageSubject', onMessageContent);
+$(document).on('change', '#staffMessageText', onMessageContent);
+$(document).on('click', '#sendStaffMessage', function (e) {
+    e.preventDefault();
+    questionYesNo('Are you sure you want to send a message?', function () {
+        let sub = $('#staffMessageSubject').val();
+        let msg = $('#staffMessageText').val();
+        request('/staff/user/' + $('#userId').val() + '/message', 'POST', {
+            'subject': sub,
+            'message': msg,
+        }).then(() => {
+            success('The message has been sent.');
+        }).catch(e => {
+            warning(e.responseJSON.message);
+        });
+    });
+});
+
 /**
  * Load User Profile Comments
  */
@@ -136,10 +174,14 @@ const getComments = (offset) => {
             }
             for (const comment of d.comments) {
                 ids.push(comment.staffUserId);
+                let extra = '';
+                if (comment.staffUserId === userId) {
+                    extra = `<p style="margin-top:1rem;color:red;cursor:pointer;" class="delete-comment" data-comment-id="${comment.userCommentId}">Delete</p>`;
+                }
                 $('#staffComments').append(`
             <div class="col-12" style="padding-top:0.5rem;">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-12 col-md-2">
                         <img data-userid="${comment.staffUserId}" style="width:100%;max-width:150px;margin:0 auto;display: block;" />
                         <p class="text-center">
                             <span data-userid="${comment.staffUserId}" style="font-weight:600;"></span>
@@ -148,8 +190,14 @@ const getComments = (offset) => {
                             <span>${moment(comment.dateCreated).format('DD MMM YYYY')}</span>
                         </p>
                     </div>
-                    <div class="col-10">
+                    <div class="col-12 col-md-10">
                         <p>${comment.comment.escapeAllowFormattingBasic()}</p>
+                        ${extra}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr />
                     </div>
                 </div>
             </div>
@@ -205,6 +253,16 @@ $(document).on('click', '#uncheck-all-full-permissions', function (e) {
         $(this).prop("checked", false);
     });
 });
+
+const loadModHistoryNames = () => {
+    let ids = [];
+    $('span.mod-history').each(function () {
+        ids.push(parseInt($(this).attr('data-userid')));
+    });
+    setUserNames(ids);
+}
+loadModHistoryNames();
+
 
 $(document).on('click', '#update-full-permissions', function (e) {
     e.preventDefault();

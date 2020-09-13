@@ -1,9 +1,14 @@
 @html.extend('layouts/staff', function(model) {
     @html.block('content', function(model) {
+        <style>
+            p.space-out-spans > span {
+                margin: 0.15rem;
+            }
+        </style>
         <div class="metadata-for-profile" data-userid="@model.page.userInfo.userId"></div>
         <div class="row">
             <div class="col-sm-12">
-                <h1 style="white-space:pre-wrap;padding-top: 1rem;" class="text-left">@model.page.userInfo.username's Moderation Profile</h1>
+                <h1 style="white-space:pre-wrap;padding-top: 1rem;font-size:1.5rem;" class="text-left">@model.page.userInfo.username's Moderation Profile</h1>
             </div>
             <div class="col-md-4 col-12" style="margin-bottom:1rem;">
                 <div class="card">
@@ -16,33 +21,37 @@
                                 <img src="@model.apiBaseUrl/api/v1/user/@model.page.userInfo.userId/thumbnail/redirect" style="width:100%;display:block;margin:0 auto;" />
                             </div>
                             <div class="col-12">
-                                @if (model.page.online) {
-                                    <p><i class="fas fa-circle" style="color: #46c35b;"></i> [ Online ]</p>
-                                }else{
-                                    <p><i class="fas fa-circle" style="color: grey;"></i> [ Offline ]</p>
-                                }
-                                <p>
-                                    <span style="font-weight:600;">Moderation Status:</span>
+                                <p class="space-out-spans">
+                                    @if (model.page.online) {
+                                        <span class="badge badge-success">ONLINE</span>
+                                    }else{
+                                        <span class="badge badge-dark" data-toggle="tooltip" title="Last seen @model.page.userInfo.lastOnlineFormatted">OFFLINE</span>
+                                    }
                                     @switch(model.page.userInfo.accountStatus) {
                                         case 0: {
-                                            <span style="color:#46c35b;font-weight:100;">OK</span>
+                                            <span class="badge badge-success">OK</span>
                                             break;
                                         }
                                         case 1: {
-                                            <span style="color:grey;font-weight:100;">Temporary Ban</span>
+                                            <span class="badge badge-warning">TEMP BAN</span>
                                             break;
                                         }
                                         case 2: {
-                                            <span style="color:orange;font-weight:100;">Terminated</span>
+                                            <span class="badge badge-warning">TERMINATED</span>
                                             break;
                                         }
                                         case 3: {
-                                            <span style="color:red;font-weight:100;">Deleted</span>
+                                            <span class="badge badge-danger">DELETED</span>
                                             break;
                                         }
                                         default: {
-                                            <span style="font-weight:100;">@model.page.userInfo.accountStatus</span>
+                                            <span class="badge badge-dark">@model.page.userInfo.accountStatus</span>
                                         }
+                                    }
+                                    @if (model.page.isOver13) {
+                                        <span class="badge badge-dark">OVER 13</span>
+                                    }else{
+                                        <span class="badge badge-dark">UNDER 13</span>
                                     }
                                 </p>
                                 <p>
@@ -67,14 +76,6 @@
                                     <span class="formatDate" data-date="@model.page.userInfo.joinDate" style="font-weight:100;"></span>
                                 </p>
                                 <p>
-                                    <span style="font-weight:600;">Over 13: </span>
-                                    @if (model.page.isOver13) {
-                                        <span style="font-weight:100;">Yes</span>
-                                    }else{
-                                        <span style="font-weight:100;">No</span>
-                                    }
-                                </p>
-                                <p>
                                     <span style="font-weight:600;">Email Verified: </span>
                                     @if (model.page.isEmailVerified) {
                                         <span style="font-weight:100;">Yes</span>
@@ -92,40 +93,16 @@
                                         }
                                     </p>
                                 }
-                                @if (model.userInfo.staff >= 2) {
-                                                                    <p>
-                                                                        <span style="font-weight:600;">Is Developer: </span>
-                                                                        <select class="form-control" id="is-developer">
-                                                                        @if (model.page.userInfo.isDeveloper === 1) {
-                                                                            <option value="true" selected>Yes</option>
-                                                                            <option value="false">No</option>
-                                                                        }else{
-                                                                            <option value="true">Yes</option>
-                                                                            <option value="false" selected>No</option>
-                                                                        }
-                                                                        </select>
-                                                                    </p>
-                                                                }
                                 <p>
                                     <span style="font-weight:600;">Mod Level: </span>
                                     <span style="font-weight:100;">@model.page.userInfo.staff</span>
                                 </p>
                             </div>
                             <div class="col-12">
-                                <p><span style="font-weight:600;">Blurb</span> - <span style="color:red;cursor:pointer;" id="deleteUserBlurb">Delete</span></p>
-                                <textarea style="width:100%;" readonly id="userblurb">@model.page.userInfo.blurb</textarea>
-                            </div>
-                            <div class="col-12">
-                                <p><span style="font-weight:600;">User Status</span> - <span style="color:red;cursor:pointer;" id="deleteUserStatus">Delete</span></p>
-                                <textarea style="width:100%;" readonly id="userstatus">@model.page.userInfo.status</textarea>
-                            </div>
-                            <div class="col-12">
-                                <p><span style="font-weight:600;">Forum Signature</span> - <span style="color:red;cursor:pointer;" id="deleteUserForumSignature">Delete</span></p>
-                                <textarea style="width:100%;" readonly id="userforumsignature">@model.page.userInfo.forumSignature</textarea>
-                            </div>
-                            <div class="col-12">
-                                <p><a href="#" id="impersonate-user" data-userId="@model.page.userInfo.userId">Impersonate User</a></p>
                                 <p><a href="/staff/user/inventory?userId=@model.page.userInfo.userId">Manage Collectible Inventory</a></p>
+                            </div>
+                            <div class="col-12">
+                                <button id="impersonate-user" data-userId="@model.page.userInfo.userId" type="button" class="btn btn-secondary" style="width:100%;margin-top:1rem;">Impersonate User</button>
                             </div>
 
                         </div>
@@ -135,14 +112,39 @@
             <div class="col-12 col-md-8">
                 <div class="card">
                     <div class="card-body">
+                        <div class="row" style="margin-bottom:1rem;">
+                            <div class="col-12">
+                                <h5>User Content</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p><span style="font-weight:600;">Blurb</span> - <span style="color:red;cursor:pointer;" id="deleteUserBlurb">Delete</span></p>
+                                <textarea rows="4" class="form-control" style="width:100%;" readonly id="userblurb">@model.page.userInfo.blurb</textarea>
+                            </div>
+                            <div class="col-12">
+                                <p><span style="font-weight:600;">User Status</span> - <span style="color:red;cursor:pointer;" id="deleteUserStatus">Delete</span></p>
+                                <textarea rows="4" class="form-control" style="width:100%;" readonly id="userstatus">@model.page.userInfo.status</textarea>
+                            </div>
+                            <div class="col-12">
+                                <p><span style="font-weight:600;">Forum Signature</span> - <span style="color:red;cursor:pointer;" id="deleteUserForumSignature">Delete</span></p>
+                                <textarea rows="4" class="form-control" style="width:100%;" readonly id="userforumsignature">@model.page.userInfo.forumSignature</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" style="margin-bottom:1rem;">
+                <div class="card">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-12">
                                 <h5 style="white-space:pre-wrap;" class="text-left">Ban @model.page.userInfo.username</h5>
                             </div>
                             <div class="col-4">
-                                <p>Auto Fill</p>
+                                <p style="margin-bottom:1rem;">Auto Fill</p>
                                 @['Swearing','Harassment','Dating','Offsite Links','Bad Image','Scamming','Account Theft'].forEach((reason, index) => {
-                                    <div class="row" style="padding-bottom:0.5rem;">
+                                    <div class="row" style="padding-bottom:0.15rem;">
                                         <div class="col-12">
                                             <button type="button" class="btn btn-secondary autofill-reason" data-id="@index" style="width:100%;">@reason</button>
                                         </div>
@@ -160,16 +162,27 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Reason</label>
-                                            <input type="text" class="form-control" id="reason" placeholder="Reason for Ban (Try to stay under 120 Characters or so.)">
+                                            <input type="text" class="form-control" id="reason" placeholder="Reason for Ban" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Internal Note</label>
-                                            <textarea class="form-control" id="privateNotes" rows="3" placeholder="This will only be visible for other moderators"></textarea>
+                                            <textarea class="form-control" id="privateNotes" rows="3" placeholder="This will only be visible for other moderators. Include any information related to the ban." autocomplete="off"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Ban Type</label>
+                                            <select class="form-control" id="ban-type" autocomplete="off">
+                                                <option value="1">Warning</option>
+                                                <option value="2">Temporary Ban</option>
+                                                <option value="3">Permanent Ban</option>
+                                                <option value="4">Permanent Ban & Hide Account</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" id="ban-len" style="display:none;">
                                         <div class="form-group">
                                             <label>Length</label>
                                             <div class="row">
@@ -185,25 +198,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>Permanent?</label>
-                                            <select class="form-control" id="isTerminated">
-                                                <option value="0">No</option>
-                                                <option value="1">Yes</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Delete Account?</label>
-                                            <label>This will prevent it's username, profile, and other info from being visible to anyone other than the account's owner and staff.</label>
-                                            <select class="form-control" id="isDeleted">
-                                                <option value="0">No</option>
-                                                <option value="1">Yes</option>
-                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -226,17 +220,17 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <h5>Moderation History</h5>
+                                <h5 style="margin-bottom:0;">Moderation History</h5>
                             </div>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Action</th>
-                                        <th scope="col">Staff ID</th>
-                                        <th scope="col">Reason</th>
-                                        <th scope="col">Internal Note</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Expiration</th>
+                                        <th scope="col" style="border-top: none;">Action</th>
+                                        <th scope="col" style="border-top: none;">Staff</th>
+                                        <th scope="col" style="border-top: none;">Reason</th>
+                                        <th scope="col" style="border-top: none;">Internal Note</th>
+                                        <th scope="col" style="border-top: none;">Date</th>
+                                        <th scope="col" style="border-top: none;">Expiration</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -250,7 +244,9 @@
                                             <td>Ban</td>
                                         }
                                         <td>
-                                            @history.actorUserId
+                                            <a href="/staff/user/profile?userId=@history.actorUserId">
+                                                <span class="mod-history" data-userid="@history.actorUserId">Loading...</span>
+                                            </a>
                                         </td>
                                         <td>
                                             @history.reason
@@ -262,7 +258,7 @@
                                             <span class="formatDate" data-date="@history.date" style="font-weight:100;"></span>
                                         </td>
                                         <td>
-                                            @if (history.isTerminated === 1) {
+                                            @if (history.isTerminated === 1 || history.untilUnbanned.toString() === history.date.toString()) {
                                                 <span>N/A</span>
                                             }else{
                                                 <span class="formatDate" data-date="@history.untilUnbanned" style="font-weight:100;"></span>
@@ -297,6 +293,18 @@
             </div>
             <div class="col-md-8 col-12" style="margin-top: 1rem;">
                 <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Send Message</h5>
+                                <textarea style="width:100%;margin-bottom:1rem;" rows="2" id="staffMessageSubject" class="form-control" placeholder="Message subject"></textarea>
+                                <textarea style="width:100%;" rows="4" id="staffMessageText" class="form-control" placeholder="Message content"></textarea>
+                                <button type="button" class="btn btn-success" style="margin-top:0.5rem;" id="sendStaffMessage" disabled="disabled">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 1rem;">
                     @if (model.userInfo.staff >= 2) {
                         <div class="col-12">
                             <div class="card">
