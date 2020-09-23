@@ -23,9 +23,6 @@ let GenericWWWController = class GenericWWWController extends base_1.default {
         return 'BWS OK';
     }
     async getUserRoleInGroup(userId, groupId) {
-        console.log('user', userId, 'group', groupId);
-        userId = base_1.default.ValidateId(userId);
-        groupId = base_1.default.ValidateId(groupId);
         const info = await this.Groups.getUserRole(groupId, userId);
         return info.name;
     }
@@ -56,7 +53,7 @@ let GenericWWWController = class GenericWWWController extends base_1.default {
             return res.redirect('/dashboard');
         }
         return new model.WWWTemplate({
-            title: 'Index',
+            title: 'Free 3D Browser Games',
         });
     }
     dashboard() {
@@ -67,11 +64,6 @@ let GenericWWWController = class GenericWWWController extends base_1.default {
     avatar() {
         return new model.WWWTemplate({
             title: 'Avatar',
-        });
-    }
-    trades() {
-        return new model.WWWTemplate({
-            title: 'Trades',
         });
     }
     transactions() {
@@ -182,7 +174,7 @@ __decorate([
 ], GenericWWWController.prototype, "getUserRoleInGroup", null);
 __decorate([
     common_1.Get('/discord'),
-    common_1.Redirect(302, 'https://discord.gg/CAjZfcZ'),
+    common_1.Redirect(302, 'https://discord.gg/9eXgJue'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -219,7 +211,7 @@ __decorate([
 ], GenericWWWController.prototype, "buyCurrency", null);
 __decorate([
     common_1.Get('/'),
-    common_1.Render('index'),
+    common_1.Render('index_a'),
     __param(0, common_1.Res()),
     __param(1, common_1.Locals('userInfo')),
     __metadata("design:type", Function),
@@ -243,15 +235,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], GenericWWWController.prototype, "avatar", null);
-__decorate([
-    common_1.Get('/trades'),
-    swagger_1.Summary('User trades page/overview'),
-    common_1.Render('trades'),
-    common_1.Use(middleware.auth.YesAuth),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], GenericWWWController.prototype, "trades", null);
 __decorate([
     common_1.Get('/transactions'),
     swagger_1.Summary('User transactions page/overview'),

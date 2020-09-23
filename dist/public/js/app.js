@@ -244,6 +244,32 @@ $(document).ready(function() {
 */$(document).on("click",".onClickShowTabs",function(a){a.preventDefault();var b=$(this).parent().attr("data-tabs"),c=$(this).attr("id");$("."+b).children().each(function(){$(this).hide(),$(this).attr("data-id")===c&&$(this).show()})});var apiBaseUrl=$("#meta").attr("data-api-base-url");/**
  *  load ads
  */$(".leaderboard-ad").each(function(){var a=this;request("/ad/random/1","GET").then(function(b){$(a).append("\n        <div class=\"col-12\" style=\"margin-top:1rem;\">\n            <div style=\"display:block;margin:0 auto;max-width:728px;\">\n                <a href=\"".concat(apiBaseUrl,"/api/v1/ad/").concat(b.adId,"/click\">\n                    <img style=\"width:100%;\" src=\"").concat(b.imageUrl,"\" title=\"").concat(xss(b.title),"\" />\n                    <p class=\"ad-alert-text\" style=\"color: rgba(33, 37, 41, 0.95);\"><i class=\"fas fa-ad\"></i></p>\n                </a>\n            </div>\n        </div>\n        ")),$(a).find("img").on("load",function(){console.log("ad image loaded"),$(a).find(".whitespace-ad").remove()})})["catch"](function(){// default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
-$(a).append("\n        <div class=\"col-12\" style=\"margin-top:1rem;\">\n            <div style=\"display:block;margin:0 auto;max-width:728px;\">\n                <a href=\"/ads\">\n                    <img style=\"width:100%;\" src=\"https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png\" />\n                    <p class=\"ad-alert-text\"><i class=\"fas fa-ad\"></i></p>\n                </a>\n            </div>\n        </div>\n        "),$(a).find("img").on("load",function(){console.log("ad image loaded"),$(a).find(".whitespace-ad").remove()})})}),991<window.innerWidth&&$(".skyscraper-ads").each(function(){var a=this;request("/ad/random/2","GET").then(function(b){$(a).append("\n                    <a href=\"".concat(apiBaseUrl,"/api/v1/ad/").concat(b.adId,"/click\">\n                        <img style=\"width:160px;height:600px;\" src=\"").concat(b.imageUrl,"\" title=\"").concat(xss(b.title),"\" />\n                        <p class=\"ad-alert-text\" style=\"color: rgba(33, 37, 41, 0.95);\"><i class=\"fas fa-ad\"></i></p>\n                    </a>\n            "))})["catch"](function(){// default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
-$(a).append("\n                    <a href=\"/ads\">\n                        <img style=\"width:160px;height:600px;\" src=\"https://cdn.blockshub.net/thumbnails/81082ace029ca2526b6a54e6f2d9914b2397a22c3d4e3260de402f872e093f97.png\" />\n                        <p class=\"ad-alert-text\"><i class=\"fas fa-ad\"></i></p>\n                    </a>\n            "),$(a).find("img").on("load",function(){console.log("ad image loaded"),$(a).find(".whitespace-ad").remove()})})});function getTheme(){if(!auth)return 0;var a=$("#userdata").attr("data-theme");return parseInt(a)}// handler for mobile menu
+/*
+            $(this).append(`
+        <div class="col-12" style="margin-top:1rem;">
+            <div style="display:block;margin:0 auto;max-width:728px;">
+                <a href="/ads">
+                    <img style="width:100%;" src="https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png" />
+                    <p class="ad-alert-text"><i class="fas fa-ad"></i></p>
+                </a>
+            </div>
+        </div>
+        `);
+            $(this).find('img').on('load', () => {
+                console.log('ad image loaded');
+                $(this).find('.whitespace-ad').remove();
+            });
+            */})}),991<window.innerWidth&&$(".skyscraper-ads").each(function(){var a=this;request("/ad/random/2","GET").then(function(b){$(a).append("\n                    <a href=\"".concat(apiBaseUrl,"/api/v1/ad/").concat(b.adId,"/click\">\n                        <img style=\"width:160px;height:600px;\" src=\"").concat(b.imageUrl,"\" title=\"").concat(xss(b.title),"\" />\n                        <p class=\"ad-alert-text\" style=\"color: rgba(33, 37, 41, 0.95);\"><i class=\"fas fa-ad\"></i></p>\n                    </a>\n            "))})["catch"](function(){// default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
+/*
+                $(this).append(`
+                    <a href="/ads">
+                        <img style="width:160px;height:600px;" src="https://cdn.blockshub.net/thumbnails/81082ace029ca2526b6a54e6f2d9914b2397a22c3d4e3260de402f872e093f97.png" />
+                        <p class="ad-alert-text"><i class="fas fa-ad"></i></p>
+                    </a>
+            `);
+                $(this).find('img').on('load', () => {
+                    console.log('ad image loaded');
+                    $(this).find('.whitespace-ad').remove();
+                });
+                */})});function getTheme(){if(!auth)return 0;var a=$("#userdata").attr("data-theme");return parseInt(a)}// handler for mobile menu
 $(document).on("click","#expand-more-mobile",function(a){a.preventDefault(),$("#more-expanded").fadeToggle({duration:100})});

@@ -15,6 +15,9 @@
             <button type="button" class="btn btn-success openTrades">Outbound</button>
             <button type="button" class="btn btn-success openTrades">Completed</button>
             <button type="button" class="btn btn-success openTrades">Inactive</button>
+            @if (model.page.tradeAdsMetadata && model.page.tradeAdsMetadata.isEnabled !== false) {
+                <button type="button" class="btn btn-success"><a href="/trades/ads">Ads</a></button>
+            }
         </div>
         <div class="row">
             <div class="col-12 col-md-6" style="max-height: 75vh;overflow-y: auto;">
@@ -32,6 +35,6 @@
 
     })
     @html.block('js', function(model) {
-        <script nonce="@model.nonce" src="/js/pages/trades.js?v=@model.v"></script>
+        <script nonce="@model.nonce" src="/js/pages/trades/default.js?v=@model.v"></script>
     })
 })

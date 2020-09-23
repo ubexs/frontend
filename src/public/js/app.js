@@ -1241,6 +1241,7 @@ $('.leaderboard-ad').each(function (e) {
         })
         .catch(e => {
             // default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
+            /*
             $(this).append(`
         <div class="col-12" style="margin-top:1rem;">
             <div style="display:block;margin:0 auto;max-width:728px;">
@@ -1255,6 +1256,7 @@ $('.leaderboard-ad').each(function (e) {
                 console.log('ad image loaded');
                 $(this).find('.whitespace-ad').remove();
             });
+            */
 
         });
 });
@@ -1271,6 +1273,7 @@ if (window.innerWidth > 991) {
             })
             .catch(e => {
                 // default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
+                /*
                 $(this).append(`
                     <a href="/ads">
                         <img style="width:160px;height:600px;" src="https://cdn.blockshub.net/thumbnails/81082ace029ca2526b6a54e6f2d9914b2397a22c3d4e3260de402f872e093f97.png" />
@@ -1281,6 +1284,7 @@ if (window.innerWidth > 991) {
                     console.log('ad image loaded');
                     $(this).find('.whitespace-ad').remove();
                 });
+                */
 
             });
     });

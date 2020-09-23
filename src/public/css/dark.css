@@ -213,3 +213,9 @@ a.ticket-click {
 a.ticket-click:hover {
     color: #FFFFFF;
 }
+div.row.userChatMessageCard > div.col-5 {
+    background: #0e1215;
+}
+div.gdpr-cookie-notice {
+    color: white;
+}

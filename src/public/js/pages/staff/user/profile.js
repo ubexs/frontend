@@ -151,6 +151,86 @@ $(document).on('click', '#sendStaffMessage', function (e) {
     });
 });
 
+$(document).on('click', '.remove-email', function (e) {
+    e.preventDefault();
+    questionYesNo('Are you sure you want to delete this email?', () => {
+        request('/staff/user/email/' + $(this).attr('data-email-id'), 'DELETE', {}).then(d => {
+            success('This email has been removed.');
+            let currentLen = $('.associated-emails-table').find('tbody').children().length;
+            console.log('current', currentLen);
+            if (currentLen === 1) {
+                $('.associated-emails-table').parent().append(`<p>This user does not have any associated emails</p>`);
+                $('.associated-emails-table').remove()
+            } else {
+                $(this).parent().parent().remove();
+            }
+        })
+    });
+});
+
+$(document).on('click', '#open-ban-data', function () {
+    $('#ban-data-form').toggle();
+});
+$(document).on('click', '#open-moderation-history', function () {
+    $('#moderation-history-table').toggle();
+});
+$(document).on('click', '#open-staff-message-board', function () {
+    $('#staff-comments-list').toggle();
+});
+
+$(document).on('click', '#open-associated-accounts', function () {
+    $('#associatedAccountsArray').toggle();
+})
+
+$(document).on('click', '#open-staff-permissions', function () {
+    $('#staff-permissions').toggle();
+})
+
+$(document).on('click', '#open-cs-currency-list', function () {
+    $('#cs-currency-list').toggle();
+})
+
+let givenCurrencyLoading = false;
+let givenCurrencyOffset = 0;
+let givenCurrencyLimit = 25;
+let areMoreCurrencyGiven = false;
+const loadGivenCurrency = () => {
+    if (givenCurrencyLoading) {
+        return;
+    }
+    givenCurrencyLoading = true;
+    request('/staff/user/' + $('#userId').val() + '/received-currency?limit=' + givenCurrencyLimit + '&offset=' + givenCurrencyOffset, 'GET').then(data => {
+        givenCurrencyLoading = false;
+        areMoreCurrencyGiven = data.length >= givenCurrencyLimit;
+        if (areMoreCurrencyGiven) {
+            givenCurrencyOffset += givenCurrencyLimit;
+        }
+        let ids = [];
+        for (const item of data) {
+            ids.push(item.userIdGiver);
+            $('#cs-currency-list').append(`
+            
+            <div class="row">
+                <div class="col-6">
+                    <p>${formatCurrency(item.currency)}  ${item.amount}</p>
+                </div>
+                <div class="col-6">
+                    <p style="font-size:0.85rem;"><span data-userid="${item.userIdGiver}">Loading...</span> -  ${moment(item.date).fromNow()}</p>
+                </div>
+            </div>
+            
+            `);
+        }
+        setUserNames(ids);
+
+    }).catch(err => {
+        console.error('error loading currency', err);
+        areMoreCurrencyGiven = false;
+        givenCurrencyLoading = false;
+    });
+}
+loadGivenCurrency();
+
 /**
  * Load User Profile Comments
  */

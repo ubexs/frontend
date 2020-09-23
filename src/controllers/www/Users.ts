@@ -162,6 +162,8 @@ export class UsersController extends base {
         if (userData.tradingEnabled !== 1) {
             throw new this.Conflict('UserCannotBeTradedWith');
         }
+        // @ts-ignore
+        userData.mode = 'TradeWithUser';
         return new model.WWWTemplate<model.Users.Info>({
             title: 'Trade with ' + userData.username,
             page: userData,

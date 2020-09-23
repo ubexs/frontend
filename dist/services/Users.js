@@ -20,6 +20,10 @@ class Users extends base_1.default {
         const info = await this.v1.get('/auth/ban');
         return info.data;
     }
+    async getCookieConsentInfo() {
+        const info = await this.v1.get('/auth/cookie-consent');
+        return info.data;
+    }
     async getAuthenticatedUserInfo() {
         const info = await this.v1.get('/auth/current-user');
         return info.data;

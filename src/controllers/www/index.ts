@@ -23,15 +23,12 @@ export class GenericWWWController extends base {
         @Required()
         @QueryParams('groupId') groupId: number,
     ) {
-        console.log('user', userId, 'group', groupId);
-        userId = base.ValidateId(userId);
-        groupId = base.ValidateId(groupId);
         const info = await this.Groups.getUserRole(groupId, userId);
         return info.name;
     }
 
     @Get('/discord')
-    @Redirect(302, 'https://discord.gg/CAjZfcZ')
+    @Redirect(302, 'https://discord.gg/9eXgJue')
     public redirectToDiscord() { }
 
     @Get('/play')
@@ -72,7 +69,7 @@ export class GenericWWWController extends base {
     }
 
     @Get('/')
-    @Render('index')
+    @Render('index_a')
     public Index(
         @Res() res: Res,
         @Locals('userInfo') info?: model.UserSession
@@ -81,7 +78,7 @@ export class GenericWWWController extends base {
             return res.redirect('/dashboard');
         }
         return new model.WWWTemplate({
-            title: 'Index',
+            title: 'Free 3D Browser Games',
         })
     }
 
@@ -101,16 +98,6 @@ export class GenericWWWController extends base {
     public avatar() {
         return new model.WWWTemplate({
             title: 'Avatar',
-        })
-    }
-
-    @Get('/trades')
-    @Summary('User trades page/overview')
-    @Render('trades')
-    @Use(middleware.auth.YesAuth)
-    public trades() {
-        return new model.WWWTemplate({
-            title: 'Trades',
         })
     }
 

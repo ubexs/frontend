@@ -1,0 +1,46 @@
+@html.extend('layouts/default', function(model) {
+    @html.block('content', function(model) {
+        <div class="row">
+            <div class="col-12">
+                <h3>Trades Dashboard</h3>
+            </div>
+            <div class="col-12 col-md-6 col-lg-8">
+                <div class="card" style="background:none;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <label style="font-weight:bold;margin-bottom:0;font-size:0.8rem;">Show ads that...</label>
+                                <select class="form-control" id="trade-ads-filter-completable" style="font-size:0.85rem;">
+                                    <option value="1" selected="selected">I can complete</option>
+                                    <option value="0">All (no filter)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:2rem;">
+                            <div class="col-12" id="trade-ads">
+                                <div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Latest Marketplace Threads</p>
+                            </div>
+                            <div class="col-12" id="latest-forum-threads" style="margin-top:1rem;">
+                                <div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    })
+    @html.block('js', function(model) {
+        <script nonce="@model.nonce" src="/js/pages/trades/ads.js?v=@model.v"></script>
+    })
+})

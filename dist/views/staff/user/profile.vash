@@ -29,23 +29,23 @@
                                     }
                                     @switch(model.page.userInfo.accountStatus) {
                                         case 0: {
-                                            <span class="badge badge-success">OK</span>
+                                            <span class="badge badge-success">ACCOUNT OK</span>
                                             break;
                                         }
                                         case 1: {
-                                            <span class="badge badge-warning">TEMP BAN</span>
+                                            <span class="badge badge-warning">ACCOUNT TEMP BANNED</span>
                                             break;
                                         }
                                         case 2: {
-                                            <span class="badge badge-warning">TERMINATED</span>
+                                            <span class="badge badge-warning">ACCOUNT TERMINATED</span>
                                             break;
                                         }
                                         case 3: {
-                                            <span class="badge badge-danger">DELETED</span>
+                                            <span class="badge badge-danger">ACCOUNT DELETED</span>
                                             break;
                                         }
                                         default: {
-                                            <span class="badge badge-dark">@model.page.userInfo.accountStatus</span>
+                                            <span class="badge badge-dark">ACCOUNT "@model.page.userInfo.accountStatus"</span>
                                         }
                                     }
                                     @if (model.page.isOver13) {
@@ -53,6 +53,15 @@
                                     }else{
                                         <span class="badge badge-dark">UNDER 13</span>
                                     }
+                                    @{
+                                        model.countryIcon = model.page.country.country.toLowerCase().replace(/ /g, '-') + '.png';
+                                    }
+                                    @if (model.page.country.didLookupSucceed) {
+                                        <span class="badge badge-dark"><img style="height:1rem;width:1rem;" src="https://cdn.blockshub.net/static/country/@model.countryIcon" /> @model.page.country.country</span>
+                                    }else{
+                                        <span class="badge badge-dark">COUNTRY UNKNOWN</span>
+                                    }
+                                    
                                 </p>
                                 <p>
                                    <span style="font-weight:600;">Primary:</span> 
@@ -71,35 +80,28 @@
                                         <span style="font-weight:100;">@model.page.userInfo.secondaryBalance</span>
                                     }
                                 </p>
-                                <p>
-                                    <span style="font-weight:600;">Join Date: </span>
-                                    <span class="formatDate" data-date="@model.page.userInfo.joinDate" style="font-weight:100;"></span>
-                                </p>
-                                <p>
-                                    <span style="font-weight:600;">Email Verified: </span>
-                                    @if (model.page.isEmailVerified) {
-                                        <span style="font-weight:100;">Yes</span>
-                                    }else{
-                                        <span style="font-weight:100;">No</span>
-                                    }
-                                </p>
-                                @if (model.userInfo.staff >= 1) {
-                                    <p>
-                                        <span style="font-weight:600;" id="two-factor-enabled">2-Factor Enabled: </span>
-                                        @if (model.page.twoFactorEnabled) {
-                                            <span style="font-weight:100;">Yes <span style="color:red;cursor:pointer;" id="disableTwoFactor">(Disable)</span></span>
+                                <p style="margin-top:1rem;margin-bottom:1rem;">                    
+                                        <span class="badge stats-badge"><span class="stats-badge-header">JOIN DATE</span><br><span class="stats-badge-body"><span class="formatDate" data-date="@model.page.userInfo.joinDate" style="font-weight:100;"></span></span></span>
+
+                                        <span class="badge stats-badge"><span class="stats-badge-header">EMAIL STATUS</span><br><span class="stats-badge-body">
+                                        @if (model.page.isEmailVerified) {
+                                            <span>VERIFIED</span>
                                         }else{
-                                            <span style="font-weight:100;">No</span>
-                                        }
-                                    </p>
-                                }
-                                <p>
-                                    <span style="font-weight:600;">Mod Level: </span>
-                                    <span style="font-weight:100;">@model.page.userInfo.staff</span>
+                                            <span>UNVERIFIED</span>
+                                        }</span></span>
+
+                                        <span class="badge stats-badge"><span class="stats-badge-header">2FA STATUS</span><br><span class="stats-badge-body">
+                                        @if (model.page.twoFactorEnabled) {
+                                            <span>ENABLED <span style="color:red;cursor:pointer;" id="disableTwoFactor">(Disable)</span></span>
+                                        }else{
+                                            <span>DISABLED</span>
+                                        }</span></span>
+
+                                        <span class="badge stats-badge"><span class="stats-badge-header">STAFF STATUS</span><br><span class="stats-badge-body"><span>@model.page.userInfo.staff</span></span></span>
                                 </p>
                             </div>
                             <div class="col-12">
-                                <p><a href="/staff/user/inventory?userId=@model.page.userInfo.userId">Manage Collectible Inventory</a></p>
+                                <p style="margin-top:1rem;margin-bottom:0;"><a href="/staff/user/inventory?userId=@model.page.userInfo.userId">Manage Collectible Inventory</a></p>
                             </div>
                             <div class="col-12">
                                 <button id="impersonate-user" data-userId="@model.page.userInfo.userId" type="button" class="btn btn-secondary" style="width:100%;margin-top:1rem;">Impersonate User</button>
@@ -139,8 +141,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <h5 style="white-space:pre-wrap;" class="text-left">Ban @model.page.userInfo.username</h5>
+                                <h5 style="white-space:pre-wrap;cursor:pointer;" class="text-left" id="open-ban-data">Ban @model.page.userInfo.username</h5>
                             </div>
+                        </div>
+                        <div class="row" id="ban-data-form" style="display:none;">
                             <div class="col-4">
                                 <p style="margin-bottom:1rem;">Auto Fill</p>
                                 @['Swearing','Harassment','Dating','Offsite Links','Bad Image','Scamming','Account Theft'].forEach((reason, index) => {
@@ -220,9 +224,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <h5 style="margin-bottom:0;">Moderation History</h5>
+                                <h5 style="margin-bottom:0;cursor:pointer;" id="open-moderation-history">Moderation History</h5>
                             </div>
-                            <table class="table">
+                            <table class="table" id="moderation-history-table" style="display:none;">
                                 <thead>
                                     <tr>
                                         <th scope="col" style="border-top: none;">Action</th>
@@ -277,8 +281,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <h5>Staff Message Board</h5>
+                                <h5 style="cursor:pointer;" id="open-staff-message-board">Staff Message Board</h5>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding-top:0;margin-top:0;display:none;" id="staff-comments-list">
+                        <div class="row" >
                             <div class="col-12">
                                 <p>Leave Comment</p>
                                 <textarea style="width:100%;" rows="2" id="staffCommentText" class="form-control"></textarea>
@@ -313,26 +321,27 @@
                                     @if (model.page.userEmails.length === 0) {
                                         <p>This user does not have any associated emails</p>
                                     }else{
-                                    <table class="table">
+                                    <table class="table associated-emails-table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Email Address</th>
-                                                    <th scope="col">Verified?</th>
+                                                    <th scope="col" style="border-top:none;">Email Address</th>
+                                                    <th scope="col" style="border-top:none;">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             @model.page.userEmails.forEach(email => {
                                                 <tr>
                                                     <td>
-                                                        @email.email
+                                                        <span>@email.email </span>
+                                                        @if (email.status === 1) {
+                                                            <span class="badge badge-success">VERIFIED</span>
+                                                        }else{
+                                                            <span class="badge badge-warning">NOT VERIFIED</span>
+                                                        }
                                                     </td>
-                                                    @if (email.status === 1) {
-                                                        <td>
-                                                            Verified
-                                                        </td>
-                                                    }else{
-                                                        <td>Unverified</td>
-                                                    }
+                                                    <td>
+                                                        <button style="font-size:0.85rem;font-weight:700;" type="button" class="btn btn-danger remove-email" data-email-id="@email.emailId">REMOVE</button>
+                                                    </td>
                                                 </tr>
                                             })
                                             </tbody>
@@ -348,11 +357,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12" id="open-associated-accounts" style="cursor:pointer;">
                                         <h5>Associated Accounts</h5>
                                         <p>These are accounts that are likely owned by the same person or same people, but it is not guaranteed.</p>
                                     </div>
-                                    <div class="col-12" id="associatedAccountsArray">
+                                    <div style="display:none;" class="col-12" id="associatedAccountsArray">
                                         
                                     </div>
                                 </div>
@@ -360,6 +369,57 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" style="padding-top:1rem;">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12" id="open-cs-currency-list" style="cursor:pointer;">
+                                        <h5>CS Currency Entries</h5>
+                                        <p>Currency this user got from staff members</p>
+                                    </div>
+                                    <div style="display:none;" class="col-12" id="cs-currency-list">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <p style="font-weight:bold;">AMOUNT</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p style="font-weight:bold;">SENDER & DATE</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 @if (model.page.staffPermissionSelect.length >= 1 && model.page.userInfo.staff >= 1) {
+                <div class="row" style="padding-top:1rem;">
+                    <div class="col-12">
+                        <div class="card" style="margin-top:0.5rem;">
+                            <div class="card-body" id="open-staff-permissions" style="cursor:pointer;">
+                                <h5>Staff Permissions</h5>
+                            </div>
+                            <div class="card-body" id="staff-permissions" style="display:none;padding-top:0;">
+                                @for (const item of model.page.staffPermissionSelect) {
+                                    @{
+                                        item.displaySelected = (item.selected === true ? 'checked' : '');
+                                    }
+                                    @{item.id=Math.floor((Math.random() + 100) * 100000)}
+                                    <div class="form-check">
+                                        <input autocomplete="off" type="checkbox" class="form-check-input update-permissions-checkbox" @html.raw(item.displaySelected) id="checkbox-auto-id-@item.string-@item.id" data-permission="@item.string">
+                                        <label class="form-check-label" for="checkbox-auto-id-@item.string-@item.id">@item.string</label>
+                                    </div>
+                                }
+                                <br>
+                                <p id="update-full-permissions" style="cursor:pointer;">Update Permissions</p>
+                                <br>
+                                <p id="uncheck-all-full-permissions" style="font-size:0.8rem;cursor:pointer;">Uncheck All Permissions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             </div>
             <div class="col-md-4 col-12" style="padding-top:1rem;">
                 @if (model.userInfo.staff >= 3) {
@@ -483,32 +543,6 @@
                 }
             </div>
         </div>
-        @if (model.page.staffPermissionSelect.length >= 1 && model.page.userInfo.staff >= 1) {
-
-            <div class="row" style="padding-top:1rem;">
-                <div class="col-12">
-                    <div class="card" style="margin-top:0.5rem;">
-                        <div class="card-body">
-                            <h3>Staff Permissions</h3>
-                            @for (const item of model.page.staffPermissionSelect) {
-                                @{
-                                    item.displaySelected = (item.selected === true ? 'checked' : '');
-                                }
-                                @{item.id=Math.floor((Math.random() + 100) * 100000)}
-                                <div class="form-check">
-                                    <input autocomplete="off" type="checkbox" class="form-check-input update-permissions-checkbox" @html.raw(item.displaySelected) id="checkbox-auto-id-@item.string-@item.id" data-permission="@item.string">
-                                    <label class="form-check-label" for="checkbox-auto-id-@item.string-@item.id">@item.string</label>
-                                </div>
-                            }
-                            <br>
-                            <p id="update-full-permissions">Update Permissions</p>
-                            <br>
-                            <p id="uncheck-all-full-permissions">Uncheck All Permissions</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
     })
     @html.block('js', function(model) {
         @*

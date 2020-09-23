@@ -43,6 +43,11 @@ export default class Staff extends base {
         return this.v1.get('/staff/user/search?userId=' + (req.userId || '') + '&username=' + (req.username || '') + '&email=' + (req.email || '')).then(d => { return d.data });
     }
 
-
-
+    /**
+     * Guess user country based off IPs
+     * @param userId 
+     */
+    public getUserCountry(userId: number): Promise<{ country: string; countryCode: string; }> {
+        return this.v1.get('/staff/user/' + userId + '/country').then(d => { return d.data });
+    }
 }

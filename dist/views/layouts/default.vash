@@ -30,8 +30,10 @@
         <script nonce="@model.nonce" src="/js/metrics.js?v=@model.v"></script>
         <!-- Font Awesome -->
         <script nonce="@model.nonce" src="https://kit.fontawesome.com/983cb40861.js"></script>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
+        @if (model.cookieConsent && model.cookieConsent.googleAnalytics === true) {
+             <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
+        }
         <script nonce="@model.nonce">
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -346,6 +348,7 @@
 
         @html.block('aboveContent')
 
+        @if (!model.noContent) {
         <div class="container">
             <div class="row">
                 <div class="content" style="width:100%;overflow:visible;">
@@ -355,6 +358,9 @@
                 </div>
             </div>
         </div>
+        }else{
+            
+        }
 
         <footer>
             <div id="footerUpper" class="row">
@@ -417,7 +423,7 @@
                             <div class="row" style="padding-bottom:1rem;">
                                 <div class="col-12">
                                     <p class="text-center" style="font-size:small;font-weight:300;margin-bottom:1rem;">Certain Icons made by freepik & vectors-market from <a href="http://www.flaticon.com/" target="_blank" rel="noopener">www.flaticon.com</a></p>
-                                    <p class="text-center" style="font-size:small;font-weight: 300;">We are not sponsored, authorized or endorsed by any producer of plastic building bricks, and no resemblance to the products of these companies is intended. Use of this site signifies your acceptance of the <a href="/terms" style="font-weight: 400;">Terms and Conditions.</a></p>
+                                    <p class="text-center" style="font-size:small;font-weight: 300;">We are not sponsored, authorized or endorsed by any producer of plastic building bricks, and no resemblance to the products of these companies is intended. Use of this site signifies your acceptance of the <a href="/terms" style="font-weight: 400;">Terms and Conditions. <a href="#" id="open-cookie-consent">Click Here to Manage Cookie Consent.</a></a></p>
                                 </div>
                             </div>
                         </div>

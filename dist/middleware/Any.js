@@ -13,7 +13,7 @@ exports.csp = {
     'media-src': `'none'`,
     'frame-ancestors': `'self'`,
     'img-src': `'self' data: https://cdn.blockshub.net/ https://hindigamerclub-game.ewr1.vultrobjects.com/ https://www.google-analytics.com/ ${config_1.default.baseUrl.frontend}`,
-    'connect-src': `'self' ws://localhost:8080/ https://sentry.io/ https://ka-f.fontawesome.com/releases/v5.13.1/css/free.min.css ${config_1.default.baseUrl.frontend} ${config_1.default.baseUrl.play}`,
+    'connect-src': `'self' ws://localhost:8080/ https://www.google-analytics.com/ https://sentry.io/ https://ka-f.fontawesome.com/releases/v5.13.1/css/free.min.css ${config_1.default.baseUrl.frontend} ${config_1.default.baseUrl.play}`,
     'object-src': `'none'`,
     'base-uri': `'self'`,
 };
@@ -107,6 +107,11 @@ exports.default = async (req, res, next) => {
     const baseService = new base_1.default({
         cookie: req.headers['cookie'],
     });
+    try {
+        res.locals.cookieConsent = await baseService.Users.getCookieConsentInfo();
+    }
+    catch (err) {
+    }
     try {
         const newUserInfo = await baseService.Users.getAuthenticatedUserInfo();
         res.locals.userInfo = newUserInfo;

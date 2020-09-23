@@ -12,7 +12,7 @@
         @if (model.userInfo) {
             @if (model.userInfo.theme === 1) {
                 <!-- Dark Theme -->
-                @*<link href="/css/dark.css?v=@model.v" rel="stylesheet"> *@
+                <link href="/css/dark.css?v=@model.v" rel="stylesheet">
             }
         }
 
@@ -180,6 +180,8 @@
         <div class="container">
             @html.block('content')
         </div>
+
+        <div class="staff-footer" style="margin-bottom:2rem;"></div>
 
         <script nonce="@model.nonce" src="/js/warning.js"></script>
         @html.raw(model.javascript)

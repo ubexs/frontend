@@ -314,7 +314,7 @@ export class WWWSupportController extends base {
             title: 'Ad System Help',
             page: {
                 'article': `<div class="col-12" style="margin-bottom:1rem;">
-                <h1>Ad System Help</v>
+                <h1>Ad System Help</h1>
             </div>
             <div class="col-12" style="margin-bottom:1rem;">
                 <h4 style="font-size:1rem;margin-bottom:0;">How does the ad system work?</h4>
@@ -368,6 +368,64 @@ export class WWWSupportController extends base {
                     <br>
                 </p>
             </div>`
+            }
+        });
+    }
+
+    @Get('/developer-get-started')
+    @Render('support_article')
+    public DeveloperGetStarted() {
+        return new model.WWWTemplate({
+            title: 'Developer Get Started',
+            page: {
+                'article': `<div class="col-12" style="margin-bottom:1rem;">
+                <h1>Developer Get Started</h1>
+            </div>
+            <div class="col-12" style="margin-bottom:1rem;">
+                <p style="marign-bottom:2rem;">Looking to get started developing games on BlocksHub? Look no further! This article will introduce you to some basic elements of BlocksHub game development, what to expect when making a game, ways to come up with game ideas, and more. Please note that BlocksHub is still heavily in-development, so not nearly as many features as we'd like have been implemented.</p>
+                <br>
+                <p style="marign-bottom:2rem;">This article assumes that you have a BlocksHub account. If you don't have an account, <a href="/signup">Sign Up Here!</a></p>
+                <br>
+                <h3>Tooling</h3>
+                <p>Some third party programs are highly recommended to get started. For one, a text editor with Javascript syntax highlighting. One great option is <a href="https://code.visualstudio.com/" rel="noopener nofollow">Microsoft Visual Studio Code</a>, a free text editor with tons of plugins. Another program that you might need is some type of image editor to make assets for your game. <a rel="noopener nofollow" href="https://www.getpaint.net/">Paint.net</a> is a great free option. Node/NPM is also highly reccomended to make programming easier.</p>
+                <br>
+                <h3>1. Creating The Game</h3>
+                <p>Head over to <a href="/game/create" target="_blank">the game create page</a> and give your game a name and description. You'll be taken to the game's page. From there, click on "Edit" to be taken to the game edit page.</p>
+                <br>
+                <h3>2. Editing the game</h3>
+                <p>You can give your game a more concise genre and max player count from this screen. All games are assumed to be multiplayer, however, you can make the max player count "1" in order to make your game singleplayer.
+                <br>
+                Let's look at the various screens displayed to you:
+                </p>
+                <h3>The "Map" Box</h3>
+                <p>You can create a custom map for your game with the map textbox. This textbox takes properly written JavaScript code and uses it as the map for  your game server/client. Essentially, all code inside the Map textbox will be executed on the client and server.</p>
+                <br>
+                <h3>The "Server"</h3>
+                <p>You can add various server scripts to be executed on your game's server. A "server" is created for each group of players that play your game. Anything inside the "Server" section will be executed by the server. You can click on "Create Server Script" to add a server script to your game. Any server scripts cannot be accessed by the client whatsoever.</p>
+                <br>
+                <h3>The "Client"</h3>
+                <p>The client scripts are scripts that will be executed on each individual client machine. Client scripts are scripts that will only be executed on client machines (i.e. the web browsers of users playing games), and will not be executed on servers. Client scripts will also be specifc to each client, so if a client script does something (such as a "while (true) {}" loop if the current player's userId is 5), then only the one client will be affected. The source code, although obfuscated, can theoretically be un-obfuscated by the client and viewed, so make sure you don't put unnecessary information in client scripts.</p>
+                <br>
+                <h3>3. Using A Text Editor</h3>
+                <p>This will assume you're using VSCode, however, any information posted here will likely apply to most text editors.</p>
+                <br>
+                <p>Create a new folder on your desktop, and name it something specific (such as your game's name). Then, right click on the folder and click "Open in Visual Studio Code". Once VSCode opens, click on "Terminal" in the top left, and click on "New Terminal". Assuming you have NPM installed (which is included with NodeJS), type "npm init --y && npm i babylonjs". Open up the explorer, and create a new file called "jsconfig.json". Put this inside your jsconfig file:
+                </p>
+                <p style="background:#1d1d23;color:white;padding:10px 5px;white-space:pre-wrap;font-family:monospace;">{
+    "compilerOptions": {
+        "checkJs": true
+    }
+}</p>
+                <p>You may need to relaunch VSCode.<br><br>Create a file called "map.js", a file called "server.js", and a file called "client.js".
+                </p>
+                <p style="background:#1d1d23;color:white;padding:10px 5px;"><span class="font-weight-bold">HINT:</span> You can call these files whatever you want, however, using "client.js", "server.js", and "map.js" can help you stay organized.</p>
+                <p>Now, you should be able to open any of the files you made and start programming while having access to full "babylon.js" type definitions.</p>
+                <br>
+                <br>
+                <p>For further information about babylon.js, click <a rel="nofollow noopener" href="https://doc.babylonjs.com/babylon101/">here</a>. For information regarding our APIs (added ontop of babylon), click <a href="https://cdn.blockshub.net/docs/index.html">here</a>.</p>
+            </div>
+            
+            `
             }
         });
     }

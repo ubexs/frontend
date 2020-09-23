@@ -2,6 +2,10 @@ var userData = $('#userdata');
 var userid = userData.attr("data-userid");
 var traderData = $('#tradedata')
 var traderId = traderData.attr("data-userid");
+/**
+ * @type {"TradeWithUser"|"CreateTradeAd"}
+ */
+var mode = traderData.attr('data-mode');
 
 let metadata = {
     isEnabled: false,
@@ -39,6 +43,9 @@ let currentOfferPrimary = 0;
  */
 let CurrentRequest = [];
 const inRequest = (userInventoryId) => {
+    if (mode === 'CreateTradeAd') {
+        return false;
+    }
     for (const item of CurrentRequest) {
         if (item.userInventoryId === userInventoryId) {
             return true;
@@ -58,8 +65,8 @@ const loadItems = (data) => {
     }
     data.isLoading = true;
     let oldHeight = $(data.div).innerHeight();
-    let paddTop = Math.round((oldHeight / 2)-16)+'px';
-    let paddBottom =  Math.round((oldHeight / 2)-16)+'px';
+    let paddTop = Math.round((oldHeight / 2) - 16) + 'px';
+    let paddBottom = Math.round((oldHeight / 2) - 16) + 'px';
     $(data.div).empty()
     $(data.div).append(`
     
@@ -75,12 +82,20 @@ const loadItems = (data) => {
     if (data.query) {
         _q = data.query;
     }
-    return request('/user/'+data.userId+'/inventory/collectibles?limit=6&offset='+data.offset+'&query='+_q, 'GET').then(items => {
+    let url = '/user/' + data.userId + '/inventory/collectibles?limit=6&offset=' + data.offset + '&query=' + _q;
+    if (mode === 'CreateTradeAd' && !data.userId) {
+        url = '/catalog?offset=' + data.offset + '&limit=6&category=20&orderBy=id&orderByType=desc&query=' + _q;
+    }
+    return request(url, 'GET').then(items => {
         console.log('.then');
         $(data.div).empty()
         data.isLoading = false;
-        if (items.items.length === 0) {
-            $(data.div).parent().find('span.next-page').css('opacity','0.5');
+        let itemsArr = items.items;
+        if (mode === 'CreateTradeAd' && !data.userId) {
+            itemsArr = items;
+        }
+        if (itemsArr.length === 0) {
+            $(data.div).parent().find('span.next-page').css('opacity', '0.5');
             $(data.div).append(`
             
             <div class="col-12" style="margin-top:8rem;margin-bottom:8rem;">
@@ -92,7 +107,7 @@ const loadItems = (data) => {
             return;
         }
         let setThumbs = [];
-        for (const item of items.items) {
+        for (const item of itemsArr) {
             setThumbs.push(item.catalogId);
             let serial = '';
             if (item.serial) {
@@ -124,27 +139,35 @@ const loadItems = (data) => {
         setCatalogThumbs(setThumbs);
         // if current offset is 0, hide previous page button
         if (data.offset === 0) {
-            $(data.div+'-pagination').find('.previous-page').css('opacity','0.5');
-        }else{
+            $(data.div + '-pagination').find('.previous-page').css('opacity', '0.5');
+        } else {
             // otherwise show previous page button
-            $(data.div+'-pagination').find('.previous-page').css('opacity','1');
+            $(data.div + '-pagination').find('.previous-page').css('opacity', '1');
+        }
+        let moreAvailable = items.areMoreAvailable;
+        if (mode === 'CreateTradeAd' && !items.items) {
+            if (items.length >= 6) {
+                moreAvailable = true;
+            } else {
+                moreAvailable = false;
+            }
         }
         // if more items are available, show next page button
-        if (items.areMoreAvailable) {
+        if (moreAvailable) {
             data.areMoreAvailable = true;
             data.offset = data.offset + 6;
-            $(data.div+'-pagination').find('.next-page').css('opacity','1');
-        }else{
+            $(data.div + '-pagination').find('.next-page').css('opacity', '1');
+        } else {
             data.areMoreAvailable = false;
             // otherwise dont show next page button
-            $(data.div+'-pagination').find('.next-page').css('opacity','0.5');
+            $(data.div + '-pagination').find('.next-page').css('opacity', '0.5');
         }
         console.log(items);
     })
-    .catch(e => {
-        console.error(e);
-        data.isLoading = false;
-    })
+        .catch(e => {
+            console.error(e);
+            data.isLoading = false;
+        })
 }
 
 const currentUserPager = {
@@ -168,106 +191,106 @@ const partnerPager = {
 loadItems(partnerPager);
 
 // setup search function for requester
-$('#search-requester-click').click(function(e) {
+$('#search-requester-click').click(function (e) {
     e.preventDefault();
-    $(this).attr('disabled','disabled');
-    $('#search-requester').attr('disabled','disalbed');
+    $(this).attr('disabled', 'disabled');
+    $('#search-requester').attr('disabled', 'disalbed');
     currentUserPager.query = $('#search-requester').val();
     currentUserPager.offset = 0;
-    $(this).parent().parent().parent().find('span.current-page').html('&emsp;Page '+1+'&emsp;');
-    $(this).parent().parent().parent().find('span.previous-page').css('opacity','0.5');
+    $(this).parent().parent().parent().find('span.current-page').html('&emsp;Page ' + 1 + '&emsp;');
+    $(this).parent().parent().parent().find('span.previous-page').css('opacity', '0.5');
 
     loadItems(currentUserPager)
-    .then(d => {
-        $(this).removeAttr('disabled');
-        $('#search-requester').removeAttr('disabled');
-    })
-    .catch(() => {
-        $(this).removeAttr('disabled');
-        $('#search-requester').removeAttr('disabled');
-    })
+        .then(d => {
+            $(this).removeAttr('disabled');
+            $('#search-requester').removeAttr('disabled');
+        })
+        .catch(() => {
+            $(this).removeAttr('disabled');
+            $('#search-requester').removeAttr('disabled');
+        })
 });
 // setup search function for requestee
-$('#search-requestee-click').click(function(e) {
+$('#search-requestee-click').click(function (e) {
     e.preventDefault();
-    $(this).attr('disabled','disabled');
-    $('#search-requestee').attr('disabled','disalbed');
+    $(this).attr('disabled', 'disabled');
+    $('#search-requestee').attr('disabled', 'disalbed');
     partnerPager.query = $('#search-requestee').val();
     partnerPager.offset = 0;
-    $('#search-requestee-click').parent().parent().parent().find('span.current-page').html('&emsp;Page '+1+'&emsp;');
-    $(this).parent().parent().parent().find('span.previous-page').css('opacity','0.5');
+    $('#search-requestee-click').parent().parent().parent().find('span.current-page').html('&emsp;Page ' + 1 + '&emsp;');
+    $(this).parent().parent().parent().find('span.previous-page').css('opacity', '0.5');
 
     loadItems(partnerPager)
-    .then(d => {
-        $(this).removeAttr('disabled');
-        $('#search-requestee').removeAttr('disabled');
-    })
-    .catch(() => {
-        $(this).removeAttr('disabled');
-        $('#search-requestee').removeAttr('disabled');
-    })
+        .then(d => {
+            $(this).removeAttr('disabled');
+            $('#search-requestee').removeAttr('disabled');
+        })
+        .catch(() => {
+            $(this).removeAttr('disabled');
+            $('#search-requestee').removeAttr('disabled');
+        })
 });
 
 // setup next and previous page for requester
-$('#requester-items-pagination').find('.next-page').click(function(e) {
+$('#requester-items-pagination').find('.next-page').click(function (e) {
     console.log('Click!');
     e.preventDefault();
     if ($(this).css('opacity') === '0.5') {
         return;
     }
-    $(this).css('opacity','0.5');
+    $(this).css('opacity', '0.5');
     let page = currentUserPager.offset / 6;
     page++;
-    $('#requester-items-pagination').find('span.current-page').html('&emsp;Page '+page+'&emsp;');
+    $('#requester-items-pagination').find('span.current-page').html('&emsp;Page ' + page + '&emsp;');
     loadItems(currentUserPager);
 });
-$('#requester-items-pagination').find('.previous-page').click(function(e) {
+$('#requester-items-pagination').find('.previous-page').click(function (e) {
     console.log('Click!');
     e.preventDefault();
     if ($(this).css('opacity') === '0.5') {
         return;
     }
-    $(this).css('opacity','0.5');
+    $(this).css('opacity', '0.5');
     if (!currentUserPager.areMoreAvailable) {
         currentUserPager.offset = currentUserPager.offset - 6;
-    }else{
+    } else {
         currentUserPager.offset = currentUserPager.offset - 12;
     }
     let page = currentUserPager.offset / 6;
     page++;
-    $('#requester-items-pagination').find('span.current-page').html('&emsp;Page '+page+'&emsp;');
+    $('#requester-items-pagination').find('span.current-page').html('&emsp;Page ' + page + '&emsp;');
     loadItems(currentUserPager);
 });
 // setup next and previous page for requestee
-$('#requestee-items-pagination').find('.next-page').click(function(e) {
+$('#requestee-items-pagination').find('.next-page').click(function (e) {
     console.log('Click!');
     e.preventDefault();
     if ($(this).css('opacity') === '0.5') {
         return;
     }
-    $(this).css('opacity','0.5');
+    $(this).css('opacity', '0.5');
     let page = partnerPager.offset / 6;
     page++;
-    $('#requestee-items-pagination').find('span.current-page').html('&emsp;Page '+page+'&emsp;');
+    $('#requestee-items-pagination').find('span.current-page').html('&emsp;Page ' + page + '&emsp;');
     loadItems(partnerPager);
 });
 // setup next and previous page for requester
-$('#requestee-items-pagination').find('.previous-page').click(function(e) {
+$('#requestee-items-pagination').find('.previous-page').click(function (e) {
     console.log('Click!');
     e.preventDefault();
     if ($(this).css('opacity') === '0.5') {
         return;
     }
-    $(this).css('opacity','0.5');
+    $(this).css('opacity', '0.5');
     console.log(partnerPager.areMoreAvailable);
     if (!partnerPager.areMoreAvailable) {
         partnerPager.offset = partnerPager.offset - 6;
-    }else{
+    } else {
         partnerPager.offset = partnerPager.offset - 12;
     }
     let page = partnerPager.offset / 6;
     page++;
-    $('#requestee-items-pagination').find('span.current-page').html('&emsp;Page '+page+'&emsp;');
+    $('#requestee-items-pagination').find('span.current-page').html('&emsp;Page ' + page + '&emsp;');
     loadItems(partnerPager);
 });
 
@@ -288,8 +311,8 @@ const setupOfferArea = () => {
     let totalASP = offerTextArea;
     if (CurrentOffer.length !== 0 && CurrentRequest.length !== 0) {
         $('#send-trade').removeAttr('disabled');
-    }else{
-        $('#send-trade').attr('disabled','disabled');
+    } else {
+        $('#send-trade').attr('disabled', 'disabled');
     }
     $('#offer-items').empty();
     if (CurrentOffer.length === 0) {
@@ -310,17 +333,17 @@ const setupOfferArea = () => {
         let serial = `<p style="font-size:0.65rem;font-weight:400;">&emsp;</p>`;
         if (item.serial) {
             serial = `<p style="font-size:0.65rem;font-weight:400;">Serial: ${number_format(item.serial)}</p>`;
-        }        
+        }
         $('#offer-items').append(`
         
-        <div class="col-12 remove-item-requester-items item-in-trade-request-or-offer-sidebar" style="cursor:pointer;" data-userinventoryid="${item.userInventoryId}">
+        <div class="col-12 remove-item-requester-items item-in-trade-request-or-offer-sidebar" style="cursor:pointer;" data-userinventoryid="${item.userInventoryId}" data-catalogid="${item.catalogId}">
             <div class="row">
                 <div class="col-4">
                     <img src="${window.subsitutionimageurl}" style="width:100%;height:auto;display:block;margin:0 auto;max-width:70px;" data-catalogid="${item.catalogId}" />
                 </div>
                 <div class="col-8">
                     <p style="font-size:0.85rem;margin-bottom:0;font-weight:600;">${xss(item.catalogName)}</p>
-                    <p style="font-size:0.65rem;margin-bottom:0;font-weight:400;">${formatCurrency(1, '0.65rem')+' '+xss(number_format(item.averagePrice))}</p>
+                    <p style="font-size:0.65rem;margin-bottom:0;font-weight:400;">${formatCurrency(1, '0.65rem') + ' ' + xss(number_format(item.averagePrice))}</p>
                     ${serial}
                 </div>
             </div>
@@ -331,7 +354,7 @@ const setupOfferArea = () => {
     $('#total-offer-value').html(`Total Value: ${formatCurrency(1, '1rem')} ${number_format(totalASP)}`);
     setCatalogThumbs(thumbIds);
 }
-$(document).on('click', '.trade-item-requester-items', function(e) {
+$(document).on('click', '.trade-item-requester-items', function (e) {
     e.preventDefault();
     let data = currentUserPager;
     let UserInventoryId = parseInt($(this).attr('data-userinventoryid'), 10);
@@ -348,7 +371,7 @@ $(document).on('click', '.trade-item-requester-items', function(e) {
         return; // skip
     }
     if (CurrentOffer.length >= metadata.maxItemsPerSide) {
-        warning('You can only include up to '+metadata.maxItemsPerSide+' items, per user, in a trade.');
+        warning('You can only include up to ' + metadata.maxItemsPerSide + ' items, per user, in a trade.');
         return;
     }
     CurrentOffer.push({
@@ -359,9 +382,9 @@ $(document).on('click', '.trade-item-requester-items', function(e) {
         averagePrice,
     });
     setupOfferArea();
-    $(this).attr('class',`col-6 col-md-4 trade-card-hover remove-item-${data.div.slice(1)} item-in-trade-request-or-offer`);
+    $(this).attr('class', `col-6 col-md-4 trade-card-hover remove-item-${data.div.slice(1)} item-in-trade-request-or-offer`);
 });
-$(document).on('click', '.remove-item-requester-items', function(e) {
+$(document).on('click', '.remove-item-requester-items', function (e) {
     e.preventDefault();
     let data = currentUserPager;
     let UserInventoryId = parseInt($(this).attr('data-userinventoryid'), 10);
@@ -375,8 +398,8 @@ $(document).on('click', '.remove-item-requester-items', function(e) {
             }
         }
         CurrentOffer = _newArray;
-        $('.remove-item-requester-items.item-in-trade-request-or-offer[data-userinventoryid="'+UserInventoryId+'"]').attr('class',`col-6 col-md-4 trade-card-hover trade-item-${data.div.slice(1)}`);
-        $('.remove-item-requester-items.item-in-trade-request-or-offer-sidebar[data-userinventoryid="'+UserInventoryId+'"]').remove();
+        $('.remove-item-requester-items.item-in-trade-request-or-offer[data-userinventoryid="' + UserInventoryId + '"]').attr('class', `col-6 col-md-4 trade-card-hover trade-item-${data.div.slice(1)}`);
+        $('.remove-item-requester-items.item-in-trade-request-or-offer-sidebar[data-userinventoryid="' + UserInventoryId + '"]').remove();
         setupOfferArea();
         return;
     }
@@ -396,8 +419,8 @@ const setupRequestArea = () => {
     let totalASP = offerTextArea;
     if (CurrentOffer.length !== 0 && CurrentRequest.length !== 0) {
         $('#send-trade').removeAttr('disabled');
-    }else{
-        $('#send-trade').attr('disabled','disabled');
+    } else {
+        $('#send-trade').attr('disabled', 'disabled');
     }
     $('#request-items').empty();
     if (CurrentRequest.length === 0) {
@@ -412,7 +435,7 @@ const setupRequestArea = () => {
         return;
     }
     let thumbIds = [];
-    console.log('total asp',totalASP);
+    console.log('total asp', totalASP);
     for (const item of CurrentRequest) {
         totalASP += item.averagePrice;
         thumbIds.push(item.catalogId);
@@ -420,17 +443,17 @@ const setupRequestArea = () => {
         if (item.serial) {
             console.log('item has serial!!!!!');
             serial = `<p style="font-size:0.65rem;font-weight:400;">Serial: ${number_format(item.serial)}</p>`;
-        }        
+        }
         $('#request-items').append(`
         
-        <div class="col-12 remove-item-requestee-items item-in-trade-request-or-offer-sidebar" style="cursor:pointer;" data-userinventoryid="${item.userInventoryId}">
+        <div class="col-12 remove-item-requestee-items item-in-trade-request-or-offer-sidebar" style="cursor:pointer;" data-userinventoryid="${item.userInventoryId}" data-catalogid="${item.catalogId}">
             <div class="row">
                 <div class="col-4">
                     <img src="${window.subsitutionimageurl}" style="width:100%;height:auto;display:block;margin:0 auto;max-width:70px;" data-catalogid="${item.catalogId}" />
                 </div>
                 <div class="col-8">
                     <p style="font-size:0.85rem;margin-bottom:0;font-weight:600;">${xss(item.catalogName)}</p>
-                    <p style="font-size:0.65rem;margin-bottom:0;font-weight:400;">${formatCurrency(1, '0.65rem')+' '+xss(number_format(item.averagePrice))}</p>
+                    <p style="font-size:0.65rem;margin-bottom:0;font-weight:400;">${formatCurrency(1, '0.65rem') + ' ' + xss(number_format(item.averagePrice))}</p>
                     ${serial}
                 </div>
             </div>
@@ -441,16 +464,16 @@ const setupRequestArea = () => {
     $('#total-request-value').html(`Total Value: ${formatCurrency(1, '1rem')} ${number_format(totalASP)}`);
     setCatalogThumbs(thumbIds);
 }
-$(document).on('input', '#currency-request', function(e) {
+$(document).on('input', '#currency-request', function (e) {
     e.preventDefault();
     setupRequestArea();
 });
 
-$(document).on('input', '#currency-offer', function(e) {
+$(document).on('input', '#currency-offer', function (e) {
     e.preventDefault();
     setupOfferArea();
 });
-$(document).on('click', '.trade-item-requestee-items', function(e) {
+$(document).on('click', '.trade-item-requestee-items', function (e) {
     e.preventDefault();
     let data = partnerPager;
     let UserInventoryId = parseInt($(this).attr('data-userinventoryid'), 10);
@@ -467,7 +490,7 @@ $(document).on('click', '.trade-item-requestee-items', function(e) {
         return; // skip
     }
     if (CurrentRequest.length >= metadata.maxItemsPerSide) {
-        warning('You can only include up to '+metadata.maxItemsPerSide+' items, per user, in a trade.');
+        warning('You can only include up to ' + metadata.maxItemsPerSide + ' items, per user, in a trade.');
         return;
     }
     CurrentRequest.push({
@@ -478,13 +501,34 @@ $(document).on('click', '.trade-item-requestee-items', function(e) {
         averagePrice: averagePrice,
     });
     setupRequestArea();
-    $(this).attr('class',`col-6 col-md-4 trade-card-hover remove-item-${data.div.slice(1)} item-in-trade-request-or-offer`);
+    if (mode === 'TradeWithUser') {
+        $(this).attr('class', `col-6 col-md-4 trade-card-hover remove-item-${data.div.slice(1)} item-in-trade-request-or-offer`);
+    }
 });
-$(document).on('click', '.remove-item-requestee-items', function(e) {
+$(document).on('click', '.remove-item-requestee-items', function (e) {
     e.preventDefault();
     let data = partnerPager;
     let UserInventoryId = parseInt($(this).attr('data-userinventoryid'), 10);
+    let catalogId = parseInt($(this).attr('data-catalogid'), 10);
 
+    if (mode === 'CreateTradeAd') {
+        let found = false;
+        let _newArray = [];
+        for (const item of CurrentRequest) {
+            if (item.catalogId !== catalogId) {
+                _newArray.push(item);
+            } else {
+                if (found) {
+                    _newArray.push(item);
+                } else {
+                    found = true;
+                }
+            }
+        }
+        CurrentRequest = _newArray;
+        setupRequestArea();
+        return;
+    }
     // check if already exists
     if (inOffer(UserInventoryId) || inRequest(UserInventoryId)) {
         let _newArray = [];
@@ -494,41 +538,62 @@ $(document).on('click', '.remove-item-requestee-items', function(e) {
             }
         }
         CurrentRequest = _newArray;
-        $('.remove-item-requestee-items.item-in-trade-request-or-offer[data-userinventoryid="'+UserInventoryId+'"]').attr('class',`col-6 col-md-4 trade-card-hover trade-item-${data.div.slice(1)}`);
-        $('.remove-item-requestee-items.item-in-trade-request-or-offer-sidebar[data-userinventoryid="'+UserInventoryId+'"]').remove();
+        $('.remove-item-requestee-items.item-in-trade-request-or-offer[data-userinventoryid="' + UserInventoryId + '"]').attr('class', `col-6 col-md-4 trade-card-hover trade-item-${data.div.slice(1)}`);
+        $('.remove-item-requestee-items.item-in-trade-request-or-offer-sidebar[data-userinventoryid="' + UserInventoryId + '"]').remove();
         setupRequestArea();
         return;
     }
 });
 
-$(document).on('click', '#send-trade', function(e) {
-    questionYesNo('Are you sure you want to send this trade?', function(e) {
+$(document).on('click', '#send-trade', function (e) {
+    let msg = 'Are you sure you want to send this trade?';
+    let url = '/economy/trades/user/' + traderId + '/request';
+    let requesteeUserInventoryIds = [];
+    CurrentOffer.forEach(i => requesteeUserInventoryIds.push(i.userInventoryId));
+    let requestedUserInventoryIds = [];
+    CurrentRequest.forEach(i => requestedUserInventoryIds.push(i.userInventoryId));
+    let body = {
+        offerItems: requesteeUserInventoryIds,
+        requestedItems: requestedUserInventoryIds,
+        requestPrimary: currentRequestPrimary,
+        offerPrimary: currentOfferPrimary,
+    }
+    if (mode === 'CreateTradeAd') {
+        msg = 'Are you sure you want to create this trade ad?<br><br><p style="font-size:0.75rem;margin:1rem 0 0 0;padding:0;">Note that the serials you get from this trade will be random, as anybody can complete it.</p>';
+        url = '/trade-ads/ad/create';
+        body = {
+            offerItems: CurrentOffer.map(val => {
+                return {
+                    userInventoryId: val.userInventoryId,
+                }
+            }),
+            requestItems: CurrentRequest.map(val => {
+                return {
+                    catalogId: val.catalogId,
+                }
+            }),
+            requestPrimary: currentRequestPrimary,
+            offerPrimary: currentOfferPrimary,
+        }
+    }
+    questionYesNoHtml(msg, function (e) {
         loading();
-        let requesteeUserInventoryIds = [];
-        CurrentOffer.forEach(i => requesteeUserInventoryIds.push(i.userInventoryId));
-        let requestedUserInventoryIds = [];
-        CurrentRequest.forEach(i => requestedUserInventoryIds.push(i.userInventoryId));
         //questionYesNo('Sending trade...', function() {
-            request('/economy/trades/user/'+traderId+'/request', 'PUT', {
-                offerItems: requesteeUserInventoryIds,
-                requestedItems: requestedUserInventoryIds,
-                requestPrimary: currentRequestPrimary,
-                offerPrimary: currentOfferPrimary,
-            }).then(d => {
-                success('Your trade has been sent. You can review its status in the trades page.', () => {
-                    window.location.reload();
-                })
+        request(url, 'PUT', body).then(d => {
+            success('Your trade has been created. You can review its status in the trades page.', () => {
+                window.location.reload();
             })
+        })
             .catch(e => {
                 console.error(e);
                 if (e && e.responseJSON && e.responseJSON.message) {
                     warning(e.responseJSON.message);
-                }else{
+                } else {
                     let code = 'UnknownException';
                     if (e && e.responseJSON && e.responseJSON.error && e.responseJSON.error.code) {
                         code = e.responseJSON.error.code;
                     }
-                    warning('An unknown error has occurred. Please try again. Code: '+code)
+                    warning('An unknown error has occurred. Please try again. Code: ' + code)
                 }
             })
         //});

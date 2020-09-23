@@ -28,7 +28,7 @@ export const csp = {
     'media-src': `'none'`,
     'frame-ancestors': `'self'`,
     'img-src': `'self' data: https://cdn.blockshub.net/ https://hindigamerclub-game.ewr1.vultrobjects.com/ https://www.google-analytics.com/ ${config.baseUrl.frontend}`,
-    'connect-src': `'self' ws://localhost:8080/ https://sentry.io/ https://ka-f.fontawesome.com/releases/v5.13.1/css/free.min.css ${config.baseUrl.frontend} ${config.baseUrl.play}`,
+    'connect-src': `'self' ws://localhost:8080/ https://www.google-analytics.com/ https://sentry.io/ https://ka-f.fontawesome.com/releases/v5.13.1/css/free.min.css ${config.baseUrl.frontend} ${config.baseUrl.play}`,
     'object-src': `'none'`,
     'base-uri': `'self'`,
 } as any;
@@ -142,6 +142,11 @@ export default async (req: { session: any } & Request, res: Response, next: Next
     const baseService = new base({
         cookie: req.headers['cookie'],
     });
+    try {
+        res.locals.cookieConsent = await baseService.Users.getCookieConsentInfo()
+    } catch (err) {
+        // Ignore if error (since it defaults to all declined anyway so we dont risk legal issues)
+    }
     // Check if authenticated
     try {
         const newUserInfo = await baseService.Users.getAuthenticatedUserInfo();

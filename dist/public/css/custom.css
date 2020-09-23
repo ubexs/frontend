@@ -748,6 +748,20 @@ div.navBarMobileBottom > div.border-right {
 div#more-expanded > div.col-5 {
     background: #ffffff;
 }
+span.badge.stats-badge {
+    margin: 0.3rem 0.10rem;
+    text-align:left;
+    border-radius: 0;
+}
+span.badge.stats-badge > span.stats-badge-header {
+    font-size:0.6rem;
+}
+span.badge.stats-badge > span.stats-badge-body {
+    font-size:0.9rem;
+    font-weight:200;
+    padding-top:0.5rem;
+    display:block;
+}
 
 .support-ticket-text-box {
     padding: 0.5rem 0.65rem;
@@ -791,3 +805,18 @@ div.staff-card-index > i {
     font-size: 35px;
 }
 */
+
+div.row.userChatMessageCard > div.col-5 {
+    background: #f5f6f8;
+    border-radius: 4px;
+    padding: 3px;
+}
+.tooltipped-asp {
+    cursor: pointer;
+}
+span#deleteUserSecondaryBalance, span#deleteUserPrimaryBalance {
+    font-size: 0.75rem;
+}
+div.gdpr-cookie-notice {
+    color: #212529;
+}

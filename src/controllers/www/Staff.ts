@@ -166,6 +166,10 @@ export class WWWStaffController extends base {
         ViewData.page.ModerationHistory = moderationHistory;
         ViewData.page.userEmails = userEmails;
         ViewData.page.twoFactorEnabled = twoFactorEnabled;
+        ViewData.page.country = await s.Staff.getUserCountry(userInfo.userId);
+        if (ViewData.page.country.country === 'United Kingdom of Great Britain and Northern Ireland') {
+            ViewData.page.country.country = 'United Kingdom';
+        }
 
         const staffPermissionSelect: { string: string; selected: boolean }[] = [];
         let currentUserInfo = await s.Staff.getPermissions(userInfo.userId);

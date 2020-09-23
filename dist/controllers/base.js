@@ -9,6 +9,7 @@ const User_Referral_1 = require("../services/User-Referral");
 const Games_1 = require("../services/Games");
 const Support_1 = require("../services/Support");
 const Staff_1 = require("../services/Staff");
+const TradeAds_1 = require("../services/TradeAds");
 const xss = require("xss");
 const moment = require("moment");
 const ts_httpexceptions_1 = require("ts-httpexceptions");
@@ -26,6 +27,7 @@ class ControllerBase extends errors_1.default {
         this.Games = new Games_1.default(data);
         this.Support = new Support_1.default(data);
         this.Staff = new Staff_1.default(data);
+        this.TradeAds = new TradeAds_1.default(data);
     }
     static ValidateId(id) {
         console.log('provided', id);

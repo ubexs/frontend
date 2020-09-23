@@ -31,6 +31,14 @@ export default class Users extends base {
     }
 
     /**
+     * Get cookie consent info for the current session
+     */
+    public async getCookieConsentInfo(): Promise<{ googleAnalytics: boolean }> {
+        const info = await this.v1.get('/auth/cookie-consent');
+        return info.data;
+    }
+
+    /**
      * Get the authenticated user session info
      */
     public async getAuthenticatedUserInfo(): Promise<model.Users.AuthenticatedInfo> {

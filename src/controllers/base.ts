@@ -9,6 +9,7 @@ import UserReferral from "../services/User-Referral";
 import Games from '../services/Games';
 import Support from '../services/Support';
 import Staff from '../services/Staff';
+import TradeAds from '../services/TradeAds';
 // custom libraries
 import * as xss from 'xss';
 import * as moment from 'moment';
@@ -29,6 +30,7 @@ export default class ControllerBase extends errors {
     public Games: Games;
     public Support: Support;
     public Staff: Staff;
+    public TradeAds: TradeAds;
     public xss = xss;
     public moment = moment;
 
@@ -58,5 +60,6 @@ export default class ControllerBase extends errors {
         this.Games = new Games(data);
         this.Support = new Support(data);
         this.Staff = new Staff(data);
+        this.TradeAds = new TradeAds(data);
     }
 }

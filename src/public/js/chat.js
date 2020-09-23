@@ -1,7 +1,7 @@
 // env
 let wsurl = "wss://" + window.location.host + "/chat/websocket.aspx";
 if (window.location.protocol === 'http:') {
-    wsurl = "ws://"+window.location.host+"/chat/websocket.aspx";
+    wsurl = "ws://" + window.location.host + "/chat/websocket.aspx";
 }
 if (window.location.host.slice(0, 9) === 'localhost') {
     wsurl = "ws://localhost:8080/chat/websocket.aspx";
@@ -24,7 +24,7 @@ function getCsrf() {
                 withCredentials: true
             },
             type: "POST",
-            url: HTTPMeta.baseUrl+'/api/v1/chat/metadata',
+            url: HTTPMeta.baseUrl + '/api/v1/chat/metadata',
             data: '',
             complete: function (xhr) {
                 res(xhr.getResponseHeader('X-CSRF-Token'));
@@ -35,7 +35,6 @@ function getCsrf() {
 }
 
 function chatInit() {
-    return;
     if (window.location.pathname === '/Membership/NotApproved.aspx') {
         return; // account is banned so dont bother trying to load chat since it wont work
     }
@@ -182,7 +181,7 @@ function chatInit() {
                 var messageToLoad = JSON.parse(event.data);
                 if (messageToLoad.pong) {
                     return;
-                } 
+                }
                 handleChatMessage(messageToLoad);
                 // localStorage.setItem('notifSystemJson', event.data);
             }
@@ -268,7 +267,7 @@ function chatInit() {
     }
     if (openedChatModalUserIdLS !== 0 && !isNaN(openedChatModalUserIdLS)) {
         $('#chatModalTextBar').attr('data-open', 'true');
-        $('#scrollingDivForAllChatUsersList').css('height','300px');
+        $('#scrollingDivForAllChatUsersList').css('height', '300px');
         $('#chatUsersParent').show();
         $('#latestChatUsersParent').show();
         $('#chatDMModal').show();
@@ -285,14 +284,14 @@ function chatInit() {
             $(this).attr('data-open', 'true');
             $('#chatUsersParent').show();
             $('#latestChatUsersParent').show();
-            $('#scrollingDivForAllChatUsersList').css('height','300px');
+            $('#scrollingDivForAllChatUsersList').css('height', '300px');
         } else {
             // Is open. Let's close it
             $(this).attr('data-open', 'false');
             $('#chatUsersParent').hide();
             $('#latestChatUsersParent').hide();
             $('#chatDMModal').hide();
-            $('#scrollingDivForAllChatUsersList').css('height','auto');
+            $('#scrollingDivForAllChatUsersList').css('height', 'auto');
             openUserId = 0;
             chatDmOffset = 0;
             localStorage.setItem('ChatModalOpenUserId', 0);
@@ -327,25 +326,25 @@ function chatInit() {
                     }
                     currentlyDisplayedUserIds.push(user);
                     $('#latestChatUsers').append(`<div class="row userChatCard" style="cursor:pointer;" data-userid="${user}"></div>`)
-                        latestMessage = chatMessage;
+                    latestMessage = chatMessage;
+                    if (!latestMessage) {
+                        latestMessage = '';
+                    } else {
+                        latestMessage = latestMessage['content'];
                         if (!latestMessage) {
                             latestMessage = '';
-                        } else {
-                            latestMessage = latestMessage['content'];
-                            if (!latestMessage) {
-                                latestMessage = '';
-                            }
                         }
-                        $('#latestChatUsers').find('.userChatCard[data-userid="'+user+'"]').append(`
-                            <div class="col-4">
+                    }
+                    $('#latestChatUsers').find('.userChatCard[data-userid="' + user + '"]').append(`
+                            <div class="col-4" style="padding-right:0;">
                                 <img data-userid="${user}" style="width:100%;max-width:50px;margin:0 auto;display: block;" />
                             </div>
-                            <div class="col-8">
-                                <p data-userid="${user}" class="text-truncate" style="font-weight:500;font-size:0.75rem;">Loading...</p>
-                                <p class="chatMessageTrunc text-truncate" style="font-size: small;">${latestMessage.escape()}</p>
+                            <div class="col-8" style="padding-left:0;">
+                                <p data-userid="${user}" class="text-truncate" style="font-weight:800;font-size:0.7rem;">Loading...</p>
+                                <p class="chatMessageTrunc text-truncate" style="font-size: 0.71rem;">${latestMessage.escape()}</p>
+                                <hr />
                             </div>
                         `);
-                        $('#latestUserChats').append(`<div class="row"><div class="col-12"> <hr style="margin: 0.05rem;" /></div></div>`);
                 }
                 setUserThumbs(currentlyDisplayedUserIds);
                 setUserNames(currentlyDisplayedUserIds);
@@ -386,15 +385,13 @@ function chatInit() {
                         }
                         $('#chatUsers').append(`
                         <div class="row userChatCard" style="cursor:pointer;" data-userid="${fr.userId}">
-                            <div class="col-4">
+                            <div class="col-4" style="padding-right:0;">
                                 <img data-userid="${fr.userId}" style="width:100%;max-width:50px;margin:0 auto;display: block;" />
                             </div>
-                            <div class="col-8">
-                                <p data-userid="${fr.userId}" class="text-truncate" style="font-weight:500;">Loading...</p>
-                                <p class="chatMessageTrunc text-truncate" style="font-size: small;">${fr.UserStatus.escape()}</p>
-                            </div>
-                            <div class="col-12">
-                                <hr style="margin: 0.05rem;" />
+                            <div class="col-8" style="padding-left:0;">
+                                <p data-userid="${fr.userId}" class="text-truncate" style="font-weight:800;font-size:0.7rem;">Loading...</p>
+                                <p data-latestmessage-userid="${fr.userId}" class="chatMessageTrunc text-truncate" style="font-size: 0.71rem;">Nothing Yet...</p>
+                                <hr />
                             </div>
                         </div>
                         `);
@@ -482,12 +479,15 @@ function chatInit() {
                 fr.UserStatus = "";
             }
             var textalign = "";
+            let extraColFormat = '';
             if (fr.userIdFrom === userId) {
                 // Sender is current user
                 textalign = "text-right";
+                extraColFormat = 'offset-7';
             } else {
                 // Sender is partner
                 textalign = "text-left";
+                extraColFormat = '';
             }
             if (pastUserId === fr.userIdFrom) {
                 /*
@@ -501,22 +501,22 @@ function chatInit() {
                 if ($('#dmchatmessages').children().length === 0) {
                     $('#dmchatmessages').append(`
                     <div class="row userChatMessageCard" style="cursor:pointer;" data-userid="${fr.userIdFrom}">
-                        <div class="col-12" style="padding: 0;padding-right:0.25rem;padding-left:0.25rem;">
-                            <a href="/users/${fr.userIdFrom}/profile"><p data-userid="${fr.userIdFrom}" class="text-truncate text-right" style="font-weight:500;">...</p></a>
+                        <div class="col-5 ${extraColFormat}" style="padding: 0;padding-right:0.25rem;padding-left:0.25rem;">
+                            <a href="/users/${fr.userIdFrom}/profile"><p data-userid="${fr.userIdFrom}" class="text-truncate text-right" style="font-weight:700;font-size:0.7rem;">...</p></a>
                             <p class="text ${textalign}" style="font-size: small;">${fr.content.escape()}</p>
                         </div>
                     </div>
                     `);
-                }else{
+                } else {
                     $('#dmchatmessages').append(`
                     <div class="row userChatMessageCard" style="cursor:pointer;" data-userid="${fr.userIdFrom}">
-                        <div class="col-12" style="padding: 0;padding-right:0.25rem;padding-left:0.25rem;">
+                        <div class="col-5 ${extraColFormat}" style="padding: 0;padding-right:0.25rem;padding-left:0.25rem;">
                             <p class="text ${textalign}" style="font-size: small;">${fr.content.escape()}</p>
                         </div>
                     </div>
                     `);
-               }
-                
+                }
+
             } else {
                 /*
                 var hr = "";
@@ -528,8 +528,8 @@ function chatInit() {
                 */
                 $('#dmchatmessages').append(`
                     <div class="row userChatMessageCard" style="cursor:pointer;" data-userid="${fr.userIdFrom}">
-                        <div class="col-12" style="padding: 0;padding-right:0.25rem;padding-left:0.25rem;">
-                            <a href="/users/${fr.userIdFrom}/profile"><p data-userid="${fr.userIdFrom}" class="text-truncate ${textalign}" style="font-weight:500;">Loading...</p></a>
+                        <div class="col-5 ${extraColFormat}" style="padding: 0;padding-right:0.25rem;padding-left:0.25rem;">
+                            <a href="/users/${fr.userIdFrom}/profile"><p data-userid="${fr.userIdFrom}" class="text-truncate ${textalign}" style="font-weight:700;font-size:0.7rem;">Loading...</p></a>
                             <p class="text ${textalign}" style="font-size: small;">${fr.content.escape()}</p>
                         </div>
                         <div class="col-12">
