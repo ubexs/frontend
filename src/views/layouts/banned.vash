@@ -21,15 +21,9 @@
             <!-- google analytics -->
             <!-- Global site tag (gtag.js) - Google Analytics -->
             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
+            <script async src="/js/misc/ga.js" nonce="@model.nonce"></script>
         }
     }
-    <script nonce="@model.nonce">
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-161288601-1');
-    </script>
 
 
     <style>
@@ -121,18 +115,18 @@
                             </div>
                             <div class="col-12 col-md-4 footerBarListItems">
                                 <p>
-                                    Free 3D in-browser video games. Use your own virtual 3D sanbox to create nearly whatever you want, the only limitation is your imagination.
+                                    Free 3D in-browser video games. Use your own virtual 3D sandbox to create nearly whatever you want, the only limitation is your imagination.
                                 </p>
                             </div>
                         </div>
                         <div class="row" style="margin-top:2rem;">
                                 @for (const genre in model.gameGenres) {
                                     @if (Number.isInteger(parseInt(genre, 10))) {
-                                        <div class="col text-center text-truncate d-none d-lg-block" style="padding-left: 5px;padding-right: 5px;">
-                                            <p style="font-size:0.75rem;"><a href="/game/genre/@model.gameGenres[genre]">@model.gameGenres[genre]</a></p>
+                                        <div class="col text-center text-truncate d-none d-lg-block genre-padding-area">
+                                            <p class="point-75-rem"><a href="/game/genre/@model.gameGenres[genre]">@model.gameGenres[genre]</a></p>
                                         </div>
-                                        <div class="col-3 text-center text-truncate d-block d-lg-none" style="padding-left: 5px;padding-right: 5px;">
-                                            <p style="font-size:0.75rem;"><a href="/game/genre/@model.gameGenres[genre]">@model.gameGenres[genre]</a></p>
+                                        <div class="col-3 text-center text-truncate d-block d-lg-none genre-padding-area">
+                                            <p class="point-75-rem"><a href="/game/genre/@model.gameGenres[genre]">@model.gameGenres[genre]</a></p>
                                         </div>
                                     }
                                 }

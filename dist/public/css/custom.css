@@ -820,3 +820,13 @@ span#deleteUserSecondaryBalance, span#deleteUserPrimaryBalance {
 div.gdpr-cookie-notice {
     color: #212529;
 }
+div#cookieConsentInfoModal {
+    z-index: 99999;
+}
+p.point-75-rem  {
+    font-size:0.75rem;
+}
+.genre-padding-area   {
+    padding-left: 5px;
+    padding-right: 5px;
+}

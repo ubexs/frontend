@@ -1,3 +1,5 @@
+let currentCountry = 'UNKNOWN';
+
 /**
  * Update session cookie status
  * @param {boolean} ga Google Analytics enabled? true/false
@@ -8,7 +10,7 @@ const updateCookieStatus = (ga) => {
     }).then(d => {
         // OK
         try {
-            localStorage.setItem('cookie_prompt_success_v2', 'true')
+            localStorage.setItem('cookie_prompt_success_v3', currentCountry)
         } catch (e) {
 
         }
@@ -95,27 +97,36 @@ $(document).on('click', '#openCookieInfo', function (e) {
     e.preventDefault();
 })
 
+
 const cookieConsent = () => {
     // default to false (for example, if user has cookies/localstorage disabled)
     let userPromptedWithCookieNotice = 'false';
     // try to remove the old (unused) cookie consent
     try {
         localStorage.removeItem('cookie_prompt_success');
+        localStorage.removeItem('cookie_prompt_success_v2');
     } catch (e) {
         // ignore for now
     }
     try {
-        userPromptedWithCookieNotice = localStorage.getItem('cookie_prompt_success_v2');
+        userPromptedWithCookieNotice = localStorage.getItem('cookie_prompt_success_v3');
     } catch (e) {
         console.error('[warning] error getting cookie prompt status', e);
     }
     // Open the consent if it is not false
-    if (userPromptedWithCookieNotice !== 'true') {
+    if (userPromptedWithCookieNotice !== currentCountry) {
         openCookieConsent();
     }
 }
 
-cookieConsent();
+request('/auth/current-country', 'GET').then(data => {
+    currentCountry = data.country;
+    if (data.cookiePromptRequired) {
+        cookieConsent();
+    } else {
+        updateCookieStatus(true);
+    }
+})
 $(document).on('click', '#open-cookie-consent', function (e) {
     e.preventDefault();
     openCookieConsent();

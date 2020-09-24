@@ -105,9 +105,11 @@ function request(url, method, body) {
     });
 }
 
-// send ping
-request('/auth/ping', 'POST', { url: window.location.href }).then(ok => {
+if ($('#userdata').attr('data-authenticated') === 'true') {
+    // send ping
+    request('/auth/ping', 'POST', { url: window.location.href }).then(ok => {
 
-}).catch(err => {
-    console.error('ping event error', err);
-})
+    }).catch(err => {
+        console.error('ping event error', err);
+    })
+}
