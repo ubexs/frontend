@@ -17,6 +17,7 @@ const common_1 = require("@tsed/common");
 const base_1 = require("../base");
 const model = require("../../models");
 const middleware = require("../../middleware/v1");
+const swagger_1 = require("@tsed/swagger");
 const { YesAuth, NoAuth } = middleware.auth;
 let WWWStaffController = class WWWStaffController extends base_1.default {
     constructor() {
@@ -66,6 +67,11 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
     }
     editBanner() {
         return new model.WWWTemplate({ title: 'Edit Banner' });
+    }
+    whitelistIp() {
+        return new model.WWWTemplate({
+            title: 'Create Ip Whitelist URL',
+        });
     }
     async moderationProfile(localUserData, userId, req) {
         let s = new base_1.default({ cookie: req.headers['cookie'] });
@@ -323,6 +329,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], WWWStaffController.prototype, "editBanner", null);
+__decorate([
+    common_1.Get('/staff/whitelist-ip'),
+    swagger_1.Summary('Create an ip whitelist URL'),
+    common_1.Render('staff/whitelist-ip'),
+    common_1.Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManagePrivateUserInfo)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], WWWStaffController.prototype, "whitelistIp", null);
 __decorate([
     common_1.Get('/staff/user/profile'),
     common_1.Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ReviewUserInformation)),

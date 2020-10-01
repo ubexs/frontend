@@ -1,0 +1,1 @@
+"use strict";$(document).on("click","#createUrl",function(a){a.preventDefault(),request("/staff/ip/whitelist","POST",{}).then(function(a){var b=a.code;success("Url: "+("https://www.blockshub.net/ip/whitelist?code="+b))})});

@@ -60,6 +60,12 @@
                         '/staff/currency-product',
                         'fas fa-money-bill-wave-alt',
                         'ManageCurrencyProducts',
+                    ],
+                    [
+                        'IP WHITELIST',
+                        '/staff/whitelist-ip',
+                        'fas fa-tools',
+                        'ManagePrivateUserInfo'
                     ]
                 ].filter(val => {
                     return model.hasPerm(val[3]);

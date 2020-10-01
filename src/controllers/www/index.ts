@@ -253,4 +253,19 @@ export class GenericWWWController extends base {
             }
         });
     }
+
+    @Get('/ip/whitelist')
+    @Summary('Url to whitelist ip')
+    @Render('ip-whitelist')
+    public async whitelistIpUrl(
+        @Required()
+        @QueryParams('code', String) code: string
+    ) {
+        return new model.WWWTemplate({
+            title: 'Ip Whitelist',
+            page: {
+                code,
+            }
+        })
+    }
 }

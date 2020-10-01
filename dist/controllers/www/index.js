@@ -153,6 +153,14 @@ let GenericWWWController = class GenericWWWController extends base_1.default {
             }
         });
     }
+    async whitelistIpUrl(code) {
+        return new model.WWWTemplate({
+            title: 'Ip Whitelist',
+            page: {
+                code,
+            }
+        });
+    }
 };
 __decorate([
     common_1.Get('/perf.txt'),
@@ -332,6 +340,16 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], GenericWWWController.prototype, "V1AuthenticationFlow", null);
+__decorate([
+    common_1.Get('/ip/whitelist'),
+    swagger_1.Summary('Url to whitelist ip'),
+    common_1.Render('ip-whitelist'),
+    __param(0, common_1.Required()),
+    __param(0, common_1.QueryParams('code', String)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], GenericWWWController.prototype, "whitelistIpUrl", null);
 GenericWWWController = __decorate([
     common_1.Controller('/')
 ], GenericWWWController);

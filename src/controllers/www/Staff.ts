@@ -114,6 +114,16 @@ export class WWWStaffController extends base {
         return new model.WWWTemplate({ title: 'Edit Banner' });
     }
 
+    @Get('/staff/whitelist-ip')
+    @Summary('Create an ip whitelist URL')
+    @Render('staff/whitelist-ip')
+    @Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ManagePrivateUserInfo))
+    public whitelistIp() {
+        return new model.WWWTemplate({
+            title: 'Create Ip Whitelist URL',
+        })
+    }
+
     @Get('/staff/user/profile')
     @Use(YesAuth, middleware.staff.validate(model.Staff.Permission.ReviewUserInformation))
     @Render('staff/user/profile')
