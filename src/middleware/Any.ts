@@ -20,6 +20,7 @@ import * as model from '../models';
  * Errors
  */
 import config from "../helpers/config";
+import { bigNum2Small } from '../helpers/Numbers';
 /**
  * Pre-Generated CSP
  */
@@ -151,6 +152,8 @@ export default async (req: { session: any } & Request, res: Response, next: Next
     try {
         const newUserInfo = await baseService.Users.getAuthenticatedUserInfo();
         res.locals.userInfo = newUserInfo as UserSession;
+        res.locals.userInfo.primaryBalanceFormatted = bigNum2Small(newUserInfo.primaryBalance);
+        res.locals.userInfo.secondaryBalanceFormatted = bigNum2Small(newUserInfo.secondaryBalance);
 
         if (newUserInfo.banned) {
 

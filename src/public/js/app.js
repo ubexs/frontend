@@ -449,12 +449,15 @@ if (userData.attr("data-authenticated") === "true") {
         // etc.
     }
     */
+
+    /*
     var balOne = $('#currencyBalanceOne').attr("data-amt");
     balOne = bigNum2Small(parseInt(balOne));
     $('#currencyBalanceOne').html(balOne);
     var balTwo = $('#currencyBalanceTwo').attr("data-amt");
     balTwo = bigNum2Small(parseInt(balTwo));
     $('#currencyBalanceTwo').html(balTwo);
+    */
 
     $('[data-toggle="currency"]').tooltip();
 
@@ -476,14 +479,17 @@ if (userData.attr("data-authenticated") === "true") {
             });
             */
 
-    $(document).on('click', '#logoutAClick', function () {
-        request('/auth/logout', 'POST', '{}')
-            .then(function (d) {
-                window.location.reload();
-            })
-            .catch(function (e) {
-                warning("There was an error logging you out. Please reload the page, and try again.");
-            });
+    $(document).on('click', '.onClickLogout', function () {
+        questionYesNo('Are you sure you want to log out?', () => {
+            request('/auth/logout', 'POST', '{}')
+                .then(function (d) {
+                    window.location.reload();
+                })
+                .catch(function (e) {
+                    warning("There was an error logging you out. Please reload the page, and try again.");
+                });
+        });
+
     });
 } else {
 
