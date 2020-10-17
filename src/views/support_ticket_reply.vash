@@ -1,4 +1,8 @@
 @html.extend('layouts/banned', function(model) {
+    @html.block('css', function(model) {
+        <!-- Recaptcha -->
+        <script nonce="@model.nonce" src="https://www.google.com/recaptcha/api.js" async defer></script>
+    })
     @html.block('content', function(model) {
             <input type="hidden" id="ticketid" value="@model.page.ticket.ticketId">
             <div class="row">

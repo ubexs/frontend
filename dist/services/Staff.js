@@ -36,5 +36,8 @@ class Staff extends base_1.default {
     getUserCountry(userId) {
         return this.v1.get('/staff/user/' + userId + '/country').then(d => { return d.data; });
     }
+    getBanner() {
+        return this.v1.get(`/staff/banner`).then(d => { return d.data; });
+    }
 }
 exports.default = Staff;

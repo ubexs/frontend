@@ -72,10 +72,30 @@ exports.UserSession = UserSession;
 const crypto = require("crypto");
 const config_1 = require("../helpers/config");
 const versionStr = crypto.randomBytes(8).toString('hex');
+let currentBannerText = ``;
+const Staff_1 = require("../services/Staff");
+let staffService = new Staff_1.default();
+const updateBannerText = async () => {
+    currentBannerText = (await staffService.getBanner()).message;
+};
+let _updateBannerTextLocked = false;
+setInterval(() => {
+    if (_updateBannerTextLocked) {
+        return;
+    }
+    _updateBannerTextLocked = true;
+    updateBannerText().then(() => {
+    }).catch(err => {
+        console.error('Error updating site-wide banner text inside models/index:', err);
+    }).finally(() => {
+        _updateBannerTextLocked = false;
+    });
+}, 10 * 1000);
 class WWWTemplate {
     constructor(props) {
         this.year = new Date().getFullYear();
         this.v = versionStr;
+        this.bannerText = currentBannerText;
         this.gameGenres = Games.GameGenres;
         this.env = process.env.NODE_ENV;
         this.isStaging = process.env.IS_STAGING === '1';

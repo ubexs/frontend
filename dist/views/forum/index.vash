@@ -105,11 +105,11 @@
             <div class="col-12 col-xl-4" style="margin-top:1rem;">
                 <div class="row forumlatestposts">
                     <div class="col-12">
-                        <div class="card" style="color:white;border-radius:0;border-bottom: 1px solid rgba(105,222,124,1);">
+                        <div class="card gradient-border-bottom">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 style="margin-bottom:0;font-size:1rem;background: linear-gradient(90deg, rgba(71,195,91,1) 0%, rgba(105,222,124,1) 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">Latest Threads</h5>
+                                        <h5 class="gradient-heading">Latest Threads</h5>
                                     </div>
                                 </div>
                             </div>

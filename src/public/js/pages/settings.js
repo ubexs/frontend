@@ -12,11 +12,11 @@ request("/settings", "GET")
                 if (data.email.email === null) {
                     $('#email-status').html('( No Email Added )')
                 } else {
-                    $('#newEmailValue').attr('disabled','disabled');
+                    $('#newEmailValue').attr('disabled', 'disabled');
                     $('#email-status').html('( Unverified; Check your inbox! Or, <a href="#" id="send-verification-email">Click Me</a> to resend a verification email. )')
                 }
             } else if (data.email.status === 1) {
-                $('#newEmailValue').attr('disabled','disabled');
+                $('#newEmailValue').attr('disabled', 'disabled');
                 $('#email-status').html('( Verified )');
             }
         }
@@ -149,7 +149,7 @@ request("/settings", "GET")
                         $('#updateTwoFactorAuthenticatorClick').attr('disabled', 'disabled');
                         $('#twoFactorAuth').attr('disabled', 'disabled');
                         let pass = $('#two-factor-password').val();
-                        request('/auth/totp', 'DELETE', JSON.stringify({'password': pass})).then(d => {
+                        request('/auth/totp', 'DELETE', JSON.stringify({ 'password': pass })).then(d => {
                             success('Two-factor authentication has been disabled for your account.', () => {
                                 window.location.reload();
                             });
@@ -187,25 +187,25 @@ $(document).on('keypress', '#newEmailValue', function (e) {
 $(document).on("click", "#updateEmailClick", function () {
     loading();
     if ($('#newEmailValue').attr('disabled') === 'disabled') {
-        question('Please enter your new email address.', function(em) {
-            request("/settings/email", "PATCH", JSON.stringify({"email": em}))
+        question('Please enter your new email address.', function (em) {
+            request("/settings/email", "PATCH", JSON.stringify({ "email": em }))
                 .then(function (data) {
                     success("Your email has been updated! Please verify it with the link sent to your email.", function () {
                     });
-                    $('#newEmailValue').val(em.slice(0,1)+'*'.repeat(em.indexOf('@')-1)+em.slice(em.indexOf('@')));
+                    $('#newEmailValue').val(em.slice(0, 1) + '*'.repeat(em.indexOf('@') - 1) + em.slice(em.indexOf('@')));
                 })
                 .catch(function (e) {
                     warning(e.responseJSON.message);
                 });
         })
-    }else{
+    } else {
         let email = $('#newEmailValue').val();
-        request("/settings/email", "PATCH", JSON.stringify({"email": email}))
+        request("/settings/email", "PATCH", JSON.stringify({ "email": email }))
             .then(function (data) {
                 success("Your email has been set! Please verify it with the link sent to your email.", function () {
                 });
                 let em = email;
-                $('#newEmailValue').attr('disabled','disabled').val(em.slice(0,1)+'*'.repeat(em.indexOf('@')-1)+em.slice(em.indexOf('@')));
+                $('#newEmailValue').attr('disabled', 'disabled').val(em.slice(0, 1) + '*'.repeat(em.indexOf('@') - 1) + em.slice(em.indexOf('@')));
             })
             .catch(function (e) {
                 warning(e.responseJSON.message);
@@ -218,7 +218,7 @@ $(document).on('keydown', '#newForumSignatureValue', function () {
 });
 $(document).on("click", "#updateForumSignatureClick", function () {
     var signature = $('#newForumSignatureValue').val();
-    request("/settings/forum/signature", "PATCH", JSON.stringify({"signature": signature}))
+    request("/settings/forum/signature", "PATCH", JSON.stringify({ "signature": signature }))
         .then(function (data) {
             success("Your forum signature has been updated.", function () {
 
@@ -234,17 +234,20 @@ $(document).on('keypress', '#selectThemeOption', function () {
 });
 $(document).on("click", "#updateThemeClick", function () {
     var theme = parseInt($('#selectThemeOption').find(":selected").attr("value"));
-    request("/settings/theme", "PATCH", JSON.stringify({"theme": theme}))
+    request("/settings/theme", "PATCH", JSON.stringify({ "theme": theme }))
         .then(function (data) {
             if (theme === 1) {
                 $('head').append('<link href="/css/dark.css" rel="stylesheet">');
             } else {
-                let allStyles = $('link[rel=stylesheet]');
-                for (const style of allStyles) {
-                    if ($(style).attr('href').slice(0, '/css/dark.css'.length) === '/css/dark.css') {
+                $('link[rel=stylesheet]').each(function (index, style) {
+                    let h = $(style).attr('href');
+                    if (typeof h !== 'string') {
+                        return;
+                    }
+                    if (h.indexOf('/css/dark.css') !== -1) {
                         $(style).remove();
                     }
-                }
+                });
             }
             setTimeout(function () {
                 success("Your theme has been updated!", function () {
@@ -252,6 +255,7 @@ $(document).on("click", "#updateThemeClick", function () {
             }, 100);
         })
         .catch(function (e) {
+            console.error('error updating theme', e);
             warning(e.responseJSON.message);
             // hmm
         });
@@ -262,7 +266,7 @@ $(document).on('keypress', '#selectTradingOption', function () {
 });
 $(document).on("click", "#updateTradingClick", function () {
     var enabled = parseInt($('#selectTradingOption').find(":selected").attr("value"));
-    request("/settings/trade", "PATCH", JSON.stringify({"enabled": enabled}))
+    request("/settings/trade", "PATCH", JSON.stringify({ "enabled": enabled }))
         .then(function (data) {
             success("Your trade settings have been updated!", function () {
 
@@ -280,7 +284,7 @@ $(document).on('keypress', '#newBlurbValue', function () {
 });
 $(document).on("click", "#updateBlurbClick", function () {
     var blurb = $('#newBlurbValue').val();
-    request("/settings/blurb", "PATCH", JSON.stringify({"blurb": blurb}))
+    request("/settings/blurb", "PATCH", JSON.stringify({ "blurb": blurb }))
         .then(function (data) {
             success("Your blurb has been updated!", function () {
 
@@ -335,7 +339,7 @@ $(document).on("click", "#updateUsernameClick", function () {
     questionYesNoHtml('Changing your username costs <span style="color:#28a745;"><img alt="$" style="height: 1rem;" src="https://cdn.blockshub.net/static/money-green-2.svg"/></span> 1,000. Are you sure you\'d like to continue?', function () {
         request('/auth/username/change/available?username=' + newUsername, "GET")
             .then(function () {
-                request('/auth/username/change', 'PATCH', JSON.stringify({'username': newUsername}))
+                request('/auth/username/change', 'PATCH', JSON.stringify({ 'username': newUsername }))
                     .then(function () {
                         success('Your username has been changed.', function () {
                             window.location.reload();
@@ -383,7 +387,7 @@ const loadReferralInfo = () => {
         request('/user-referral/my/referral-contest/entry').then(stats => {
             if (stats.hasEnteredContest && stats.hasContestEnded) {
                 div.append(`<p>The contest you were entered into has ended.</p>`);
-            }else if (stats.hasEnteredContest && !stats.hasContestEnded) {
+            } else if (stats.hasEnteredContest && !stats.hasContestEnded) {
                 div.append(`<p>You were entered into the contest. Check back soon to see if you win!</p>`);
             }
         }).catch(err => {

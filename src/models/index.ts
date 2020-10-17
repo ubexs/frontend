@@ -8,7 +8,7 @@ import * as UserReferral from './User-Referral';
 import * as Support from './Support';
 import * as Staff from './Staff';
 import { Required } from '@tsed/common';
-import {hostName} from '../middleware/Any';
+import { hostName } from '../middleware/Any';
 
 export class UserSession {
     @Required()
@@ -34,6 +34,27 @@ export class UserSession {
 import * as crypto from 'crypto';
 import config from "../helpers/config";
 const versionStr = crypto.randomBytes(8).toString('hex');
+
+let currentBannerText = ``;
+import staffServiceClass from '../services/Staff';
+let staffService = new staffServiceClass();
+const updateBannerText = async () => {
+    currentBannerText = (await staffService.getBanner()).message;
+}
+let _updateBannerTextLocked = false;
+setInterval(() => {
+    if (_updateBannerTextLocked) {
+        return;
+    }
+    _updateBannerTextLocked = true;
+    updateBannerText().then(() => {
+
+    }).catch(err => {
+        console.error('Error updating site-wide banner text inside models/index:', err);
+    }).finally(() => {
+        _updateBannerTextLocked = false;
+    })
+}, 10 * 1000);
 
 export class WWWTemplate<PageType> {
     constructor(props: WWWTemplate<PageType>) {
@@ -73,7 +94,7 @@ export class WWWTemplate<PageType> {
     /**
      * Banner Thing
      */
-    // bannerText?: string = currentBannerText;
+    bannerText?: string = currentBannerText;
 
     /**
      * Game Genres (for footer)
@@ -104,7 +125,7 @@ export class WWWTemplate<PageType> {
  * URL-Encode a String
  * @param string String to Encode
  */
-export const urlEncode = (string: string|undefined): string => {
+export const urlEncode = (string: string | undefined): string => {
     if (!string) {
         return "unnamed";
     }

@@ -50,4 +50,11 @@ export default class Staff extends base {
     public getUserCountry(userId: number): Promise<{ country: string; countryCode: string; }> {
         return this.v1.get('/staff/user/' + userId + '/country').then(d => { return d.data });
     }
+
+    /**
+     * Get the current site-wide banner text
+     */
+    public getBanner(): Promise<{ message: string }> {
+        return this.v1.get(`/staff/banner`).then(d => { return d.data });
+    }
 }

@@ -1,6 +1,7 @@
 html,body {
     height: 100%;
 }
+
 .image{
     position:relative;
     overflow:hidden;
@@ -16,6 +17,39 @@ html,body {
 }
 * {
     font-family: 'Montserrat', sans-serif;
+}
+a.navbar-brand  > span.brand-blocks {
+    color:rgba(71,195,91,1);
+}
+a.navbar-brand  > span.brand-hub {
+    background-color:rgba(71,195,91,1);
+    border-radius:0.25rem;
+    color:white;
+    padding-left:0.25rem;
+    padding-right:0.25rem;
+    padding-top:0.1rem;
+    padding-bottom:0.15rem;
+}
+.gradient-heading {
+    margin-bottom:0;
+    font-size:1rem;
+    background: linear-gradient(90deg, rgba(71,195,91,1) 0%, rgba(105,222,124,1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.gradient-border-bottom {
+    color:white;
+    border-radius:0;
+    border-bottom: 1px solid rgba(105,222,124,1);
+}
+div#bannerText > div {
+    background-color: #23282d;
+}
+div#bannerText > div > div > h6 {
+    margin-top:1rem;
+    margin-bottom:1rem;
+    font-size:0.85rem;
+    color: white;
 }
 .rainbow-fa:before {
     -webkit-background-clip: text;
