@@ -95,25 +95,51 @@
                 <div class="col-5">
                     <p style="text-align:left;padding-top:0.5rem;font-size:1.5rem;"><i class="fas fa-angle-double-right"></i> MORE</p>
                     <div style="text-align:left;font-weight:700;padding-bottom: 1rem;padding-top:0.5rem;">
-                        <p>
-                            <a href="/groups">
-                                Groups
+                        <p class="mobile-navbar-more-links">
+                            @if (model.userInfo && model.userInfo.staff >= 1) {
+                                <a href="/staff/directory">
+                                    <i class="fas fa-lock"></i> Staff
+                                </a>
+                                <br>
+                            }
+                            <a href="/users">
+                                <i class="fas fa-users"></i> Users
                             </a>
                             <br>
-                            <a href="/users">
-                                Users
-                            </a>
+                            <a href="/groups">
+                                <i class="fas fa-city"></i> Groups
+                            </a>                            
                             <br>
                             <a href="/forum">
-                                Forum
+                                <i class="fas fa-scroll"></i> Forum
+                            </a>
+                            <br>
+                            <a href="/avatar">
+                                <i class="fas fa-user-tag"></i> My Avatar
+                            </a>
+                            <br>
+                            <a href="/users/@model.userInfo.userId/profile">
+                                <i class="fas fa-id-card"></i> My Profile
+                            </a>
+                            <br>
+                            <a href="/trades">
+                               <i class="fas fa-exchange-alt"></i> My Trades
+                            </a>
+                            <br>
+                            <a href="/settings">
+                                <i class="fas fa-sliders-h"></i> My Settings
                             </a>
                             <br>
                             <a href="/shop">
-                                Currency Shop
+                                <i class="fas fa-dollar-sign"></i> Currency Shop
                             </a>
                             <br>
                             <a href="/discord">
-                                Discord
+                                <i class="fas fa-phone"></i> Discord
+                            </a>
+                            <br>
+                            <a href="#" class="onClickLogout">
+                                <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </p>
                     </div>
@@ -169,9 +195,29 @@
                     </a>
                 </h3>
 
+            @*
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            *@
+            <div class="navbar-mobile-user-info text-truncate">
+                <a class="nav-link" href="/transactions" style="color: inherit;font-weight:700;">
+                    @if (!model.userInfo || model.userInfo.theme !== 1) {
+                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-grey.svg"/>    
+                    }else{
+                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-white.svg"/>    
+                    }
+                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.primaryBalance" data-amt="@model.userInfo.primaryBalance">@model.userInfo.primaryBalanceFormatted</span>
+
+                    <span>&emsp;</span>
+                    @if (!model.userInfo || model.userInfo.theme !== 1) {
+                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-grey.svg"/>    
+                    }else{
+                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-white.svg"/>    
+                    }
+                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.secondaryBalance" data-amt="@model.userInfo.secondaryBalance">@model.userInfo.secondaryBalanceFormatted</span>
+                </a>
+            </div>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding:0;">
                 <ul class="navbar-nav mr-auto">
@@ -231,7 +277,7 @@
                                     }else{
                                         <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-white.svg"/>    
                                     }
-                                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.primaryBalance" id="currencyBalanceOne" data-amt="@model.userInfo.primaryBalance">@model.userInfo.primaryBalance</span>
+                                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.primaryBalance" id="currencyBalanceOne" data-amt="@model.userInfo.primaryBalance">@model.userInfo.primaryBalanceFormatted</span>
                                 </a>
                             </li>
                             <li class="nav-item displayCurrency">
@@ -241,7 +287,7 @@
                                     }else{
                                         <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-white.svg"/>    
                                     }
-                                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.secondaryBalance" id="currencyBalanceTwo" data-amt="@model.userInfo.secondaryBalance">@model.userInfo.secondaryBalance</span>
+                                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.secondaryBalance" id="currencyBalanceTwo" data-amt="@model.userInfo.secondaryBalance">@model.userInfo.secondaryBalanceFormatted</span>
                                 </a>
                     <!--
                                 <a class="nav-link" href="/transactions">
@@ -273,7 +319,7 @@
                             <a class="dropdown-item" href="/settings"><i class="fas fa-sliders-h"></i> My Settings</a>
                             <a class="dropdown-item" href="/moderation"><i class="fas fa-exclamation-triangle"></i> Moderation History</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" id="logoutAClick" href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                            <a class="dropdown-item onClickLogout" href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
                         </div>
                     </li>
                 </ul>

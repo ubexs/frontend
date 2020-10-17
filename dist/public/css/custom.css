@@ -864,3 +864,16 @@ p.point-75-rem  {
     padding-left: 5px;
     padding-right: 5px;
 }
+
+div.navbar-mobile-user-info {
+    display: none;
+}
+@media (max-width: 992px) {
+    div.navbar-mobile-user-info {
+        display: block;
+    }
+}
+
+p.mobile-navbar-more-links > a {
+    color: inherit;
+}

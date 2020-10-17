@@ -8,6 +8,7 @@ const ts_httpexceptions_1 = require("ts-httpexceptions");
 const base_1 = require("../controllers/base");
 const model = require("../models");
 const config_1 = require("../helpers/config");
+const Numbers_1 = require("../helpers/Numbers");
 exports.csp = {
     'form-action': `'self'`,
     'media-src': `'none'`,
@@ -115,6 +116,8 @@ exports.default = async (req, res, next) => {
     try {
         const newUserInfo = await baseService.Users.getAuthenticatedUserInfo();
         res.locals.userInfo = newUserInfo;
+        res.locals.userInfo.primaryBalanceFormatted = Numbers_1.bigNum2Small(newUserInfo.primaryBalance);
+        res.locals.userInfo.secondaryBalanceFormatted = Numbers_1.bigNum2Small(newUserInfo.secondaryBalance);
         if (newUserInfo.banned) {
             if (req.url === "/Membership/NotApproved.aspx?ID=" + newUserInfo.userId) {
                 let banData;
