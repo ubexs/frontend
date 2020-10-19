@@ -175,7 +175,7 @@
                 <div class="card" style="margin: 1rem 0;">
                     <div class="card-body">
                         <div class="card-title text-left" style="margin-bottom:0;">
-                            <div class="row">
+                            <div class="row" style="margin-bottom:1rem;">
                                 <div class="col-sm-10">
                                     <h3 class="text-truncate" style="margin-bottom:0.5rem;margin-top:0;font-size:1.25rem">@model.page.username's Friends <span id="friendCountDiv"></span></h3>
                                 </div>
@@ -197,7 +197,7 @@
                 <div class="card" style="margin: 1rem 0;">
                     <div class="card-body">
                         <div class="card-title text-left" style="margin-bottom:0;">
-                            <div class="row">
+                            <div class="row" style="margin-bottom:1rem;">
                                 <div class="col-sm-10">
                                     <h3 class="text-truncate" style="margin-bottom:0.5rem;margin-top:0;font-size:1.25rem;">@model.page.username's Items</h3>
                                 </div>
@@ -234,6 +234,7 @@
                 </div>
             </div>
         </div>
+        @*
         @if (model.badges.length >= 1) {
             <div class="col-12">
                     <div id="badges">
@@ -259,6 +260,7 @@
                     </div>
             </div>
         }
+        *@
     </div>
 
     <div class="row">

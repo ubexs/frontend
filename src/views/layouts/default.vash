@@ -113,34 +113,39 @@
                             <a href="/forum">
                                 <i class="fas fa-scroll"></i> Forum
                             </a>
-                            <br>
-                            <a href="/avatar">
-                                <i class="fas fa-user-tag"></i> My Avatar
-                            </a>
-                            <br>
-                            <a href="/users/@model.userInfo.userId/profile">
-                                <i class="fas fa-id-card"></i> My Profile
-                            </a>
-                            <br>
-                            <a href="/trades">
-                               <i class="fas fa-exchange-alt"></i> My Trades
-                            </a>
-                            <br>
-                            <a href="/settings">
-                                <i class="fas fa-sliders-h"></i> My Settings
-                            </a>
-                            <br>
-                            <a href="/shop">
-                                <i class="fas fa-dollar-sign"></i> Currency Shop
-                            </a>
+                            @if (typeof model.userInfo !== 'undefined') {
+                                <br>
+                                <a href="/avatar">
+                                    <i class="fas fa-user-tag"></i> My Avatar
+                                </a>
+                                <br>
+                                <a href="/users/@model.userInfo.userId/profile">
+                                    <i class="fas fa-id-card"></i> My Profile
+                                </a>
+                                
+                                <br>
+                                <a href="/trades">
+                                <i class="fas fa-exchange-alt"></i> My Trades
+                                </a>
+                                <br>
+                                <a href="/settings">
+                                    <i class="fas fa-sliders-h"></i> My Settings
+                                </a>
+                                <br>
+                                <a href="/shop">
+                                    <i class="fas fa-dollar-sign"></i> Currency Shop
+                                </a>
+                            }
                             <br>
                             <a href="/discord">
                                 <i class="fas fa-phone"></i> Discord
                             </a>
-                            <br>
-                            <a href="#" class="onClickLogout">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
+                            @if (typeof model.userInfo !== 'undefined') {
+                                <br>
+                                <a href="#" class="onClickLogout">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                            }
                         </p>
                     </div>
                 </div>
@@ -200,24 +205,26 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             *@
-            <div class="navbar-mobile-user-info text-truncate">
-                <a class="nav-link" href="/transactions" style="color: inherit;font-weight:700;">
-                    @if (!model.userInfo || model.userInfo.theme !== 1) {
-                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-grey.svg"/>    
-                    }else{
-                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-white.svg"/>    
-                    }
-                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.primaryBalance" data-amt="@model.userInfo.primaryBalance">@model.userInfo.primaryBalanceFormatted</span>
+            @if (typeof model.userInfo !== 'undefined') {
+                <div class="navbar-mobile-user-info text-truncate">
+                    <a class="nav-link" href="/transactions" style="color: inherit;font-weight:700;">
+                        @if (!model.userInfo || model.userInfo.theme !== 1) {
+                            <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-grey.svg"/>    
+                        }else{
+                            <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/money-white.svg"/>    
+                        }
+                        <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.primaryBalance" data-amt="@model.userInfo.primaryBalance">@model.userInfo.primaryBalanceFormatted</span>
 
-                    <span>&emsp;</span>
-                    @if (!model.userInfo || model.userInfo.theme !== 1) {
-                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-grey.svg"/>    
-                    }else{
-                        <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-white.svg"/>    
-                    }
-                    <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.secondaryBalance" data-amt="@model.userInfo.secondaryBalance">@model.userInfo.secondaryBalanceFormatted</span>
-                </a>
-            </div>
+                        <span>&emsp;</span>
+                        @if (!model.userInfo || model.userInfo.theme !== 1) {
+                            <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-grey.svg"/>    
+                        }else{
+                            <img alt="$" style="height: 1rem;padding-right:4px;" src="/img/coin-stack-white.svg"/>    
+                        }
+                        <span data-toggle="currency" data-placement="bottom" title="$ @model.userInfo.secondaryBalance" data-amt="@model.userInfo.secondaryBalance">@model.userInfo.secondaryBalanceFormatted</span>
+                    </a>
+                </div>
+            }
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding:0;">
                 <ul class="navbar-nav mr-auto">
