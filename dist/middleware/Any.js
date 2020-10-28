@@ -14,7 +14,7 @@ exports.csp = {
     'media-src': `'none'`,
     'frame-ancestors': `'self'`,
     'img-src': `'self' data: https://cdn.blockshub.net/ https://hindigamerclub-game.ewr1.vultrobjects.com/ https://www.google-analytics.com/ ${config_1.default.baseUrl.frontend}`,
-    'connect-src': `'self' ws://localhost:8080/ https://www.google-analytics.com/ https://sentry.io/ https://ka-f.fontawesome.com/releases/v5.13.1/css/free.min.css ${config_1.default.baseUrl.frontend} ${config_1.default.baseUrl.play}`,
+    'connect-src': `'self' ws://localhost:8080/ https://www.google-analytics.com/ https://sentry.io/ https://ka-f.fontawesome.com/releases/v5.15.1/css/free.min.css ${config_1.default.baseUrl.frontend} ${config_1.default.baseUrl.play}`,
     'object-src': `'none'`,
     'base-uri': `'self'`,
 };

@@ -79,7 +79,7 @@ describe('StaffController.moderationGroup()', () => {
                 };
             }
         };
-        const results = await staff.moderationGroup(groupId);
+        const results = await staff.moderationGroup(groupId, '');
         chai_1.expect(results).to.be.instanceOf(model.WWWTemplate);
         if (!results.page) {
             throw new Error('Page is undefined');

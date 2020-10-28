@@ -155,9 +155,10 @@ let WWWStaffController = class WWWStaffController extends base_1.default {
         ViewData.page.staffPermissionSelect = staffPermissionSelect;
         return ViewData;
     }
-    async moderationGroup(groupId) {
+    async moderationGroup(groupId, cookie) {
         groupId = base_1.default.ValidateId(groupId);
-        let groupInfo = await this.Groups.getInfo(groupId);
+        let s = new base_1.default({ cookie });
+        let groupInfo = await s.Groups.getInfo(groupId);
         let ViewData = new model.WWWTemplate({ 'title': "Manage \"" + groupInfo.groupName + "\"" });
         ViewData.page = {
             groupInfo: groupInfo,
@@ -355,8 +356,9 @@ __decorate([
     common_1.Render('staff/groups/manage'),
     __param(0, common_1.Required()),
     __param(0, common_1.QueryParams('groupId', Number)),
+    __param(1, common_1.HeaderParams('cookie')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, String]),
     __metadata("design:returntype", Promise)
 ], WWWStaffController.prototype, "moderationGroup", null);
 __decorate([
