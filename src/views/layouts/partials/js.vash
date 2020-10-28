@@ -1,0 +1,13 @@
+@{
+    // == js Partial ==
+    // This view file contains JS files required by most view templates.
+    // Includes: locale/(lang).js (for errors), request.js, app.js, warning.js (to prevent session theft)
+}
+<!-- Dev Console Warning -->
+<script nonce="@model.nonce" src="/js/warning.js"></script>
+<!-- Locale -->
+<script nonce="@model.nonce" src="/js/locale/en.js?v=@model.v"></script>
+<!-- request.js -->
+<script nonce="@model.nonce" src="/js/request.js?v=@model.v"></script>
+<!-- app.js -->
+<script nonce="@model.nonce" src="/js/app.js?v=@model.v"></script>

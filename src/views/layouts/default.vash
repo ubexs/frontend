@@ -1,4 +1,9 @@
 @{
+    // == Default View ==
+    // This is the default view used for most pages. It does not require authentication
+
+
+    // == START HALLOWEEN THEME STUFF ==
     let icons = [
         'fas fa-crow',
         'fas fa-cloud-moon',
@@ -7,6 +12,7 @@
     ];
     let randomIcon = icons[Math.floor(Math.random() * icons.length)];
     model.randomHalloweenIcon = '<i class="'+randomIcon+'"></i>';
+    // == END HALLOWEEN THEME STUFF ==
 }
 <!doctype html>
 <html lang="en">
@@ -424,97 +430,10 @@
             
         }
 
-        <footer>
-            <div id="footerUpper" class="row">
-                <div class="container">
-                    <div class="content" style="width:100%;">
-                    <div class="col-12" style="padding: 3rem 0 0 0;">
-                        <div class="row" style="padding-bottom:1rem;">
-                            <div class="col-12">
-                                <h2 style="">BlocksHub</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 col-md-4 footerBarListItems">
-                                <h5>COMPANY</h5>
-                                <p style="font-size:0.85rem;"><a href="/play">Play</a></p>
-                                <p style="font-size:0.85rem;"><a href="/forum/9?page=1">Blog</a></p>
-                                <p style="font-size:0.85rem;"><a href="/staff">Staff</a></p>
-                                <p style="font-size:0.85rem;"><a href="/terms">Terms of Service</a></p>
-                                <p style="font-size:0.85rem;"><a href="/terms#privacypolicy">Privacy Policy</a></p>
-                            </div>
-                            <div class="col-6 col-md-4 footerBarListItems">
-                                <h5>SUPPORT</h5>
-                                <p style="font-size:0.85rem;"><a href="/support">Contact Us</a></p>
-                                <p style="font-size:0.85rem;"><a href="/support/refund-policy">Refund Policy</a></p>
-                                <p style="font-size:0.85rem;"><a href="/support/signup-help">Signup Help</a></p>
-                                <p style="font-size:0.85rem;"><a href="/support/game-help">Game Help</a></p>
-                                <p style="font-size:0.85rem;"><a href="/support/account-hacked">Account Hacked</a></p>
-                                <p style="font-size:0.85rem;"><a href="/support/scammed">I was scammed</a></p>
-                                <p style="font-size:0.85rem;"><a href="/support/account-banned-help">Why was my account banned?</a></p>
-                            </div>
-                            <div class="col-12 col-md-4 footerBarListItems">
-                                <p>
-                                    Free 3D in-browser video games. Use your own virtual 3D sandbox to create nearly whatever you want, the only limitation is your imagination.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top:2rem;">
-                                @for (const genre in model.gameGenres) {
-                                    @if (Number.isInteger(parseInt(genre, 10))) {
-                                        <div class="col text-center text-truncate d-none d-lg-block genre-padding-area">
-                                            <p class="point-75-rem"><a href="/game/genre/@model.gameGenres[genre]">@model.gameGenres[genre]</a></p>
-                                        </div>
-                                        <div class="col-3 text-center text-truncate d-block d-lg-none genre-padding-area">
-                                            <p class="point-75-rem"><a href="/game/genre/@model.gameGenres[genre]">@model.gameGenres[genre]</a></p>
-                                        </div>
-                                    }
-                                }
-                        </div>
-                    </div>
-                        <div class="col-12">
-                            <div class="row" style="padding: 1rem 0;">
-                                <div class="mr-auto">
-                                    <div class="row justify-content-center">
-                                        <div class="col-12">
-                                            <p style="padding-top: 10%;font-size:0.85rem;">&copy; @model.year BlocksHub</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-bottom:1rem;">
-                                <div class="col-12">
-                                    <p class="text-center" style="font-size:small;font-weight:300;margin-bottom:1rem;">Certain Icons made by freepik & vectors-market from <a href="http://www.flaticon.com/" target="_blank" rel="noopener">www.flaticon.com</a></p>
-                                    <p class="text-center" style="font-size:small;font-weight: 300;">We are not sponsored, authorized or endorsed by any producer of plastic building bricks, and no resemblance to the products of these companies is intended. Use of this site signifies your acceptance of the <a href="/terms" style="font-weight: 400;">Terms and Conditions. <a href="#" id="open-cookie-consent">Click Here to Manage Cookie Consent.</a></a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
         @html.raw(model.javascript)
-
-        @if (model.userInfo && model.userInfo.isImpersonating) {
-            <div class="col-12">
-                <button style="margin:1rem 0;" id="leave-impersonate" type="button" class="btn btn-secondary" id="submit-take-items-request">Exit Impersonation</button>
-            </div>
-            <script src="/js/impersonate.js?v=@model.v" nonce="@model.nonce"></script>
-        }
-
-        <!-- Locale -->
-        <script nonce="@model.nonce" src="/js/locale/en.js?v=@model.v"></script>
-        <!-- request.js -->
-        <script nonce="@model.nonce" src="/js/request.js?v=@model.v"></script>
-        <!-- app.js -->
-        <script nonce="@model.nonce" src="/js/app.js?v=@model.v"></script>
-        @if (model.userInfo && typeof model.userInfo.userId !== "undefined" && model.userInfo.userId !== null) {
-            <!-- Chat Stuff -->
-            <script nonce="@model.nonce" src="/js/chat.js?v=@model.v"></script>
-        }
-        <!-- gdpr cookie prompt -->
-        <script nonce="@model.nonce" src="/js/misc/cookies.js?v=@model.v"></script>
+        @html.include('./layouts/partials/impersonation-exit.vash')
+        @html.include('./layouts/partials/js.vash')
+        @html.include('./layouts/partials/chat.vash')
         @if (model.userInfo && model.userInfo.staff >= 1) {
             <!-- staff userinf -->
             <script src="/js/pages/staff/_staff.js?v=@model.v" nonce="@model.nonce"></script>
@@ -522,5 +441,7 @@
         <!-- Page Specific JS -->
         @html.block('jsInternal')
         @html.block('js')
+
+        @html.include('./layouts/partials/footer.vash')
     </body>
 </html>

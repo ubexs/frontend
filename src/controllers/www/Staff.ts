@@ -223,10 +223,12 @@ export class WWWStaffController extends base {
     @Render('staff/groups/manage')
     public async moderationGroup(
         @Required()
-        @QueryParams('groupId', Number) groupId: number
+        @QueryParams('groupId', Number) groupId: number,
+        @HeaderParams('cookie') cookie: string,
     ) {
         groupId = base.ValidateId(groupId);
-        let groupInfo = await this.Groups.getInfo(groupId);
+        let s = new base({ cookie });
+        let groupInfo = await s.Groups.getInfo(groupId);
         let ViewData = new model.WWWTemplate<any>({ 'title': "Manage \"" + groupInfo.groupName + "\"" });
         ViewData.page = {
             groupInfo: groupInfo,

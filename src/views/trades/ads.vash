@@ -2,17 +2,30 @@
     @html.block('content', function(model) {
         <div class="row">
             <div class="col-12">
-                <h3>Trades Dashboard</h3>
+                <h3>Trade Ads Dashboard</h3>
+                <a style="font-size:0.75rem;" class="btn btn-outline-success" href="/trades/create">Create Ad</a>
             </div>
             <div class="col-12 col-md-6 col-lg-8">
-                <div class="card" style="background:none;">
-                    <div class="card-body">
-                        <div class="row">
+                        <div class="row" style="margin-top:1rem;">
                             <div class="col-6">
-                                <label style="font-weight:bold;margin-bottom:0;font-size:0.8rem;">Show ads that...</label>
+                                 <label style="font-weight:bold;margin-bottom:0;font-size:0.8rem;">Only show ads I can complete?</label>
                                 <select class="form-control" id="trade-ads-filter-completable" style="font-size:0.85rem;">
-                                    <option value="1" selected="selected">I can complete</option>
-                                    <option value="0">All (no filter)</option>
+                                    <option value="1" selected="selected">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label style="font-weight:bold;margin-bottom:0;font-size:0.8rem;">Only show ads I created?</label>
+                                <select class="form-control" id="trade-ads-filter-created" style="font-size:0.85rem;">
+                                    <option value="1" selected="selected">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label style="font-weight:bold;margin-bottom:0;font-size:0.8rem;">Ads Mode</label>
+                                <select class="form-control" id="trade-ads-filter-running" style="font-size:0.85rem;">
+                                    <option value="1">Only Show Ads Not Running</option>
+                                    <option value="0" selected="selected">Only Show Running Ads</option>
                                 </select>
                             </div>
                         </div>
@@ -21,9 +34,8 @@
                                 <div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
+            @*
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -38,6 +50,7 @@
                     </div>
                 </div>
             </div>
+            *@
         </div>
     })
     @html.block('js', function(model) {

@@ -1,7 +1,10 @@
 let offset = 0;
 let limit = 25;
 let onlyShowCompletable = parseInt($('#trade-ads-filter-completable').val(), 10);
+let onlyShowAdsICreated = parseInt($('#trade-ads-filter-created').val(), 10);
+let onlyShowAdsRunning = parseInt($('#trade-ads-filter-running').val(), 10) === 1 ? 0 : 1;
 let isRunning = 1;
+
 
 /**
  * @typedef TradeAdItemEntry
@@ -42,6 +45,8 @@ const makeOfferOrRequestDiv = (item) => {
                     <a href="/catalog/${item.catalogId}/--">
                         <span data-catalogid="${item.catalogId}">Loading...</span>
                     </a>
+                    <br>
+                    ASP: ${item.averagePrice}
                 </p>
             </div>
         </div>
@@ -52,7 +57,7 @@ const makeOfferOrRequestDiv = (item) => {
 
 const loadAds = () => {
     let d = $('#trade-ads');
-    request('/trade-ads/search?offset=' + offset + '&limit=' + limit + '&isRunning=' + isRunning + '&onlyShowCompletable=' + onlyShowCompletable, 'GET').then(resp => {
+    request('/trade-ads/search?offset=' + offset + '&limit=' + limit + '&isRunning=' + onlyShowAdsRunning + '&onlyShowCompletable=' + onlyShowCompletable + '&userId=' + (onlyShowAdsICreated === 1 ? userId : ''), 'GET').then(resp => {
         d.empty();
         /**
          * @type {TradeAdEntry[]}
@@ -92,31 +97,39 @@ const loadAds = () => {
             }
             d.append(`
             
-            <div class="row">
-                <div class="col-12" style="margin-bottom:0.5rem;">
-                    <p style="font-size:0.75rem;font-weight:300;"><a href="/users/${ad.userId}/profile"><span data-userid="${ad.userId}">Loading</span>'s</a> Trade Request (created ${moment(ad.date).fromNow()})</p>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <h2 style="font-weight:700;font-size:1rem;">OFFERING</h2>
-                    <div class="row">
-                        ${offer}
-                    </div>
-                    <p style="font-weight:600;font-size:0.8rem;"><span class="tooltipped-asp" title="The sum of the average sales price of all items offered">Total ASP: ${offerASP}</span></p>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <h2 style="font-weight:700;font-size:1rem;">REQUESTING</h2>
-                    <div class="row">
-                        ${request}
-                    </div>
-                    <p style="font-weight:600;font-size:0.8rem;"><span class="tooltipped-asp" title="The sum of the average sales price of all items requested">Total ASP: ${requestASP}</span></p>
-                </div>
-                <div class="col-12" style="margin-top:1rem;">
-                    <button type="button" class="btn btn-outline-success" ${acceptButtonDisabled}>Accept</button>
-                </div>
-            </div>
-            <div class="row">
+            <div class="row" style="margin-bottom:1rem;">
                 <div class="col-12">
-                    <hr />
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12" style="margin-bottom:0.5rem;">
+                                    <p style="font-size:0.75rem;font-weight:300;"><a href="/users/${ad.userId}/profile"><span data-userid="${ad.userId}">Loading</span>'s</a> Trade Request (created ${moment(ad.date).fromNow()})</p>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <h2 style="font-weight:700;font-size:1rem;">OFFERING</h2>
+                                    <div class="row">
+                                        ${offer}
+                                    </div>
+                                    <p style="font-weight:600;font-size:0.8rem;"><span class="tooltipped-asp" title="The sum of the average sales price of all items offered">Total ASP: ${offerASP}</span></p>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <h2 style="font-weight:700;font-size:1rem;">REQUESTING</h2>
+                                    <div class="row">
+                                        ${request}
+                                    </div>
+                                    <p style="font-weight:600;font-size:0.8rem;"><span class="tooltipped-asp" title="The sum of the average sales price of all items requested">Total ASP: ${requestASP}</span></p>
+                                </div>
+                                <div class="col-12" style="margin-top:1rem;">
+                                    <button type="button" class="btn btn-outline-success" ${acceptButtonDisabled}>Accept</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -135,3 +148,25 @@ const loadAds = () => {
     })
 }
 loadAds();
+
+$('#trade-ads-filter-completable').on('change', function (e) {
+    e.preventDefault();
+    $('#trade-ads').empty().append(`<div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>`);
+    onlyShowCompletable = parseInt($('#trade-ads-filter-completable').val(), 10);
+    loadAds();
+});
+
+$('#trade-ads-filter-created').on('change', function (e) {
+    e.preventDefault();
+    $('#trade-ads').empty().append(`<div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>`);
+    onlyShowAdsICreated = parseInt($('#trade-ads-filter-created').val(), 10);
+    loadAds();
+});
+
+$('#trade-ads-filter-running').on('change', function (e) {
+    e.preventDefault();
+    $('#trade-ads').empty().append(`<div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>`);
+    onlyShowAdsRunning = parseInt($('#trade-ads-filter-running').val(), 10) === 1 ? 0 : 1;
+    loadAds();
+});
+

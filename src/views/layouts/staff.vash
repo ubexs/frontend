@@ -1,3 +1,7 @@
+@{
+    // == Staff View ==
+    // This view file is used for staff management pages
+}
 <!DOCTYPE html>
     <html>
     <head>
