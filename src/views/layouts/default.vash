@@ -1,19 +1,6 @@
 @{
     // == Default View ==
     // This is the default view used for most pages. It does not require authentication
-
-    /*
-    // == START HALLOWEEN THEME STUFF ==
-    let icons = [
-        'fas fa-crow',
-        'fas fa-cloud-moon',
-        'fas fa-ghost',
-        'fas fa-spider',
-    ];
-    let randomIcon = icons[Math.floor(Math.random() * icons.length)];
-    model.randomHalloweenIcon = '<i class="'+randomIcon+'"></i>';
-    // == END HALLOWEEN THEME STUFF ==
-    */
 }
 <!doctype html>
 <html lang="en">
