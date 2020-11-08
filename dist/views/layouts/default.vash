@@ -2,7 +2,7 @@
     // == Default View ==
     // This is the default view used for most pages. It does not require authentication
 
-
+    /*
     // == START HALLOWEEN THEME STUFF ==
     let icons = [
         'fas fa-crow',
@@ -13,6 +13,7 @@
     let randomIcon = icons[Math.floor(Math.random() * icons.length)];
     model.randomHalloweenIcon = '<i class="'+randomIcon+'"></i>';
     // == END HALLOWEEN THEME STUFF ==
+    */
 }
 <!doctype html>
 <html lang="en">
@@ -33,7 +34,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@@4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
         <!-- Local CSS -->
         <link href="/css/custom.css?v=@model.v" rel="stylesheet">
+        @*
         <link href="/css/custom-halloween.css?v=@model.v" rel="stylesheet">
+        *@
         <link href="/css/animate.css?v=@model.v" rel="stylesheet">
         @if (model.userInfo) {
             @if (model.userInfo.theme === 1) {
@@ -202,7 +205,7 @@
             <div class="container">
                 <h3 style="margin:0;padding:0;font-weight:600;">
                     <a class="navbar-brand" href="/" style="font-weight:600;">
-                        <span class="brand-blocks">@html.raw(model.randomHalloweenIcon) BLOCKS </span><span class="brand-hub">HUB</span>
+                        <span class="brand-blocks">BLOCKS </span><span class="brand-hub">HUB</span>
                     </a>
                 </h3>
 
