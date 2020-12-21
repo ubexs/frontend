@@ -68,6 +68,7 @@
     },
     "devDependencies": {
         "@babel/cli": "^7.10.5",
-        "@babel/core": "^7.11.4"
+        "@babel/core": "^7.11.4",
+        "typescript": "^3.9.6"
     }
 }
