@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/node';
+import config from './config';
 
 let _isEnabled = false;
 export let isEnabled = () => {
@@ -6,8 +7,10 @@ export let isEnabled = () => {
 }
 
 export const init = () => {
-    Sentry.init({ dsn: 'https://dccc8567d5714c75a7b884ffd1d73843@sentry.io/2506252' });
-    _isEnabled = true;
+    if (config && config.sentry && config.sentry.backend) {
+        Sentry.init({ dsn: config.sentry.backend });
+        _isEnabled = true;
+    }
 }
 
 export {

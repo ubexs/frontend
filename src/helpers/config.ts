@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as json5 from 'json5';
 import * as path from 'path';
-import {strictEqual} from 'assert';
+import { strictEqual } from 'assert';
 
-let confPath = path.join(__dirname,'../../config.json');
+let confPath = path.join(__dirname, '../../config.json');
 console.log(confPath);
 const config = json5.parse(fs.readFileSync(confPath).toString());
 
@@ -24,6 +24,10 @@ interface IWebsiteConfig {
             public: string;
         };
     };
+    sentry?: {
+        backend?: string;
+        frontend?: string;
+    };
 }
 if (typeof config.env === 'string') {
     config.env = config.env.toLowerCase();
@@ -31,7 +35,7 @@ if (typeof config.env === 'string') {
 if (config.env === 'production' || config.env === 'development' || config.env === 'test') {
     process.env.NODE_ENV = config.env.toLowerCase();
 }
-console.log('NODE_ENV',process.env.NODE_ENV);
+console.log('NODE_ENV', process.env.NODE_ENV);
 export default config as Readonly<IWebsiteConfig>;
 // runtime config check
 strictEqual(typeof config.backendAuthorization, 'string');

@@ -119,9 +119,11 @@ export const getJavascript = (nonce: string, version: string): string => {
     return `
         <script nonce="${nonce}" src="/js/warning.js"></script>
         <script nonce="${nonce}" src="/js/bundle/sentry.bundle.js?v=${version}"></script>
+        ${config.sentry && config.sentry.frontend ? `
         <script nonce="${nonce}">
-            Sentry.init({ dsn: 'https://a5c3a9adef4a4e149a1e2d1651b9da4d@sentry.io/2505702' });
+            Sentry.init({ dsn: '${config.sentry.frontend}' });
         </script>
+        ` : ''}
         <script nonce="${nonce}" src="/js/bundle/main.bundle.js?v=${version}"></script>
         <script nonce="${nonce}" src="/js/bundle/bootstrap.bundle.js?v=${version}"></script>`;
 }
