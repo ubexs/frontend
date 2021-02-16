@@ -1,1 +1,115 @@
-"use strict";function _typeof(a){"@babel/helpers - typeof";return _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(a){return typeof a}:function(a){return a&&"function"==typeof Symbol&&a.constructor===Symbol&&a!==Symbol.prototype?"symbol":typeof a},_typeof(a)}var _metaDiv=$("#meta");window.HTTPMeta={baseUrl:_metaDiv.attr("data-api-base-url")},"/"===HTTPMeta.baseUrl.slice(HTTPMeta.baseUrl.length-1)&&(HTTPMeta.baseUrl=HTTPMeta.baseUrl.slice(0,HTTPMeta.baseUrl.length-1));function request(a,b,c){return"object"===_typeof(c)&&(c=JSON.stringify(c)),new Promise(function(e,f){function g(d){$.ajax({xhrFields:{withCredentials:!0},type:b,data:c,url:HTTPMeta.baseUrl+"/api/v1"+a,headers:{"content-type":"application/json","x-csrf-token":d,accept:"application/json"},dataType:"json",contentType:"application/json",xhr:function(){var a=jQuery.ajaxSettings.xhr(),b=a.setRequestHeader;return a.setRequestHeader=function(a,c){"X-Requested-With"===a||b.call(this,a,c)},a},complete:function complete(d){if(200===d.status)e(d);else{if(403===d.status)return(h++,10<=h)?f("CSRF Retry count exhausted"):($("#userdata").attr("data-csrf",d.getResponseHeader("x-csrf-token")),g(d.getResponseHeader("x-csrf-token")));d.responseJSON||(d.responseJSON={});var i="ERR1";if(d.responseJSON&&"object"===_typeof(d.responseJSON.error)&&"string"==typeof d.responseJSON.error.code&&(i=d.responseJSON.error.code,d.responseJSON.message=errorTransform(d.responseJSON.error.code)+" Code: "+i),"undefined"==typeof d.responseJSON.message&&(d.responseJSON.message="An unknown error has occurred. Code: "+i),d.responseJSON&&d.responseJSON.error&&"TwoStepVerificationRequired"===d.responseJSON.error.code)return void question("<span style=\"font-size:1rem;font-weight:400;\">For security reasons, please enter your two-factor authentication token to continue.</span>",function(d){c||(c={}),"string"==typeof c&&(c=JSON.parse(c)),c.twoStepToken=d,request(a,b,JSON.stringify(c)).then(function(a){e(a)})["catch"](function(a){f(a)})});if(d.responseJSON&&d.responseJSON.error&&"TwoStepRequiredVerificationFailed"===d.responseJSON.error.code)return void question("<span style=\"font-size:1rem;font-weight:400;\"><span style=\"color:red;\">The code you entered was invalid.</span> For security reasons, please enter your two-factor authentication token to continue.</span>",function(d){c||(c={}),"string"==typeof c&&(c=JSON.parse(c)),c.twoStepToken=d,request(a,b,JSON.stringify(c)).then(function(a){e(a)})["catch"](function(a){f(a)})});f(d)}},failure:function failure(a){a.responseJSON||(a.responseJSON={},a.responseJSON.message="An unknown error has occurred. Code: NET1"),a.responseJSON&&a.responseJSON.error&&a.responseJSON.error.code&&(a.responseJSON.message=errorTransform(a.responseJSON.error.code)),f(a)}})}var h=0;g($("#userdata").attr("data-csrf"))})}"true"===$("#userdata").attr("data-authenticated")&&request("/auth/ping","POST",{url:window.location.href}).then(function(){})["catch"](function(){});
+
+let _metaDiv = $('#meta');
+window.HTTPMeta = {
+    baseUrl: _metaDiv.attr('data-api-base-url'),
+}
+if (HTTPMeta.baseUrl.slice(HTTPMeta.baseUrl.length - 1) === '/') {
+    HTTPMeta.baseUrl = HTTPMeta.baseUrl.slice(0, HTTPMeta.baseUrl.length - 1);
+}
+
+function request(url, method, body) {
+    if (typeof body === 'object') {
+        body = JSON.stringify(body);
+    }
+    return new Promise((resolve, reject) => {
+        let csrfRetry = 0;
+        ajax($('#userdata').attr("data-csrf"));
+        function ajax(csrf) {
+            $.ajax({
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: method,
+                data: body,
+                url: HTTPMeta.baseUrl + "/api/v1" + url,
+                headers: {
+                    "content-type": "application/json",
+                    "x-csrf-token": csrf,
+                    "accept": "application/json",
+                },
+                dataType: "json",
+                contentType: "application/json",  // what you are sending
+                xhr: function () {
+                    var xhr = jQuery.ajaxSettings.xhr();
+                    var setRequestHeader = xhr.setRequestHeader;
+                    xhr.setRequestHeader = function (name, value) {
+                        if (name === 'X-Requested-With') return;
+                        setRequestHeader.call(this, name, value);
+                    }
+                    return xhr;
+                },
+                complete: function (xhr, textStatus) {
+                    if (xhr.status === 200) {
+                        resolve(xhr)
+                    } else if (xhr.status === 403) { //Csrf Validation Failed
+                        csrfRetry++;
+                        if (csrfRetry >= 10) {
+                            return reject('CSRF Retry count exhausted');
+                        }
+                        console.log('csrf', xhr.getResponseHeader('x-csrf-token'));
+                        $('#userdata').attr("data-csrf", xhr.getResponseHeader('x-csrf-token'));
+                        return ajax(xhr.getResponseHeader('x-csrf-token'));
+                    } else {
+                        if (!xhr.responseJSON) {
+                            xhr.responseJSON = {};
+                        }
+                        let code = 'ERR1';
+                        if (xhr.responseJSON && typeof xhr.responseJSON.error === 'object' && typeof xhr.responseJSON.error.code === 'string') {
+                            code = xhr.responseJSON.error.code;
+                            xhr.responseJSON.message = errorTransform(xhr.responseJSON.error.code) + ' Code: ' + code;
+                        }
+                        if (typeof xhr.responseJSON.message === "undefined") {
+                            xhr.responseJSON.message = "An unknown error has occurred. Code: " + code;
+                        }
+                        if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.code === 'TwoStepVerificationRequired') {
+                            question('<span style="font-size:1rem;font-weight:400;">For security reasons, please enter your two-factor authentication token to continue.</span>', function (code) {
+                                if (!body) {
+                                    body = {};
+                                }
+                                if (typeof body === 'string') {
+                                    body = JSON.parse(body);
+                                }
+                                body['twoStepToken'] = code;
+                                request(url, method, JSON.stringify(body)).then(d => { resolve(d) }).catch(e => { reject(e) });
+                            });
+                            return;
+                        }
+                        if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.code === 'TwoStepRequiredVerificationFailed') {
+                            question('<span style="font-size:1rem;font-weight:400;"><span style="color:red;">The code you entered was invalid.</span> For security reasons, please enter your two-factor authentication token to continue.</span>', function (code) {
+                                if (!body) {
+                                    body = {};
+                                }
+                                if (typeof body === 'string') {
+                                    body = JSON.parse(body);
+                                }
+                                body['twoStepToken'] = code;
+                                request(url, method, JSON.stringify(body)).then(d => { resolve(d) }).catch(e => { reject(e) });
+                            });
+                            return;
+                        }
+                        reject(xhr);
+                    }
+                },
+                failure: function (err) {
+                    if (!err.responseJSON) {
+                        err.responseJSON = {};
+                        err.responseJSON.message = "An unknown error has occurred. Code: NET1";
+                    }
+                    if (err.responseJSON && err.responseJSON.error && err.responseJSON.error.code) {
+                        err.responseJSON.message = errorTransform(err.responseJSON.error.code);
+                    }
+                    reject(err);
+                }
+            });
+        }
+    });
+}
+
+if ($('#userdata').attr('data-authenticated') === 'true') {
+    // send ping
+    request('/auth/ping', 'POST', { url: window.location.href }).then(ok => {
+
+    }).catch(err => {
+        console.error('ping event error', err);
+    })
+}

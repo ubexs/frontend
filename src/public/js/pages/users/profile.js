@@ -1,4 +1,3 @@
-
 var userid = $('#profiledata').attr("data-userid");
 if (userid === $('#userdata').attr("data-userid")) {
     $('#tradingButton').hide();

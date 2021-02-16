@@ -40,7 +40,7 @@ request('/auth/authenticate-to-service', 'POST', {
 })
 .catch(e => {
     console.error(e);
-    $('title').html('Error - BlocksHub');
+    $('title').html('Error - ubexs');
     $('h1#service-name-header').remove();
     $('#auth-service-pending').empty();
     $('#auth-service-pending').append(`<p>Oops, it looks like there was an error loading this page. Please go back, and try again.</p>`);

@@ -1,1 +1,65 @@
-"use strict";function _createForOfIteratorHelper(a,b){var c;if("undefined"==typeof Symbol||null==a[Symbol.iterator]){if(Array.isArray(a)||(c=_unsupportedIterableToArray(a))||b&&a&&"number"==typeof a.length){c&&(a=c);var d=0,e=function(){};return{s:e,n:function n(){return d>=a.length?{done:!0}:{done:!1,value:a[d++]}},e:function e(a){throw a},f:e}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var f,g=!0,h=!1;return{s:function s(){c=a[Symbol.iterator]()},n:function n(){var a=c.next();return g=a.done,a},e:function e(a){h=!0,f=a},f:function f(){try{g||null==c["return"]||c["return"]()}finally{if(h)throw f}}}}function _unsupportedIterableToArray(a,b){if(a){if("string"==typeof a)return _arrayLikeToArray(a,b);var c=Object.prototype.toString.call(a).slice(8,-1);return"Object"===c&&a.constructor&&(c=a.constructor.name),"Map"===c||"Set"===c?Array.from(a):"Arguments"===c||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(c)?_arrayLikeToArray(a,b):void 0}}function _arrayLikeToArray(a,b){(null==b||b>a.length)&&(b=a.length);for(var c=0,d=Array(b);c<b;c++)d[c]=a[c];return d}var currencyProductId=0;request("/billing/currency/products").then(function(a){$("#currencyProductSelection").empty();var b,c=[],d=_createForOfIteratorHelper(a);try{for(d.s();!(b=d.n()).done;){var e=b.value,f="";0!==e.bonusCatalogId&&(f="(+ a <span data-catalogid=\""+e.bonusCatalogId.toString()+"\"></span>)",c.push(e.bonusCatalogId)),$("#currencyProductSelection").append("\n        <div class=\"col-sm-12 col-md-6 col-4 onClickSelectItem\" style=\"padding-bottom:0.5rem;\" data-selected=\"false\" data-productid=\"".concat(e.currencyProductId,"\" data-bonusid=\"").concat(e.bonusCatalogId,"\" data-usd=\"").concat(e.usdPrice,"\" data-amt=\"").concat(e.currencyAmount,"\">\n            <div class=\"card\">\n                <div class=\"card-body\">\n                    <p class=\"text-center\">$").concat(e.usdPrice," USD - ").concat(e.currencyAmount," Primary ").concat(f,"</p>\n                </div>\n            </div>\n        </div>"))}}catch(a){d.e(a)}finally{d.f()}setCatalogNames(c)})["catch"](function(a){warning(a.responseJSON.message)}),$(document).on("click",".onClickSelectItem",function(){"true"===$(this).attr("data-selected")?($(this).attr("data-selected","false"),$(this).find(".card").css("border","none")):($("#currencyProductSelection").children().each(function(){$(this).attr("data-selected","false"),$(this).find(".card").css("border","none")}),$(this).attr("data-selected","true"),$(this).find(".card").css("border","1px solid green"),$("#bonusCatalogId").val($(this).attr("data-bonusid")),$("#usdPrice").val($(this).attr("data-usd")),$("#currencyAmount").val($(this).attr("data-amt")),currencyProductId=parseInt($(this).attr("data-productid"),10))}),$(document).on("click","#updateCurrencyProduct",function(){var a=parseInt($("#currencyAmount").val(),10),b=parseFloat($("#usdPrice").val()),c=parseInt($("#bonusCatalogId").val(),10);request("/billing/currency/product/"+currencyProductId,"PATCH",JSON.stringify({usdPrice:b,currencyAmount:a,bonusCatalogId:c})).then(function(){success("This item has been updated.",function(){})})["catch"](function(a){warning(a.responseJSON.message)})});
+let currencyProductId = 0;
+request('/billing/currency/products')
+.then((d) => {
+    $('#currencyProductSelection').empty();
+    let catalogIds = [];
+    for (const item of d) {
+        let bonus = '';
+        if (item.bonusCatalogId !== 0) {
+            bonus = '(+ a <span data-catalogid="'+item.bonusCatalogId.toString()+'"></span>)';
+            catalogIds.push(item.bonusCatalogId);
+        }
+        $('#currencyProductSelection').append(`
+        <div class="col-sm-12 col-md-6 col-4 onClickSelectItem" style="padding-bottom:0.5rem;" data-selected="false" data-productid="${item.currencyProductId}" data-bonusid="${item.bonusCatalogId}" data-usd="${item.usdPrice}" data-amt="${item.currencyAmount}">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-center">$${item.usdPrice} USD - ${item.currencyAmount} Primary ${bonus}</p>
+                </div>
+            </div>
+        </div>`);
+    }
+    setCatalogNames(catalogIds);
+})
+.catch(e => {
+    warning(e.responseJSON.message);
+});
+
+$(document).on('click', '.onClickSelectItem', function () {
+    if ($(this).attr('data-selected') === 'true') {
+        $(this).attr('data-selected', 'false');
+        // Unselect
+        $(this).find('.card').css('border', 'none');
+    }else{
+        $('#currencyProductSelection').children().each(function() {
+            $(this).attr('data-selected', 'false');
+            $(this).find('.card').css('border', 'none');
+        });
+        $(this).attr('data-selected', 'true');
+        // Select
+        $(this).find('.card').css('border', '1px solid green');
+
+        $('#bonusCatalogId').val($(this).attr('data-bonusid'));
+        $('#usdPrice').val($(this).attr('data-usd'));
+        $('#currencyAmount').val($(this).attr('data-amt'));
+        currencyProductId = parseInt($(this).attr('data-productid'), 10);
+        
+    }
+});
+
+$(document).on('click', '#updateCurrencyProduct', function() {
+    var currencyAmount = parseInt($('#currencyAmount').val(), 10);
+    var usd = parseFloat($('#usdPrice').val());
+    var bonusCatalogId = parseInt($('#bonusCatalogId').val(), 10);
+    request("/billing/currency/product/"+currencyProductId, "PATCH", JSON.stringify({
+        usdPrice: usd,
+        currencyAmount: currencyAmount,
+        bonusCatalogId: bonusCatalogId,
+    }))
+        .then((d) => {
+            success("This item has been updated.", function() {
+            });
+        })
+        .catch((e) => {
+            warning(e.responseJSON.message);
+        })
+});

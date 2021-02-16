@@ -1,1 +1,172 @@
-"use strict";function _createForOfIteratorHelper(a,b){var c;if("undefined"==typeof Symbol||null==a[Symbol.iterator]){if(Array.isArray(a)||(c=_unsupportedIterableToArray(a))||b&&a&&"number"==typeof a.length){c&&(a=c);var d=0,e=function(){};return{s:e,n:function n(){return d>=a.length?{done:!0}:{done:!1,value:a[d++]}},e:function e(a){throw a},f:e}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var f,g=!0,h=!1;return{s:function s(){c=a[Symbol.iterator]()},n:function n(){var a=c.next();return g=a.done,a},e:function e(a){h=!0,f=a},f:function f(){try{g||null==c["return"]||c["return"]()}finally{if(h)throw f}}}}function _unsupportedIterableToArray(a,b){if(a){if("string"==typeof a)return _arrayLikeToArray(a,b);var c=Object.prototype.toString.call(a).slice(8,-1);return"Object"===c&&a.constructor&&(c=a.constructor.name),"Map"===c||"Set"===c?Array.from(a):"Arguments"===c||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(c)?_arrayLikeToArray(a,b):void 0}}function _arrayLikeToArray(a,b){(null==b||b>a.length)&&(b=a.length);for(var c=0,d=Array(b);c<b;c++)d[c]=a[c];return d}var offset=0,limit=25,onlyShowCompletable=parseInt($("#trade-ads-filter-completable").val(),10),onlyShowAdsICreated=parseInt($("#trade-ads-filter-created").val(),10),onlyShowAdsRunning=1===parseInt($("#trade-ads-filter-running").val(),10)?0:1,isRunning=1,makeOfferOrRequestDiv=function(a){return"\n                \n    <div class=\"col-6 col-lg-4\" style=\"margin-bottom:1rem;\">\n        <div class=\"card\">\n            <a href=\"/catalog/".concat(a.catalogId,"/--\">\n                <img data-catalogid=\"").concat(a.catalogId,"\" style=\"width:100%;height:auto;display:block;margin:0 auto;padding:5px;\" />\n            </a>\n            <div class=\"card-body\" style=\"padding: 0.75rem;\">\n                <p style=\"font-size:0.7rem;\" class=\"text-truncate\">\n                    <a href=\"/catalog/").concat(a.catalogId,"/--\">\n                        <span data-catalogid=\"").concat(a.catalogId,"\">Loading...</span>\n                    </a>\n                    <br>\n                    ASP: ").concat(a.averagePrice,"\n                </p>\n            </div>\n        </div>\n    </div>\n\n    ")},loadAds=function(){var a=$("#trade-ads");request("/trade-ads/search?offset=0&limit="+limit+"&isRunning="+onlyShowAdsRunning+"&onlyShowCompletable="+onlyShowCompletable+"&userId="+(1===onlyShowAdsICreated?userId:""),"GET").then(function(b){a.empty();var c=b.data,d=b.total;if(!d)return a.append("<p>Your search query returned 0 results.</p>");var e,f=[],g=[],h=_createForOfIteratorHelper(c);try{for(h.s();!(e=h.n()).done;){var q=e.value;g.push(q.userId),q.offerItems.forEach(function(a){f.push(a.catalogId)});var i,j="",k="",l=0,m=0,n=_createForOfIteratorHelper(q.requestItems);try{for(n.s();!(i=n.n()).done;){var r=i.value;l+=r.averagePrice,f.push(r.catalogId),k+=makeOfferOrRequestDiv(r)}}catch(a){n.e(a)}finally{n.f()}var o,p=_createForOfIteratorHelper(q.offerItems);try{for(p.s();!(o=p.n()).done;){var s=o.value;m+=s.averagePrice,f.push(s.catalogId),j+=makeOfferOrRequestDiv(s)}}catch(a){p.e(a)}finally{p.f()}var t="";0===q.isRunning&&(t="disabled=\"disabled\" title=\"This trade ad is no longer running, so you cannot accept it.\""),a.append("\n            \n            <div class=\"row\" style=\"margin-bottom:1rem;\">\n                <div class=\"col-12\">\n                    <div class=\"card\">\n                        <div class=\"card-body\">\n                            <div class=\"row\">\n                                <div class=\"col-12\" style=\"margin-bottom:0.5rem;\">\n                                    <p style=\"font-size:0.75rem;font-weight:300;\"><a href=\"/users/".concat(q.userId,"/profile\"><span data-userid=\"").concat(q.userId,"\">Loading</span>'s</a> Trade Request (created ").concat(moment(q.date).fromNow(),")</p>\n                                </div>\n                                <div class=\"col-12 col-lg-6\">\n                                    <h2 style=\"font-weight:700;font-size:1rem;\">OFFERING</h2>\n                                    <div class=\"row\">\n                                        ").concat(j,"\n                                    </div>\n                                    <p style=\"font-weight:600;font-size:0.8rem;\"><span class=\"tooltipped-asp\" title=\"The sum of the average sales price of all items offered\">Total ASP: ").concat(m,"</span></p>\n                                </div>\n                                <div class=\"col-12 col-lg-6\">\n                                    <h2 style=\"font-weight:700;font-size:1rem;\">REQUESTING</h2>\n                                    <div class=\"row\">\n                                        ").concat(k,"\n                                    </div>\n                                    <p style=\"font-weight:600;font-size:0.8rem;\"><span class=\"tooltipped-asp\" title=\"The sum of the average sales price of all items requested\">Total ASP: ").concat(l,"</span></p>\n                                </div>\n                                <div class=\"col-12\" style=\"margin-top:1rem;\">\n                                    <button type=\"button\" class=\"btn btn-outline-success\" ").concat(t,">Accept</button>\n                                </div>\n                            </div>\n                            <div class=\"row\">\n                                <div class=\"col-12\">\n                                    <hr />\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            \n            "))}}catch(a){h.e(a)}finally{h.f()}setUserNames(g),setUserThumbs(g),setCatalogNames(f),setCatalogThumbs(f),$(".tooltipped-asp").tooltip()})["catch"](function(){void 0,a.empty(),a.append("<p>Oops, looks like something went wrong loading the page.<br><span class=\"on-click-reload-page\">Try again?</span></p>")})};loadAds(),$("#trade-ads-filter-completable").on("change",function(a){a.preventDefault(),$("#trade-ads").empty().append("<div class=\"spinner-border\" role=\"status\" style=\"margin:0 auto;display: block;\"></div>"),onlyShowCompletable=parseInt($("#trade-ads-filter-completable").val(),10),loadAds()}),$("#trade-ads-filter-created").on("change",function(a){a.preventDefault(),$("#trade-ads").empty().append("<div class=\"spinner-border\" role=\"status\" style=\"margin:0 auto;display: block;\"></div>"),onlyShowAdsICreated=parseInt($("#trade-ads-filter-created").val(),10),loadAds()}),$("#trade-ads-filter-running").on("change",function(a){a.preventDefault(),$("#trade-ads").empty().append("<div class=\"spinner-border\" role=\"status\" style=\"margin:0 auto;display: block;\"></div>"),onlyShowAdsRunning=1===parseInt($("#trade-ads-filter-running").val(),10)?0:1,loadAds()});
+let offset = 0;
+let limit = 25;
+let onlyShowCompletable = parseInt($('#trade-ads-filter-completable').val(), 10);
+let onlyShowAdsICreated = parseInt($('#trade-ads-filter-created').val(), 10);
+let onlyShowAdsRunning = parseInt($('#trade-ads-filter-running').val(), 10) === 1 ? 0 : 1;
+let isRunning = 1;
+
+
+/**
+ * @typedef TradeAdItemEntry
+ * @property {number} tradeAdId
+ * @property {number} catalogId
+ * @property {number|null} userInventoryId
+ * @property {1|2} side
+ * @property {number} averagePrice
+ */
+
+/**
+ * @typedef TradeAdEntry
+ * @property {number} tradeAdId
+ * @property {0|1} isRunning
+ * @property {string} date
+ * @property {number} userId
+ * @property {number} offerPrimary
+ * @property {number} requestPrimary
+ * @property {TradeAdItemEntry[]} requestItems
+ * @property {TradeAdItemEntry[]} offerItems
+ */
+
+
+/**
+ * makeOfferOrRequestDiv
+ * @param {TradeAdItemEntry} item 
+ */
+const makeOfferOrRequestDiv = (item) => {
+    return `
+                
+    <div class="col-6 col-lg-4" style="margin-bottom:1rem;">
+        <div class="card">
+            <a href="/catalog/${item.catalogId}/--">
+                <img data-catalogid="${item.catalogId}" style="width:100%;height:auto;display:block;margin:0 auto;padding:5px;" />
+            </a>
+            <div class="card-body" style="padding: 0.75rem;">
+                <p style="font-size:0.7rem;" class="text-truncate">
+                    <a href="/catalog/${item.catalogId}/--">
+                        <span data-catalogid="${item.catalogId}">Loading...</span>
+                    </a>
+                    <br>
+                    ASP: ${item.averagePrice}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    `;
+}
+
+const loadAds = () => {
+    let d = $('#trade-ads');
+    request('/trade-ads/search?offset=' + offset + '&limit=' + limit + '&isRunning=' + onlyShowAdsRunning + '&onlyShowCompletable=' + onlyShowCompletable + '&userId=' + (onlyShowAdsICreated === 1 ? userId : ''), 'GET').then(resp => {
+        d.empty();
+        /**
+         * @type {TradeAdEntry[]}
+         */
+        let ads = resp.data;
+        /**
+         * @type {number}
+         */
+        let total = resp.total;
+        if (!total) {
+            return d.append(`<p>Your search query returned 0 results.</p>`);
+        }
+
+        let catalogIds = [];
+        let userIds = [];
+        for (const ad of ads) {
+            userIds.push(ad.userId);
+            ad.offerItems.forEach(val => { catalogIds.push(val.catalogId) });
+
+            let offer = '';
+            let request = '';
+            let requestASP = 0;
+            let offerASP = 0;
+            for (const item of ad.requestItems) {
+                requestASP += item.averagePrice;
+                catalogIds.push(item.catalogId)
+                request += makeOfferOrRequestDiv(item);
+            }
+            for (const item of ad.offerItems) {
+                offerASP += item.averagePrice;
+                catalogIds.push(item.catalogId)
+                offer += makeOfferOrRequestDiv(item);
+            }
+            let acceptButtonDisabled = '';
+            if (ad.isRunning === 0) {
+                acceptButtonDisabled = `disabled="disabled" title="This trade ad is no longer running, so you cannot accept it."`;
+            }
+            d.append(`
+            
+            <div class="row" style="margin-bottom:1rem;">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12" style="margin-bottom:0.5rem;">
+                                    <p style="font-size:0.75rem;font-weight:300;"><a href="/users/${ad.userId}/profile"><span data-userid="${ad.userId}">Loading</span>'s</a> Trade Request (created ${moment(ad.date).fromNow()})</p>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <h2 style="font-weight:700;font-size:1rem;">OFFERING</h2>
+                                    <div class="row">
+                                        ${offer}
+                                    </div>
+                                    <p style="font-weight:600;font-size:0.8rem;"><span class="tooltipped-asp" title="The sum of the average sales price of all items offered">Total ASP: ${offerASP}</span></p>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <h2 style="font-weight:700;font-size:1rem;">REQUESTING</h2>
+                                    <div class="row">
+                                        ${request}
+                                    </div>
+                                    <p style="font-weight:600;font-size:0.8rem;"><span class="tooltipped-asp" title="The sum of the average sales price of all items requested">Total ASP: ${requestASP}</span></p>
+                                </div>
+                                <div class="col-12" style="margin-top:1rem;">
+                                    <button type="button" class="btn btn-outline-success" ${acceptButtonDisabled}>Accept</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            `);
+        }
+
+        setUserNames(userIds);
+        setUserThumbs(userIds);
+        setCatalogNames(catalogIds)
+        setCatalogThumbs(catalogIds);
+        $('.tooltipped-asp').tooltip();
+    }).catch(err => {
+        console.error('error loading trade ads', err);
+        d.empty();
+        d.append(`<p>Oops, looks like something went wrong loading the page.<br><span class="on-click-reload-page">Try again?</span></p>`);
+    })
+}
+loadAds();
+
+$('#trade-ads-filter-completable').on('change', function (e) {
+    e.preventDefault();
+    $('#trade-ads').empty().append(`<div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>`);
+    onlyShowCompletable = parseInt($('#trade-ads-filter-completable').val(), 10);
+    loadAds();
+});
+
+$('#trade-ads-filter-created').on('change', function (e) {
+    e.preventDefault();
+    $('#trade-ads').empty().append(`<div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>`);
+    onlyShowAdsICreated = parseInt($('#trade-ads-filter-created').val(), 10);
+    loadAds();
+});
+
+$('#trade-ads-filter-running').on('change', function (e) {
+    e.preventDefault();
+    $('#trade-ads').empty().append(`<div class="spinner-border" role="status" style="margin:0 auto;display: block;"></div>`);
+    onlyShowAdsRunning = parseInt($('#trade-ads-filter-running').val(), 10) === 1 ? 0 : 1;
+    loadAds();
+});
+

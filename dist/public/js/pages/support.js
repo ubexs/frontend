@@ -1,1 +1,48 @@
-"use strict";function _createForOfIteratorHelper(a,b){var c;if("undefined"==typeof Symbol||null==a[Symbol.iterator]){if(Array.isArray(a)||(c=_unsupportedIterableToArray(a))||b&&a&&"number"==typeof a.length){c&&(a=c);var d=0,e=function(){};return{s:e,n:function n(){return d>=a.length?{done:!0}:{done:!1,value:a[d++]}},e:function e(a){throw a},f:e}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var f,g=!0,h=!1;return{s:function s(){c=a[Symbol.iterator]()},n:function n(){var a=c.next();return g=a.done,a},e:function e(a){h=!0,f=a},f:function f(){try{g||null==c["return"]||c["return"]()}finally{if(h)throw f}}}}function _unsupportedIterableToArray(a,b){if(a){if("string"==typeof a)return _arrayLikeToArray(a,b);var c=Object.prototype.toString.call(a).slice(8,-1);return"Object"===c&&a.constructor&&(c=a.constructor.name),"Map"===c||"Set"===c?Array.from(a):"Arguments"===c||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(c)?_arrayLikeToArray(a,b):void 0}}function _arrayLikeToArray(a,b){(null==b||b>a.length)&&(b=a.length);for(var c=0,d=Array(b);c<b;c++)d[c]=a[c];return d}request("/support/my/tickets").then(function(a){if(0===a.length)return $("#existing-tickets").find("p").text("You have not created any tickets.");$("#existing-tickets").empty();var b,c=_createForOfIteratorHelper(a);try{for(c.s();!(b=c.n()).done;){var d=b.value,e="Awaiting Support Response";2===d.ticketStatus?e="Awaiting Your Response":3===d.ticketStatus&&(e="Closed"),$("#existing-tickets").append("\n        \n        <div class=\"row\">\n            <div class=\"col-12 col-lg-6\">\n                <a href=\"/support/ticket/".concat(d.ticketId,"\">\n                    <h2 style=\"font-size:1rem;margin-bottom:0;\">").concat(d.ticketTitle.escape(),"</h2>\n                </a>\n                <p>Created ").concat(moment(d.createdAt).fromNow(),"</p>\n                <p>Latest Update: ").concat(moment(d.updatedAt).fromNow(),"</p>\n                <p>Status: ").concat(e,"</p>\n                <hr />\n            </div>\n        </div>\n        \n        "))}}catch(a){c.e(a)}finally{c.f()}})["catch"](function(){}),$(document).on("click","#createReply",function(a){a.preventDefault(),loading(),request("/support/ticket/create","POST",{body:$("#body").val(),title:$("#title").val(),v2Token:grecaptcha.getResponse()}).then(function(){window.location.reload()})["catch"](function(a){return warning(a.responseJSON.message)})});
+request('/support/my/tickets')
+.then(d => {
+    if (d.length === 0) {
+        return $('#existing-tickets').find('p').text('You have not created any tickets.');
+    }
+    $('#existing-tickets').empty();
+    for (const message of d) {
+        let status = 'Awaiting Support Response';
+        if (message.ticketStatus === 2) {
+            status = 'Awaiting Your Response';
+        }else if (message.ticketStatus === 3) {
+            status = 'Closed';
+        }
+        $('#existing-tickets').append(`
+        
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <a href="/support/ticket/${message.ticketId}">
+                    <h2 style="font-size:1rem;margin-bottom:0;">${message.ticketTitle.escape()}</h2>
+                </a>
+                <p>Created ${moment(message.createdAt).fromNow()}</p>
+                <p>Latest Update: ${moment(message.updatedAt).fromNow()}</p>
+                <p>Status: ${status}</p>
+                <hr />
+            </div>
+        </div>
+        
+        `);
+    }
+})
+.catch(e => {
+
+})
+
+$(document).on('click', '#createReply', function(e) {
+    e.preventDefault();
+    loading();
+    request('/support/ticket/create', "POST", {
+        'body': $('#body').val(),
+        'title': $('#title').val(),
+        'v2Token': grecaptcha.getResponse(),
+    }).then(d => {
+        window.location.reload();
+    })
+    .catch(e => {
+        return warning(e.responseJSON.message);
+    })
+});

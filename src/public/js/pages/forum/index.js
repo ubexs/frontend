@@ -1,5 +1,3 @@
-/*
-// LMAOBRUH.com
 function loadVerticalAlign()
 {
     $('.vertical-align-text').each(function() {

@@ -1,1 +1,3 @@
-"use strict";var ApexCharts=require("apexcharts");window.ApexCharts=ApexCharts;
+// ApexCharts
+const ApexCharts = require('apexcharts');
+window.ApexCharts = ApexCharts;

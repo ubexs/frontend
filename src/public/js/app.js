@@ -1,4 +1,4 @@
-window.subsitutionimageurl = "https://cdn.blockshub.net/thumbnails/d8f9737603db2d077e9c6f2d5bd3eec1db8ff9fc8ef64784a5e4e6580c4519ba.png";
+window.subsitutionimageurl = "https://cdn.ubexs.com/thumbnails/d8f9737603db2d077e9c6f2d5bd3eec1db8ff9fc8ef64784a5e4e6580c4519ba.png";
 // Get UserData
 var userData = $('#userdata');
 
@@ -88,9 +88,9 @@ function formatDate(dat) {
 function formatCurrency(cur, heightData = '1rem') {
     if (cur === 1) {
         // return '<span style="color:#28a745;"><i class="far fa-money-bill-alt"></i> </span>';
-        return '<span style="color:#28a745;"><img alt="$" style="height: ' + heightData + ';" src="https://cdn.blockshub.net/static/money-green-2.svg"/> </span>';
+        return '<span style="color:#28a745;"><img alt="$" style="height: ' + heightData + ';" src="https://cdn.ubexs.com/static/money-green-2.svg"/> </span>';
     } else {
-        return '<span style="color:#ffc107;"><img alt="$" style="height: ' + heightData + ';" src="https://cdn.blockshub.net/static/coin-stack-yellow.svg"/> </span>';
+        return '<span style="color:#ffc107;"><img alt="$" style="height: ' + heightData + ';" src="https://cdn.ubexs.com/static/coin-stack-yellow.svg"/> </span>';
     }
 }
 
@@ -1246,13 +1246,13 @@ $('.leaderboard-ad').each(function (e) {
             });
         })
         .catch(e => {
-            // default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
+            // default ad url https://cdn.ubexs.com/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
             /*
             $(this).append(`
         <div class="col-12" style="margin-top:1rem;">
             <div style="display:block;margin:0 auto;max-width:728px;">
                 <a href="/ads">
-                    <img style="width:100%;" src="https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png" />
+                    <img style="width:100%;" src="https://cdn.ubexs.com/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png" />
                     <p class="ad-alert-text"><i class="fas fa-ad"></i></p>
                 </a>
             </div>
@@ -1278,11 +1278,11 @@ if (window.innerWidth > 991) {
             `);
             })
             .catch(e => {
-                // default ad url https://cdn.blockshub.net/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
+                // default ad url https://cdn.ubexs.com/thumbnails/684bc763f1459a12ac64c74d5b6154216f2bf26bd1b76cb976449ffad5e163d8.png
                 /*
                 $(this).append(`
                     <a href="/ads">
-                        <img style="width:160px;height:600px;" src="https://cdn.blockshub.net/thumbnails/81082ace029ca2526b6a54e6f2d9914b2397a22c3d4e3260de402f872e093f97.png" />
+                        <img style="width:160px;height:600px;" src="https://cdn.ubexs.com/thumbnails/81082ace029ca2526b6a54e6f2d9914b2397a22c3d4e3260de402f872e093f97.png" />
                         <p class="ad-alert-text"><i class="fas fa-ad"></i></p>
                     </a>
             `);

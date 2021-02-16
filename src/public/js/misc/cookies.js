@@ -31,7 +31,7 @@ const openCookieConsent = () => {
                             <div class="row">
                                 <div class="col-12 col-lg-8">
                                     <h3 style="font-size:1.15rem;margin-bottom:0;">GDPR Cookie Notice</h3>
-                                    <p>BlocksHub uses Google Analytics, which stores cookies on your computer. BlocksHub also uses technical cookies that cannot be declined. Are you OK with third party analytical cookies? <span style="cursor:pointer;font-size:0.75rem;" data-toggle="modal" data-target="#cookieConsentInfoModal">[info]</span><br><br> You can always change your prefereces by scrolling down to the bottom of any page, and clicking "Manage Cookie Consent".</p>
+                                    <p>ubexs uses Google Analytics, which stores cookies on your computer. ubexs also uses technical cookies that cannot be declined. Are you OK with third party analytical cookies? <span style="cursor:pointer;font-size:0.75rem;" data-toggle="modal" data-target="#cookieConsentInfoModal">[info]</span><br><br> You can always change your prefereces by scrolling down to the bottom of any page, and clicking "Manage Cookie Consent".</p>
                                 </div>
                                 <div class="col-12 col-lg-4">
                                     <button type="button" class="btn btn-small btn-dark cookie-button" id="confirmOkWithCookies" style="width:100%;margin:1rem auto 0 auto;display: block;">Yes</button>

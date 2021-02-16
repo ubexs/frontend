@@ -336,7 +336,7 @@ $(document).on("click", "#updateUsernameClick", function () {
     if (newUsername === $('#userdata').attr('data-username')) {
         return warning('Your new username cannot be the same as your current username.');
     }
-    questionYesNoHtml('Changing your username costs <span style="color:#28a745;"><img alt="$" style="height: 1rem;" src="https://cdn.blockshub.net/static/money-green-2.svg"/></span> 1,000. Are you sure you\'d like to continue?', function () {
+    questionYesNoHtml('Changing your username costs <span style="color:#28a745;"><img alt="$" style="height: 1rem;" src="https://cdn.ubexs.com/static/money-green-2.svg"/></span> 1,000. Are you sure you\'d like to continue?', function () {
         request('/auth/username/change/available?username=' + newUsername, "GET")
             .then(function () {
                 request('/auth/username/change', 'PATCH', JSON.stringify({ 'username': newUsername }))

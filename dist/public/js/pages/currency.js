@@ -1,1 +1,121 @@
-"use strict";function _createForOfIteratorHelper(a,b){var c;if("undefined"==typeof Symbol||null==a[Symbol.iterator]){if(Array.isArray(a)||(c=_unsupportedIterableToArray(a))||b&&a&&"number"==typeof a.length){c&&(a=c);var d=0,e=function(){};return{s:e,n:function n(){return d>=a.length?{done:!0}:{done:!1,value:a[d++]}},e:function e(a){throw a},f:e}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var f,g=!0,h=!1;return{s:function s(){c=a[Symbol.iterator]()},n:function n(){var a=c.next();return g=a.done,a},e:function e(a){h=!0,f=a},f:function f(){try{g||null==c["return"]||c["return"]()}finally{if(h)throw f}}}}function _unsupportedIterableToArray(a,b){if(a){if("string"==typeof a)return _arrayLikeToArray(a,b);var c=Object.prototype.toString.call(a).slice(8,-1);return"Object"===c&&a.constructor&&(c=a.constructor.name),"Map"===c||"Set"===c?Array.from(a):"Arguments"===c||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(c)?_arrayLikeToArray(a,b):void 0}}function _arrayLikeToArray(a,b){(null==b||b>a.length)&&(b=a.length);for(var c=0,d=Array(b);c<b;c++)d[c]=a[c];return d}request("/billing/accepted-currencies","GET").then(function(a){request("/billing/currency/products","GET").then(function(a){$("#currencyOptions").empty();var b=[];a.forEach(function(a){var c="<span>&emsp;</span>";0!==a.bonusCatalogId&&(c="<span style=\"font-weight:800;\">Bonus Item: </span><a href=\"/catalog/".concat(a.bonusCatalogId,"/--\" target=\"_blank\"><span data-catalogid=\"").concat(a.bonusCatalogId,"\"></span></a>"),b.push(a.bonusCatalogId));var d=a.currencyAmount,e=10*a.currencyAmount;$("#currencyOptions").append("\n            <div class=\"col-12 col-md-6\" style=\"margin-bottom:0.5rem;\">\n                <div class=\"card\">\n                    <div class=\"card-body\">\n                        <h1>"+formatCurrency(1)+" "+number_format(d)+"<span style=\"font-weight:400;font-size: 1.25rem;\"> $"+a.usdPrice+" USD</span></h1>\n                        <p style=\"overflow: hidden;white-space: nowrap;text-overflow: ellipsis;\">"+c+"</p>\n                        <p><small>Converts to "+formatCurrency(2)+" "+number_format(e)+" with our conversion system</small></p>\n                        <button type=\"button\" class=\"btn btn-success onClickPurchaseCurrency\" data-price=\""+a.usdPrice+"\" data-id=\""+a.currencyProductId+"\" style=\"width:100%;margin-top:0.5rem;\">Purchase</button>\n                    </div>\n                </div>\n            </div>")}),setCatalogNames(b)})["catch"](function(){$("#alerts").show()}),void 0,$(document).on("click",".onClickPurchaseCurrency",function(){var a=parseFloat($(this).attr("data-price")),b=parseInt($(this).attr("data-id")),c=$(this).parent().parent().parent().clone();$(c).find("button").hide(),$(c).attr("class",""),$("#currencyPurchaseArea").append(c),$("#currencyOptions").fadeOut(100),setTimeout(function(){$("#currencyPurchase").fadeIn(100)},100),$("#currencyPurchasePaypal").html("\n    <button type=\"button\" class=\"btn btn-success onClickStartTransaction\" data-id=\"".concat(b,"\" style=\"width:100%;margin-top:0.5rem;\"><i class=\"fab fa-bitcoin\"></i> Continue to Coin Payments</button>\n    "))}),$(document).on("click",".onClickStartTransaction",function(){var b,c=this,d={},e=_createForOfIteratorHelper(a);try{for(e.s();!(b=e.n()).done;){var f=b.value;d[f.id]=f.name}}catch(a){e.e(a)}finally{e.f()}question("Please select the currency you'd like to pay in.",function(a){note("Note: After payment, your transaction will be in a confirming state. This may take anywhere from 2 minutes to 24 hours, depending on network congestion. After the payment is confirmed, you will recieve the product you purchased.",function(){loading(),request("/billing/currency/purchase","POST",JSON.stringify({currencyProductId:parseInt($(c).attr("data-id")),currency:a})).then(function(a){window.location.href=a.url})["catch"](function(a){warning(a.responseJSON.message)})})},"select",d)}),$(document).on("click","#goBackToPurchaseScreen",function(a){a.preventDefault(),$("#currencyPurchaseArea").empty(),$("#currencyPurchasePaypal").empty(),$("#currencyPurchase").fadeOut(100),setTimeout(function(){$("#currencyOptions").fadeIn(100)},100)})})["catch"](function(){return warning("Sorry, our website seems to be having issues right now. Try again later.",function(){window.location.reload()})});
+request('/billing/accepted-currencies', 'GET')
+.then(d => {
+    let possibleCurrencies = d;
+    
+    request("/billing/currency/products", 'GET')
+    .then(function(amts) {
+        $('#currencyOptions').empty();
+        let catalogIds = [];
+        amts.forEach(function(item) {
+            //var extra = '<span style="font-weight:800;">Bonus Item: </span>N/A';
+            var extra = "<span>&emsp;</span>";
+            if (item.bonusCatalogId !== 0) {
+                extra = `<span style="font-weight:800;">Bonus Item: </span><a href="/catalog/${item.bonusCatalogId}/--" target="_blank"><span data-catalogid="${item.bonusCatalogId}"></span></a>`;
+                catalogIds.push(item.bonusCatalogId);
+            }
+            var prim = item["currencyAmount"];
+            var secon = item["currencyAmount"] * 10;
+            $('#currencyOptions').append(`
+            <div class="col-12 col-md-6" style="margin-bottom:0.5rem;">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>`+formatCurrency(1)+` `+number_format(prim)+`<span style="font-weight:400;font-size: 1.25rem;"> $`+item.usdPrice+` USD</span></h1>
+                        <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">`+extra+`</p>
+                        <p><small>Converts to `+formatCurrency(2)+` `+number_format(secon)+` with our conversion system</small></p>
+                        <button type="button" class="btn btn-success onClickPurchaseCurrency" data-price="`+item.usdPrice+`" data-id="`+item.currencyProductId+`" style="width:100%;margin-top:0.5rem;">Purchase</button>
+                    </div>
+                </div>
+            </div>`);
+        });
+        setCatalogNames(catalogIds);
+    })
+    .catch(function(e) {
+        $('#alerts').show();
+    });
+
+    console.log("There's gonna be a ton of errors here due to paypal not being compatible with our csp - but that's OK. This seems to just be metric logging right now so it does not matter");
+
+    $(document).on('click', '.onClickPurchaseCurrency', function() {
+    var amt = parseFloat($(this).attr('data-price'));
+    var id = parseInt($(this).attr('data-id'));
+    var append = $(this).parent().parent().parent().clone();
+    $(append).find('button').hide();
+    $(append).attr('class','');
+    $('#currencyPurchaseArea').append(append);
+
+    $('#currencyOptions').fadeOut(100);
+    setTimeout(function() {
+        $('#currencyPurchase').fadeIn(100);
+    }, 100);
+    $('#currencyPurchasePaypal').html(`
+    <button type="button" class="btn btn-success onClickStartTransaction" data-id="${id}" style="width:100%;margin-top:0.5rem;"><i class="fab fa-bitcoin"></i> Continue to Coin Payments</button>
+    `);
+    /*
+    // Setup Paypal
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            // Set up the transaction
+            return actions.order.create({
+                intent: 'CAPTURE',
+                purchase_units: [{
+                    reference_id: id,
+                    amount: {
+                        value: amt
+                    }
+                }]
+            });
+    },
+    onApprove: function(data, actions) {
+        return request('/billing/paypal/currency/purchase', 'POST', JSON.stringify({orderId: data.orderID}))
+        .then(function(d) {
+            success('Thank you for your purchase. The currency has been added to your account.', function() {
+                window.location.reload();
+            });
+        })
+        .catch(function(e) {
+            warning(e.responseJSON.message);
+        });
+    },
+    }).render('#currencyPurchasePaypal');
+    */
+    });
+
+    $(document).on('click', '.onClickStartTransaction', function(e) {
+        let kv = {};
+        for (const item of possibleCurrencies) {
+            kv[item.id] = item.name;
+        }
+        question('Please select the currency you\'d like to pay in.', (currency) => {
+            note('Note: After payment, your transaction will be in a confirming state. This may take anywhere from 2 minutes to 24 hours, depending on network congestion. After the payment is confirmed, you will recieve the product you purchased.', () => {
+                loading();
+                request('/billing/currency/purchase', 'POST', JSON.stringify({
+                    'currencyProductId': parseInt($(this).attr('data-id')),
+                    'currency': currency,
+                }))
+                .then((d) => {
+                    window.location.href = d.url;
+                })
+                .catch((e) => {
+                    warning(e.responseJSON.message);
+                });
+            });
+        }, 'select', kv);
+    });
+
+    $(document).on('click', '#goBackToPurchaseScreen', function(e) {
+    e.preventDefault();
+    $('#currencyPurchaseArea').empty();
+    $('#currencyPurchasePaypal').empty();
+
+    $('#currencyPurchase').fadeOut(100);
+    setTimeout(function() {
+        $('#currencyOptions').fadeIn(100);
+    }, 100);
+    });
+})
+.catch(e => {
+    console.error(e);
+    return warning('Sorry, our website seems to be having issues right now. Try again later.', () => {
+        window.location.reload();
+    });
+});

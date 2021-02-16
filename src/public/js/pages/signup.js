@@ -6,7 +6,7 @@ const referral = {
 if (referral.referralId) {
     $('#referral-information-box').append(`
 <h2 style="font-size:1.5rem;">Invited By <span data-userid="${referral.userId}"></span></h2>
-<p class="font-italic text-center" style="font-size:0.75rem;"><span data-userid="${referral.userId}"></span> invited you to BlocksHub! When you sign up, you'll both get an entry into our 100k Giveaway!</p>`);
+<p class="font-italic text-center" style="font-size:0.75rem;"><span data-userid="${referral.userId}"></span> invited you to ubexs! When you sign up, you'll both get an entry into our 100k Giveaway!</p>`);
     setUserNames([referral.userId]);
 }
 
@@ -92,7 +92,7 @@ $(document).on('click', '#signUpButton', function() {
     var day = parseInt($('#birthDayFormSelect').val());
     if (moment(year+'-'+month+'-'+day, 'YYYY-M-D').isSameOrAfter(moment().subtract(13, 'years'))) {
         console.log(year+'-'+month+'-'+day);
-        return warning('Sorry! You must be 13 years of age or older to join BlocksHub!');
+        return warning('Sorry! You must be 13 years of age or older to join ubexs!');
     }
     var username = $('#username').val();
     var password = $('#password').val();

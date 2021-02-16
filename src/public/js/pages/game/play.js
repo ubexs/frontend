@@ -82,9 +82,9 @@ function loadGames(addTopTwoGamesToHeader = false) {
             areMoreAvailable = true;
         }
         if (currentGenre === 1) {
-            $('title').html('Free 3D Games - BlocksHub')
+            $('title').html('Free 3D Games - ubexs')
         }else{
-            $('title').html('Free 3D '+possibleGenres[currentGenre]+' Games - BlocksHub');
+            $('title').html('Free 3D '+possibleGenres[currentGenre]+' Games - ubexs');
         }
         if (currentGenre === 1) {
             $('#free-games-description').html(`Experience thousands of user-created 3D games designed for all ages, all for free! No download required. Our games are supported on all major devices, including Desktop Computers, Laptop Computers, Tablets, and Phones.`);

@@ -1,5 +1,5 @@
 var forumData = $('#forumdata');
-// LMAOBRUH.com
+
 function loadVerticalAlign() {
     $('.vertical-align-text').each(function () {
         var size = $(this).outerHeight(true);

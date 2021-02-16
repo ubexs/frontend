@@ -381,6 +381,6 @@ request('/staff/support/tickets-all', 'GET')
     });
 })
 .catch(e => {
-    $('#tickets-any-state').empty().append(`<p>Thare are no tickets at this time.</p>`);
+    $('#tickets-any-state').empty().append(`<p>There are no tickets at this time.</p>`);
 });
 */
