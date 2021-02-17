@@ -1,4 +1,4 @@
-# Blockshub Web Frontend
+# ubexs Web Frontend
 
 ### Dev Env Setup
 1. Create a file called config.json
@@ -6,9 +6,9 @@
 ```json
 {
     "baseUrl": {
-        "backend": "http://api-devsite.blockshub.net",
-        "frontend": "http://api-devsite.blockshub.net",
-        "play": "http://play-devsite.blockshub.net"
+        "backend": "http://api-devsite.ubexs.com",
+        "frontend": "http://api-devsite.ubexs.com",
+        "play": "http://play-devsite.ubexs.com"
     },
     "backendAuthorization": "example-key",
     "env": "DEVELOPMENT",
