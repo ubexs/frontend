@@ -45,7 +45,7 @@ let inetval = setInterval(() => {
         console.log('no title');
         return;
     }
-    ite.textContent = 'BlocksHub API';
+    ite.textContent = 'ubexs API';
     clearInterval(inetval);
 }, 100);
 let seenWarning = localStorage.getItem('seen_suicide_warning');
@@ -70,10 +70,10 @@ let initDesc = setInterval(() => {
             ite.innerHTML = `
             <h3><span style="font-weight:600;">NOTICE:</span> If someone tells you to go here and enter/paste something, they are trying to scam you. Report them and do not enter anything here unless you know what you are doing.</h3>
     <br>
-    This is the official BlocksHub Web API Documentation. It uses Swagger, so you can use various auto-generating tools to auto-generate an API Wrapper in your favorite language. We believe we have reached a point where most of these endpoints will remain stable and they likely won't be changed without warning. This description of our API is written assuming you know how things like Cookies and HTTP Requests work. If you don't, you should read up on how those work first before continuing.
+    This is the official ubexs Web API Documentation. It uses Swagger, so you can use various auto-generating tools to auto-generate an API Wrapper in your favorite language. We believe we have reached a point where most of these endpoints will remain stable and they likely won't be changed without warning. This description of our API is written assuming you know how things like Cookies and HTTP Requests work. If you don't, you should read up on how those work first before continuing.
     <br>
     <h5>Base URL</h5>
-    The base URL of all api endpoints is "https://blockshub.net/".
+    The base URL of all api endpoints is "https://ubexs.com/".
     <br>
     <h5>Sessions</h5>
     The "rblxsession" cookie saved to your browser authenticates you as the user you are currently logged in as. We do not currently offer a OAUTH-style solution but we will be looking into a solution like that soon. For now, in order to create a bot account, you will have to manually create an account and save this cookie somewhere. Remember: You should not share this cookie with anyone as it will give them access to your account.
@@ -112,7 +112,7 @@ let initDesc = setInterval(() => {
     <br>
     In this error, the error code is "InternalServerError". We document our error codes in (what we believe is) a very easy to understand way. For instance, you might see something like this on the API docs below:
     <br>
-        <img style="width:100%;display:block;margin:0 auto;max-width:1000px;" src="https://cdn.blockshub.net/static/api-docs-screen-1.png" />
+        <img style="width:100%;display:block;margin:0 auto;max-width:1000px;" src="https://cdn.ubexs.com/static/api-docs-screen-1.png" />
     </br>
     In the above example, "TooManyRequests" would appear as the error code (error.code) and there is a short message documenting what the error code means. "429" would also be the Response Status Code. We do not include an error message in responses for localization reasons, as well as to save bandwidth.
     <br>
@@ -152,10 +152,10 @@ let initDesc = setInterval(() => {
     /*
     ite.innerHTML = `<h3><span style="font-weight:600;">NOTICE:</span> If someone tells you to go here and enter/paste something, they are trying to scam you. Report them and do not enter anything here unless you know what you are doing.</h3>
     <br>
-    This is the official BlocksHub Web API Documentation. It uses Swagger, so you can use various auto-generating tools to auto-generate an API Wrapper in your favorite language. We believe we have reached a point where most of these endpoints will remain stable and they likely won't be changed without warning. This description of our API is written assuming you know how things like Cookies and HTTP Requests work. If you don't, you should read up on how those work first before continuing.
+    This is the official ubexs Web API Documentation. It uses Swagger, so you can use various auto-generating tools to auto-generate an API Wrapper in your favorite language. We believe we have reached a point where most of these endpoints will remain stable and they likely won't be changed without warning. This description of our API is written assuming you know how things like Cookies and HTTP Requests work. If you don't, you should read up on how those work first before continuing.
     <br>
     <h5>Base URL</h5>
-    The base URL of all api endpoints is "https://blockshub.net/".
+    The base URL of all api endpoints is "https://ubexs.com/".
     <br>
     <h5>Sessions</h5>
     The "rblxsession" cookie saved to your browser authenticates you as the user you are currently logged in as. We do not currently offer a OAUTH-style solution but we will be looking into a solution like that soon. For now, in order to create a bot account, you will have to manually create an account and save this cookie somewhere. Remember: You should not share this cookie with anyone as it will give them access to your account.
@@ -194,7 +194,7 @@ let initDesc = setInterval(() => {
     <br>
     In this error, the error code is "InternalServerError". We document our error codes in (what we believe is) a very easy to understand way. For instance, you might see something like this on the API docs below:
     <br>
-        <img style="width:100%;display:block;margin:0 auto;max-width:1000px;" src="https://cdn.blockshub.net/static/api-docs-screen-1.png" />
+        <img style="width:100%;display:block;margin:0 auto;max-width:1000px;" src="https://cdn.ubexs.com/static/api-docs-screen-1.png" />
     </br>
     In the above example, "TooManyRequests" would appear as the error code (error.code) and there is a short message documenting what the error code means. "429" would also be the Response Status Code. We do not include an error message in responses for localization reasons, as well as to save bandwidth.
     <br>
@@ -236,10 +236,10 @@ setInterval(() => {
     let els = $('.markdown');
     if (els.length !== 0) {
         els.each(function (ind) {
-            if ($(this).attr('data-hindi-markdown') === 'true') {
+            if ($(this).attr('data-ubexs-markdown') === 'true') {
                 return;
             }
-            $(this).attr('data-hindi-markdown','true');
+            $(this).attr('data-ubexs-markdown','true');
             let p = $(this).find('p');
             p.each(function() {
                 let txt = $(this).html();
