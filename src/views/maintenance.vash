@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-    <title>Site Maintenance</title>
+    <title>Maintenance</title>
     <style>
         body { text-align: center; padding: 150px; }
         h1 { font-size: 50px; }
@@ -16,7 +16,7 @@
             <h1>We&rsquo;ll be back soon!</h1>
             <div>
                 <p>Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. We&rsquo;ll be back online shortly!</p>
-                <p>&mdash; The Team</p>
+                <p>&mdash; team ubexs</p>
             </div>
         </article>
     </body>
