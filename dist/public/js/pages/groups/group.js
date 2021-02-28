@@ -2,7 +2,7 @@ var groupid = parseInt($('#groupdata').attr("data-groupid"));
 
 $(document).on('click', '#groupLeave', function() {
     if (parseInt($('#groupdata').attr('data-groupowner')) === parseInt(userId)) {
-        questionYesNo('Are you sure you would like to abbandon this group?', function() {
+        questionYesNo('Are you sure you would like to abandon this group?', function() {
             cont();
         });
     }else{
