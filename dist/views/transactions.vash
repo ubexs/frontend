@@ -14,9 +14,6 @@
                 <option value="2">Secondary to Primary</option>
             </select>
         </div>
-        <div class="col-12">
-            <p style="font-size:0.85rem;"><span class="badge badge-danger">WARNING</span> This currency conversion system will be removed in the near future. <a href="/currency-exchange">Check out the new system here</a>.</p>
-        </div>
     </div>
     <div class="row" style="margin-top:1rem;">
         <div class="col-6 col-md-8 col-lg-10">
