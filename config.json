@@ -1,0 +1,18 @@
+{
+    "baseUrl": {
+        "backend": "http://api.ubexs.com",
+        "frontend": "http://api.ubexs.com",
+        "play": "http://play.ubexs.com"
+    },
+    "backendAuthorization": "example-key",
+    "env": "PRODUCTION",
+    "port": 3005,
+    "recaptcha": {
+        "v3": {
+            "public": "6Lc9VM8UAAAAAFlnULqvxYegRA9iz-DZg-SAuQRE"
+        },
+        "v2": {
+            "public": "6LcNVc8UAAAAALqEX0uRZGnCCR7UHl53jDlYQwHY"
+        }
+    }
+}
