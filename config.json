@@ -5,7 +5,7 @@
         "play": "http://play.ubx.10allday.com"
     },
     "backendAuthorization": "example-key",
-    "env": "PRODUCTION",
+    "env": "DEVELOPMENT",
     "port": 3005,
     "recaptcha": {
         "v3": {
