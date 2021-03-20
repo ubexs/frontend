@@ -1,8 +1,8 @@
 {
     "baseUrl": {
-        "backend": "http://api.ubexs.com",
-        "frontend": "http://api.ubexs.com",
-        "play": "http://play.ubexs.com"
+        "backend": "http://api.10allday.com",
+        "frontend": "http://api.10allday.com",
+        "play": "http://play.10allday.com"
     },
     "backendAuthorization": "example-key",
     "env": "PRODUCTION",
