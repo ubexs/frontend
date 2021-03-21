@@ -19,7 +19,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: prod-ubx-frontend    # TODO: update to cluster name
-  GKE_ZONE: northamerica-northeast1-a	# TODO: update to cluster zone
+  GKE_ZONE: northamerica-northeast1	# TODO: update to cluster zone
   DEPLOYMENT_NAME: prod-ubx-frontend # TODO: update to deployment name
   IMAGE: prod-ubx-frontend
 
