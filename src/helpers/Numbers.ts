@@ -1,4 +1,3 @@
-
 /**
  * Convert a big number to 5-ish digit string. Example: 100,000 = 100k+
  * @param bigNum 
