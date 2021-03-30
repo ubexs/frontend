@@ -49,4 +49,3 @@ strictEqual(typeof config.recaptcha.v2, 'object');
 strictEqual(typeof config.recaptcha.v3, 'object');
 strictEqual(typeof config.recaptcha.v2.public, 'string');
 strictEqual(typeof config.recaptcha.v3.public, 'string');
-
