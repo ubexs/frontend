@@ -20,7 +20,7 @@
         @if (model.cookieConsent.googleAnalytics === true) {
             <!-- google analytics -->
             <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WRD4X3R" nonce="@model.nonce"></script>
             <script async src="/js/misc/ga.js" nonce="@model.nonce"></script>
         }
     }
