@@ -64,10 +64,10 @@ const openCookieConsent = () => {
                 </p>
                 <br>
                 <h5>Cloudflare Cookies</h5>
-                <p>A third party service used by Blockshub, Cloudflare, uses a mandatory "__cfduid" cookie that cannot be declined. You can learn more about the cookie <a href="https://support.cloudflare.com/hc/en-us/articles/200170156-Understanding-the-Cloudflare-Cookies" rel="nofollow noopener">here</a>, and view Cloudflare's privacy policy <a href="https://www.cloudflare.com/privacypolicy/">here</a>.</p>
+                <p>A third party service used by ubexs, Cloudflare, uses a mandatory "__cfduid" cookie that cannot be declined. You can learn more about the cookie <a href="https://support.cloudflare.com/hc/en-us/articles/200170156-Understanding-the-Cloudflare-Cookies" rel="nofollow noopener">here</a>, and view Cloudflare's privacy policy <a href="https://www.cloudflare.com/privacypolicy/">here</a>.</p>
                 <br>
                 <h5>Session Cookies</h5>
-                <p>BlocksHub uses cookies for managing users who logged in, managing cookie consent, for and other non-tracking purposes. Due to the necessity of these cookies, they cannot be declined.</p>
+                <p>ubexs uses cookies for managing users who logged in, managing cookie consent, for and other non-tracking purposes. Due to the necessity of these cookies, they cannot be declined.</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
