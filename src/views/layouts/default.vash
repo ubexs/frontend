@@ -12,7 +12,7 @@
         @html.block('meta')
 
         <!-- Prefetch -->
-        <link rel="dns-prefetch" href="https://cdn.hindigamer.club">
+        <link rel="dns-prefetch" href="https://cdn.ubexs.com">
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/">
         <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
 
@@ -192,7 +192,7 @@
             <div class="container">
                 <h3 style="margin:0;padding:0;font-weight:600;">
                     <a class="navbar-brand" href="/" style="font-weight:600;">
-                        <span class="brand-blocks">BLOCKS </span><span class="brand-hub">HUB</span>
+                        <span class="brand-blocks">ub </span><span class="brand-hub">exs</span>
                     </a>
                 </h3>
 
