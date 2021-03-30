@@ -1,5 +1,5 @@
 /**
- * Axios library for making requests to api.blockshub.net
+ * Axios library for making requests to api.ubexs.com
  */
 import axios, { AxiosRequestConfig } from 'axios';
 import config from './config';
