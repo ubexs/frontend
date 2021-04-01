@@ -73,7 +73,7 @@
                     <div class="row">
                         <div class="col-12">
                             <a href="/forum/thread/232?page=1" class="normal">
-                                <img src="https://cdn.blockshub.net/thumbnails/6c3cc1cd3848ca16e937688530995970c735a72fc5e3c0f54ab8c12e06ac604c0d2a885dcd010529d6f409fb7bfbc4fe.png" style="width:auto;height:auto;display:block;margin:0 auto;max-height:4rem;" />
+                                <img src="https://cdn.ubexs.com/thumbnails/6c3cc1cd3848ca16e937688530995970c735a72fc5e3c0f54ab8c12e06ac604c0d2a885dcd010529d6f409fb7bfbc4fe.png" style="width:auto;height:auto;display:block;margin:0 auto;max-height:4rem;" />
                                 <p style="font-size:0.85rem;"><span class="font-weight-bold">Calling all future game-devs:</span> Join our program to get a head-start on developing games! Click here.</p>
                             </a>
                             <hr />
@@ -113,13 +113,13 @@
                     </div>
                     <div id="user-feed-selection" class="row">
                         <div class="col-12 col-lg-6 user-feed-col-right">
-                            <button type="button" class="btn btn-success text-truncate btn-grouping-status-right" id="use-feed-friends" data-toggle="tooltip" data-placement="top" title="See what your friends are up to!">
+                            <button type="button" class="btn btn-success text-truncate btn-grouping-status-right" id="use-feed-friends" data-toggle="tooltip" data-placement="top" title="Meet some old friends!">
                                 <span class="font-weight-bold">Friends</span>
                             </button>
                         </div>
                         <div style="d-lg-none d-block col-12" style="margin-top:1rem;"></div>
                         <div class="col-12 col-lg-6 user-feed-col-left">
-                            <button type="button" class="btn btn-outline-success text-truncate btn-grouping-status-left" id="use-feed-groups" data-toggle="tooltip" data-placement="top" title="See what groups you're a member of are up to!">
+                            <button type="button" class="btn btn-outline-success text-truncate btn-grouping-status-left" id="use-feed-groups" data-toggle="tooltip" data-placement="top" title="See your groups...">
                                 <span class="font-weight-bold">Groups</span>
                             </button>
                         </div>
