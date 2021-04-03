@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', function() {
     
         // Create and tweak the background material.
         var backgroundMaterial = new BABYLON.BackgroundMaterial("backgroundMaterial", scene);
-        backgroundMaterial.reflectionTexture = new BABYLON.CubeTexture("https://hindigamerclub-game.ewr1.vultrobjects.com/default_assets/TropicalSunnyDay", scene);
+        backgroundMaterial.reflectionTexture = new BABYLON.CubeTexture("https://ubexs_assets.storage.googleapis.com/TropicalSunnyDay", scene);
         backgroundMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
         skybox.material = backgroundMaterial;
     
