@@ -55,8 +55,8 @@ export enum GameGenreDescriptions {
 
 
 export enum GameGenreThumbnails {
-    'https://cdn.blockshub.net/static/genre/comedy_genre_thumbnail.png' = 5,
-    'https://cdn.blockshub.net/static/genre/Western-small.jpg' = 14,
+    'https://cdn.ubexs.com/static/genre/comedy_genre_thumbnail.png' = 5,
+    'https://cdn.ubexs.com/static/genre/Western-small.jpg' = 14,
 }
 export enum GameThumbnailModerationStatus {
     'AwaitingApproval' = 0,
