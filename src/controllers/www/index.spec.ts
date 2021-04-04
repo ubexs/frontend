@@ -23,6 +23,7 @@ describe('www.performanceTest()', () => {
 describe('www.almost everything()', () => {
     const methods = [
         'Terms',
+        'Privacy',
         'dashboard',
         'avatar',
         'trades',
@@ -45,8 +46,8 @@ describe('www.almost everything()', () => {
 
 describe('www.V1AuthenticationFlow', () => {
     it('Should accept valid domain and return WWW data', async () => {
-        const url = 'https://www.good-service.com/redirect';
-        const expectedDisplayUrl = 'www.good-service.com';
+        const url = 'https://www.10allday.com/redirect';
+        const expectedDisplayUrl = 'www.10allday.com';
 
         const results = await www.V1AuthenticationFlow(url);
         expect(results).to.be.instanceOf(model.WWWTemplate);
