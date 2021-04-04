@@ -2,7 +2,12 @@
     "baseUrl": {
         "backend": "http://api.ubexs.com",
         "frontend": "http://api.ubexs.com",
-        "play": "http://play.ubexs.com"
+        "play": "http://play.ubexs.com",
+        "cdn": "http://cdn.ubexs.com",
+        "storage": "https://storage.googleapis.com",
+        "analytics": "https://www.google-analytics.com",
+        "fonts": "https://ka-f.fontawesome.com/releases/v5.15.1/css/free.min.css",
+        "monitoring": "https://sentry.io"
     },
     "backendAuthorization": "example-key",
     "env": "PRODUCTION",
