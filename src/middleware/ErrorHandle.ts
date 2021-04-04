@@ -78,7 +78,7 @@ export class GlobalErrorHandler extends GlobalErrorHandlerMiddleware {
         if (process.env.NODE_ENV === 'development') {
             return super.use(error, request, response);
         }
-        return response.status(500).send(ErrorTemplate('500: Internal Server Error', 'BlocksHub seems to be experiencing some issues right now. Please try again later.')).end();
+        return response.status(500).send(ErrorTemplate('500: Internal Server Error', 'ubexs seems to be experiencing some issues right now. Please try again later.')).end();
     }
 }
 
