@@ -18,18 +18,9 @@ html,body {
 * {
     font-family: 'Montserrat', sans-serif;
 }
-a.navbar-brand  > span.brand-blocks {
-    color:rgba(71,195,91,1);
-}
-a.navbar-brand  > span.brand-hub {
-    background-color:rgba(71,195,91,1);
-    border-radius:0.25rem;
-    color:white;
-    padding-left:0.25rem;
-    padding-right:0.25rem;
-    padding-top:0.1rem;
-    padding-bottom:0.15rem;
-}
+a.navbar-brand  > span.brand-ubx {
+    color:rgb(76, 84, 68);
+    
 .gradient-heading {
     margin-bottom:0;
     font-size:1rem;
