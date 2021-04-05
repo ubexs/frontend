@@ -148,7 +148,7 @@ export class WWWSupportController extends base {
                 <div style="margin-top:1rem;"></div>
 
                 <h3>Error Code "OneAccountPerIP"</h3>
-                <p>This error code means that either you, or someone else on your network, recently signed up on BlocksHub. To prevent abuse, we limit the amount of times a user can register an account every 24 hours. You can try some of the fixes below to see if they help:</p>
+                <p>This error code means that either you, or someone else on your network, recently signed up on ubexs. To prevent abuse, we limit the amount of times a user can register an account every 24 hours. You can try some of the fixes below to see if they help:</p>
                 <ul>
                     <li>Confirm you are not using any VPN or IP spoofing software</li>
                     <li>If you are on a mobile network (such as LTE), try connecting to wifi (or vice-versa)</li>
@@ -202,7 +202,7 @@ export class WWWSupportController extends base {
                 <div style="margin-top:1rem;"></div>
 
                 <h3>"This content cannot be displayed in an iframe"</h3>
-                <img src="https://cdn.blockshub.net/static/support-img/Screenshot_1.png" style="width:100%;height: auto;max-width:600px;" />
+                <img src="https://cdn.ubexs.com/static/support-img/Screenshot_1.png" style="width:100%;height: auto;max-width:600px;" />
                 <p>Unfortunately, this error means that your browser is not supported by our game engine. We are currently working on a downloadable game engine to elevate problems like this on older operating systems, but until we release it, you will have to use a more up-to-date web browser such as <a href="https://www.google.com/chrome/" rel="nofollow">Google Chrome</a> or <a rel="nofollow" href="https://www.mozilla.org/firefox/">Mozilla Firefox</a>. If you are using the most up-to-date version of either browser, then your operating system is likely not supported by us.</p>
                 
                 `,
@@ -269,7 +269,7 @@ export class WWWSupportController extends base {
                 </p>
                 <h3>I can't login!</h3>
                 <p style="margin-bottom:1rem">
-                    If you have a verified email address on your account, you can <a href="/request/password-reset">reset your password here</a>. If you do not recieve a reset password email, your email may have been changed. You can email our support team at <a href="mailto:support@blockshub.net">support@blockshub.net</a> from your account's last known email for assistance. If you did not have a verified email, then we will be unable to help you.
+                    If you have a verified email address on your account, you can <a href="/request/password-reset">reset your password here</a>. If you do not recieve a reset password email, your email may have been changed. You can email our support team at <a href="mailto:support@ubexs.com">support@ubexs.com</a> from your account's last known email for assistance. If you did not have a verified email, then we will be unable to help you.
                 </p>
                 <h3>Currency/Items are missing or I think someone's on my account</h3>
                 <p style="margin-bottom:1rem">
@@ -372,6 +372,24 @@ export class WWWSupportController extends base {
         });
     }
 
+    @Get('/explore-other-sandbox-websites')
+    @Render('support_article')
+    public ExploreOtherSandboxWebsites() {
+        return new model.WWWTemplate({
+            title: 'Explore other sandbox websites',
+            page: {
+                'article': `<div class="col-12" style="margin-bottom:1rem;">
+                <h1>Explore other sandbox websites</h1>
+            </div>
+            <div class="col-12" style="margin-bottom:1rem;">
+                <h4 style="font-size:1rem;margin-bottom:0;">Sandbox Community</h4>
+                <p>The Sandbox Community is the best place to find cool sandbox sites. Ckeck out their <a href="https://discord.gg/rxZ68KeM8B">Discord</a> and <a href="https://sandboxcommunity.xyz">website</a></p>
+            </div>
+            </div>`
+            }
+        });
+    }
+    
     @Get('/developer-get-started')
     @Render('support_article')
     public DeveloperGetStarted() {
@@ -382,7 +400,7 @@ export class WWWSupportController extends base {
                 <h1>Developer Get Started</h1>
             </div>
             <div class="col-12" style="margin-bottom:1rem;">
-                <p style="marign-bottom:2rem;">Looking to get started developing games on BlocksHub? Look no further! This article will introduce you to some basic elements of BlocksHub game development, what to expect when making a game, ways to come up with game ideas, and more. Please note that BlocksHub is still heavily in-development, so not nearly as many features as we'd like have been implemented.</p>
+                <p style="marign-bottom:2rem;">Looking to get started developing games on ubexs? Look no further! This article will introduce you to some basic elements of ubexs game development, what to expect when making a game, ways to come up with game ideas, and more. Please note that ubexs is still heavily in-development, so not nearly as many features as we'd like have been implemented.</p>
                 <br>
                 <p style="marign-bottom:2rem;">This article assumes that you have a BlocksHub account. If you don't have an account, <a href="/signup">Sign Up Here!</a></p>
                 <br>
@@ -422,7 +440,7 @@ export class WWWSupportController extends base {
                 <p>Now, you should be able to open any of the files you made and start programming while having access to full "babylon.js" type definitions.</p>
                 <br>
                 <br>
-                <p>For further information about babylon.js, click <a rel="nofollow noopener" href="https://doc.babylonjs.com/babylon101/">here</a>. For information regarding our APIs (added ontop of babylon), click <a href="https://cdn.blockshub.net/docs/index.html">here</a>.</p>
+                <p>For further information about babylon.js, click <a rel="nofollow noopener" href="https://doc.babylonjs.com/babylon101/">here</a>. For information regarding our APIs (added ontop of babylon), click <a href="https://cdn.ubexs.com/docs/index.html">here</a>.</p>
             </div>
             
             `
