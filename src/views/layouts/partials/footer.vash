@@ -14,7 +14,7 @@
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-4 footerBarListItems">
-                                <h5>COMPANY</h5>
+                                <h5>Company</h5>
                                 <p style="font-size:0.85rem;"><a href="/play">Play</a></p>
                                 <p style="font-size:0.85rem;"><a href="/forum/9?page=1">Blog</a></p>
                                 <p style="font-size:0.85rem;"><a href="/staff">Staff</a></p>
@@ -22,7 +22,7 @@
                                 <p style="font-size:0.85rem;"><a href="/privacy">Privacy Policy</a></p>
                             </div>
                             <div class="col-6 col-md-4 footerBarListItems">
-                                <h5>SUPPORT</h5>
+                                <h5>Support</h5>
                                 <p style="font-size:0.85rem;"><a href="/support">Contact Us</a></p>
                                 <p style="font-size:0.85rem;"><a href="/support/refund-policy">Refund Policy</a></p>
                                 <p style="font-size:0.85rem;"><a href="/support/signup-help">Signup Help</a></p>
@@ -30,7 +30,7 @@
                                 <p style="font-size:0.85rem;"><a href="/support/account-hacked">Account Hacked</a></p>
                                 <p style="font-size:0.85rem;"><a href="/support/scammed">I was scammed</a></p>
                                 <p style="font-size:0.85rem;"><a href="/support/account-banned-help">Why was my account banned?</a></p>
-                                <p style="font-size:0.85rem;"><a href="/sbc">What's a sandbox?</a></p>
+                                <p style="font-size:0.85rem;"><a href="/support/explore-other-sandbox-websites">Explore other sandbox websites.</a></p>
                             </div>
                             <div class="col-12 col-md-4 footerBarListItems">
                                 <p>
@@ -56,7 +56,7 @@
                                 <div class="mr-auto">
                                     <div class="row justify-content-center">
                                         <div class="col-12">
-                                            <p style="padding-top: 10%;font-size:0.85rem;">&copy; @model.year BlocksHub</p>
+                                            <p style="padding-top: 10%;font-size:0.85rem;">&copy; @model.year 10allday</p>
                                         </div>
                                     </div>
                                 </div>
