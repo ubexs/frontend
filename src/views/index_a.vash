@@ -15,7 +15,7 @@
                         <div class="col-12 col-md-6">
                             @*<img src="" style="width:100%;" />*@
                             <h1 class="text-left" style="font-size:4rem;">Free 3D Browser Games</h1>
-                            <h5 class="text-left" style="font-weight: 500;">Create and play 3D video games - <span style="border-bottom:1px solid black;">all within your web browser</span>.</h5>
+                            <h5 class="text-left" style="font-weight: 500;">Create amazing stuff - <span style="border-bottom:1px solid black;">all for free</span>.</h5>
                             <div class="row" style="margin-top:3rem;">
                                 <div class="col-6 col-md-12 col-lg-6">
                                     <a href="/signup" class="btn btn-success" style="width:100%;color:white;">JOIN</button>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="waves-container-homepage-a">
-            <img src="https://cdn.blockshub.net/static/homepage-a-waves.svg?v=2" />
+            <img src="https://cdn.ubexs.com/static/homepage-a-waves.svg?v=2" />
         </div>
         <div style="background:#28a745;padding-bottom:8rem;padding-top:2rem;">
             <div class="container">
@@ -42,7 +42,7 @@
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <h3 style="color:white;">WHAT DOES UBEXS OFFER?</h3>
-                                <p style="color:white;">ubexs offers a premiere gaming experience for users aged 13 and up. All games and content are <span class="h-underline">thoroughly moderated</span> to ensure optimal quality and safety for our users. <span class="h-underline">Build friendships</span>, <span class="h-underline">chat with other users</span>, <span class="h-underline">create games</span>, <span class="h-underline">play games</span>, customize your <span class="h-underline">very own 3D avatar</span>, and more!</p>
+                                <p style="color:white;">All games and content are <span class="h-underline">thoroughly moderated</span> to ensure optimal quality and safety for our users. <span class="h-underline">Build friendships</span>, <span class="h-underline">chat with other users</span>, <span class="h-underline">create games</span>, <span class="h-underline">play games</span>, customize your <span class="h-underline">very own 3D avatar</span>, and more!</p>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h1 style="color:white;font-size:10rem;text-align:center;transform:rotate(19deg);"><i class="fas fa-gamepad"></i></h1>
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <div style="background: url('https://cdn.blockshub.net/static/brickwall.png?v=2');">
+        <div style="background: url('https://cdn.ubexs.com/static/brickwall.png?v=2');">
             <div class="container" style="padding-top:8rem;padding-bottom:8rem;">
                 <div class="row">
                     <div class="content" style="width:100%;overflow:visible;padding-left:15px;padding-right:15px;">
@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-12 col-lg-6" style="color:#28a745;">
                                 <h3>IS UBEXS SAFE FOR ME OR MY CHILD?</h3>
-                                <p>ubexs excels at child safety, privacy, and security. All uploaded content, such as clothing, is reviewed manually by humans before being shown on the website. Games can be reported if they contain abusive content. Passwords are hashed using secure technologies, emails are encrypted with AES 256 encryption, and IP addresses are only recorded to prevent fraud/TOS violations.</p>
+                                <p>We excel at child safety, privacy, and security. All uploaded content, such as clothing, is reviewed manually by humans before being shown on the website. Games can be reported if they contain abusive content. Passwords are hashed using secure technologies, emails are encrypted with AES 256 encryption, and IP addresses are only recorded to prevent fraud/TOS violations.</p>
                             </div>
                         </div>
                     </div>
@@ -80,14 +80,14 @@
                                 <h1 style="text-align:center;font-size:4rem;">HOW DO I JOIN?</h1>
                             </div>
                             <div class="col-12 col-md-8 offset-md-2">
-                                <p style="margin-bottom:2rem;">Press the join button below to create a BlocksHub account. Join the hundreds of players who are developing, playing, customizing their avatar, making friends, trading items, and more.</p>
+                                <p style="margin-bottom:2rem;">Press the join button below to create a ubexs account. Join the hundreds of players who are developing, playing, customizing their avatar, making friends, trading items, and more.</p>
                             </div>
                             <div class="col-12">
-                                <a href="/signup" class="btn btn-success" style="color:white;width:7rem;margin:0 auto;display:block;">JOIN</button>
+                                <a href="/signup" class="btn btn-success" style="color:white;width:7rem;margin:0 auto;display:block;">Join</button>
                             </div>
                             <div class="col-12 col-md-8 offset-md-2"  style="margin-top:6rem;">
                                 <p class="font-weight-bold">Looking to make games?</p>
-                                <p style="margin-bottom:2rem;">After joining BlocksHub, <a href="/support/developer-get-started" class="homepage-a">check out our developer get started guide here</a>! Please note that ubexs is still heavily in-development, so not nearly as many features as we'd like have been implemented. Learn how our javascript game engine (<a href="https://www.babylonjs.com/" rel="noopener nofollow" class="homepage-a">Babylon</a>) works, current features, upcoming features, and more.</p>
+                                <p style="margin-bottom:2rem;">After joining BlocksHub, <a href="/support/developer-get-started" class="homepage-a">check out our developer get started guide here</a>! Please note that we are still heavily in-development, so not nearly as many features as we'd like have been implemented. Learn how our javascript game engine (<a href="https://www.babylonjs.com/" rel="noopener nofollow" class="homepage-a">Babylon</a>) works, current features, upcoming features, and more.</p>
                             </div>
                         </div>
                     </div>
