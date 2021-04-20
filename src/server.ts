@@ -13,7 +13,7 @@ import * as morgan from 'morgan';
 import config from "./helpers/config";
 import requestIntercept from './middleware/Any';
 import { NotFoundMiddleware } from './middleware/ErrorHandle';
-import { MigrateRBXSession } from "./middleware/MigrateLegacySession";
+import { MigrateUBXSession } from "./middleware/MigrateLegacySession";
 
 const rootDir = __dirname;
 let portToListenOn = config.port || process.env.PORT || 3000;
