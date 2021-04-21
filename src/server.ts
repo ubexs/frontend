@@ -76,7 +76,7 @@ export class Server {
                 extended: true
             }))
             .use(requestIntercept)
-            .use(MigrateRBXSession())
+            .use(MigrateUBXSession())
 
         if (process.env.NODE_ENV === 'development') {
             // this.app.use(morgan('dev'));
