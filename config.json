@@ -1,18 +1,23 @@
 {
     "baseUrl": {
-        "backend": "http://api.ubx.10allday.com",
-        "frontend": "http://api.ubx.10allday.com",
-        "play": "http://play.ubx.10allday.com"
+        "backend": "https://api-stage.ubexs.com",
+        "frontend": "https://api-stage.ubexs.com",
+        "play": "https://play-stage.ubexs.com",
+        "cdn": "https://cdn-stage.ubexs.com",
+        "storage": "https://storage.googleapis.com",
+        "analytics": "https://www.google-analytics.com",
+        "fonts": "https://ka-f.fontawesome.com/releases/v5.15.1/css/free.min.css",
+        "monitoring": "https://sentry.io"
     },
     "backendAuthorization": "example-key",
     "env": "DEVELOPMENT",
     "port": 3005,
     "recaptcha": {
         "v3": {
-            "public": ""
+            "public": "6Lc9VM8UAAAAAFlnULqvxYegRA9iz-DZg-SAuQRE"
         },
         "v2": {
-            "public": ""
+            "public": "6LcNVc8UAAAAALqEX0uRZGnCCR7UHl53jDlYQwHY"
         }
     }
 }
