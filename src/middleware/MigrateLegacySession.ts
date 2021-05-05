@@ -8,18 +8,18 @@ import axios, { AxiosResponse } from 'axios';
 import config from '../helpers/config';
 
 
-export const MigrateRBXSession = () => {
+export const MigrateUBXSession = () => {
     return (req: Request, res: Response, next: NextFunction) => {
         if (typeof req.cookies === 'object' && req.cookies !== null) {
-            let cookie = req.cookies['rbxsession'];
+            let cookie = req.cookies['ubxsession'];
             if (typeof cookie === 'string') {
-                res.cookie('blockshub-session', cookie, {
+                res.cookie('ubexs-session', cookie, {
                     secure: true,
                     maxAge: (86400 * 30 * 12) * 1000,
                     sameSite: 'lax',
-                    domain: '.blockshub.net',
+                    domain: '.ubexs.com',
                 })
-                res.clearCookie('rbxsession');
+                res.clearCookie('ubxsession');
                 res.redirect('/');
                 return
             }

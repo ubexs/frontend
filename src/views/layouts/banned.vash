@@ -3,7 +3,7 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="x-lb-origin" content="@model['x-lb-origin']">
-    <title>@model.title - BlocksHub</title>
+    <title>@model.title - ubexs</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Local CSS -->
@@ -20,7 +20,7 @@
         @if (model.cookieConsent.googleAnalytics === true) {
             <!-- google analytics -->
             <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WRD4X3R" nonce="@model.nonce"></script>
             <script async src="/js/misc/ga.js" nonce="@model.nonce"></script>
         }
     }

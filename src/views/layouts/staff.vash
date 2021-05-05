@@ -7,7 +7,7 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="x-lb-origin" content="@model['x-lb-origin']">
-    <title>@model.title - BlocksHub</title>
+    <title>@model.title - ubexs</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Local CSS -->
@@ -30,7 +30,7 @@
         @if (model.cookieConsent.googleAnalytics === true) {
             <!-- google analytics -->
             <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WRD4X3R" nonce="@model.nonce"></script>
         }
     }
     <script nonce="@model.nonce">
@@ -38,7 +38,7 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'UA-161288601-1');
+        gtag('config', 'GTM-WRD4X3R');
     </script>
 
 
@@ -81,7 +81,7 @@
                     <div class="col-12" style="padding-top:0.25rem;padding-bottom:0.25rem;">
                         <ul class="list-inline" style="padding-bottom:0;margin-bottom:0;">
                             <li class="list-inline-item">
-                                <a style="color:#212529;" href="/">Return to BlocksHub</a>
+                                <a style="color:#212529;" href="/">Return to ubexs</a>
                             </li>
                             <li class="list-inline-item">
                                 <a style="color:#212529;font-weight:bold;" href="/staff/directory">Staff Directory</a>
@@ -96,39 +96,39 @@
             <div class="staff-sidebar">
                 <div class="card" style="height:100%;min-height: 100vh;">
                     <div class="card-body" style="height:100%;">
-                        <h3 style="font-size:1rem;">GENERAL</h3>
+                        <h3 style="font-size:1rem;">General</h3>
                         @if (model.hasPerm('ReviewPendingItems')) {
                             <a class="normal" href="/staff/catalog">
-                                <p class="staff-item">PENDING ITEMS</p>
+                                <p class="staff-item">Pending items</p>
                             </a>
                         }
                         @if (model.hasPerm('ManageBanner')) {
                             <a class="normal" href="/staff/banner">
-                                <p class="staff-item">BANNER</p>
+                                <p class="staff-item">Banner</p>
                             </a>
                         }
                         @if (model.hasPerm('ManageSupportTickets')) {
                             <a class="normal" href="/staff/tickets">
-                                <p class="staff-item">VIEW TICKETS</p>
+                                <p class="staff-item">View tickets</p>
                             </a>
                         }
                         @if (model.hasPerm('ManageSupportTickets')) {
                             <a class="normal" href="/staff/create">
-                                <p class="staff-item">CREATE ITEM</p>
+                                <p class="staff-item">Create item</p>
                             </a>
                         }
                         @if (model.hasPerm('ManageForumCategories')) {
                             <a class="normal" href="/staff/forums">
-                                <p class="staff-item">FORUMS</p>
+                                <p class="staff-item">Forums</p>
                             </a>
                         }
 
                         @if (model.hasPerm('ReviewAbuseReports')) {
                             <div class="seperator-staff"></div>
 
-                            <h3 style="font-size:1rem;">ABUSE REPORTS</h3>
+                            <h3 style="font-size:1rem;">Abuse reports</h3>
                             <a class="normal" href="/staff/report-abuse/user-status">
-                                <p class="staff-item">USER STATUS</p>
+                                <p class="staff-item">User status</p>
                             </a>
                         }
 
@@ -137,46 +137,46 @@
                         <h3 style="font-size:1rem;">USER</h3>
                         @if (model.hasPerm('ManagePublicUserInfo')) {
                             <a class="normal" href="/staff/user/leaderboard">
-                                <p class="staff-item">LEADERBOARD</p>
+                                <p class="staff-item">Leaderboard</p>
                             </a>
                         }
                         @if (model.hasPerm('ManagePublicUserInfo')) {
                             <a class="normal" href="/staff/user/search">
-                                <p class="staff-item">SEARCH</p>
+                                <p class="staff-item">Search</p>
                             </a>
                         }
                         @if (model.hasPerm('BanUser')) {
                             <a class="normal" href="/staff/ban">
-                                <p class="staff-item">BAN</p>
+                                <p class="staff-item">Ban</p>
                             </a>
                         }
                         @if (model.hasPerm('UnbanUser')) {
                             <a class="normal" href="/staff/unban">
-                                <p class="staff-item">UNBAN</p>
+                                <p class="staff-item">Unban</p>
                             </a>
                         }
                         @if (model.hasPerm('ResetPassword')) {
                             <a class="normal" href="/staff/password">
-                                <p class="staff-item">RESET PASSWORD</p>
+                                <p class="staff-item">Reset password</p>
                             </a>
                         }
                         @if (model.hasPerm('GiveItemToUser')) {
                             <a class="normal" href="/staff/give">
-                                <p class="staff-item">GIVE ITEM</p>
+                                <p class="staff-item">Give item</p>
                             </a>
                         }
                         @if (model.hasPerm('GiveCurrencyToUser')) {
                             <a class="normal" href="/staff/give/currency">
-                                <p class="staff-item">GIVE CURRENCY</p>
+                                <p class="staff-item">Give currency</p>
                             </a>
                         }
 
                         @if (model.hasPerm('ManageCurrencyProducts')) {
                             <div class="seperator-staff"></div>
 
-                            <h3 style="font-size:1rem;">ECONOMY</h3>
+                            <h3 style="font-size:1rem;">Economy</h3>
                             <a class="normal" href="/staff/currency-product">
-                                <p class="staff-item">CURRENCY PRODUCTS</p>
+                                <p class="staff-item">Currency products</p>
                             </a>
                         }
 

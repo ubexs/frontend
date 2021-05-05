@@ -28,11 +28,11 @@ export default class ServiceBase extends errors {
         this.v2 = client('v2', this.clientOptions);
     }
     /**
-     * BlocksHub V1 API
+     * ubexs V1 API
      */
     public v1: AxiosInstance;
     /**
-     * BlocksHub V2 API
+     * ubexs V2 API
      */
     public v2: AxiosInstance;
 }

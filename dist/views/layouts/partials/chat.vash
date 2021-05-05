@@ -1,9 +1,0 @@
-@{
-    // == Chat Partial ==
-    // View file containing chat JS, and potentially more (such as styling) in the future.
-    // This is only shown for authenticated users.
-}
-@if (model && model.userInfo && typeof model.userInfo.userId !== "undefined" && model.userInfo.userId !== null) {
-    <!-- Chat -->
-    <script nonce="@model.nonce" src="/js/chat.js?v=@model.v"></script>
-}

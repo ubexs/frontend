@@ -4,11 +4,8 @@ div.row.secondaryNavBar {
     color:white;
     margin: 0;
 }
-a.navbar-brand  > span.brand-blocks {
+a.navbar-brand  > span.brand-ubx {
     color:rgba(255,211,0,1);
-}
-a.navbar-brand  > span.brand-hub {
-    background-color:rgba(255,211,0,1);
 }
 .navbar-nav > .nav-item > .nav-link:hover {
     border-bottom-color: rgba(255,211,0,1);

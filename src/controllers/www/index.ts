@@ -28,7 +28,7 @@ export class GenericWWWController extends base {
     }
 
     @Get('/discord')
-    @Redirect(302, 'https://discord.gg/9eXgJue')
+    @Redirect(302, 'https://discord.gg/3Hp8MvQ')
     public redirectToDiscord() { }
 
     @Get('/play')

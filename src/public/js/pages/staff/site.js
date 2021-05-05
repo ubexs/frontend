@@ -1,3 +1,4 @@
+/* TODO: Add the abillity to shutdown */
 $(document).on('click', '#updateSite', function() {
     var siteDisabled = parseInt($('#siteEnabled').val());
     request("/staff/site", "PATCH", JSON.stringify({"siteDisabled":siteDisabled}))

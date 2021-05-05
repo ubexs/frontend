@@ -1,13 +1,13 @@
 {
     "baseUrl": {
+        "backend": "https://api.ubexs.com",
+        "frontend": "https://api.ubexs.com",
+        "play": "https://play.ubexs.com",
+        "cdn": "https://cdn.ubexs.com",
         "backend": "https://api-stage.ubexs.com",
         "frontend": "https://api-stage.ubexs.com",
         "play": "https://play-stage.ubexs.com",
         "cdn": "https://cdn-stage.ubexs.com",
-        "storage": "https://storage.googleapis.com",
-        "analytics": "https://www.google-analytics.com",
-        "fonts": "https://ka-f.fontawesome.com/releases/v5.15.1/css/free.min.css",
-        "monitoring": "https://sentry.io"
     },
     "backendAuthorization": "example-key",
     "env": "DEVELOPMENT",
