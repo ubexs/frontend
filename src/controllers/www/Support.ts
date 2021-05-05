@@ -383,7 +383,7 @@ export class WWWSupportController extends base {
             </div>
             <div class="col-12" style="margin-bottom:1rem;">
                 <h4 style="font-size:1rem;margin-bottom:0;">Sandbox Community</h4>
-                <p>The Sandbox Community is the best place to find cool sandbox sites. Ckeck out their <a href="https://discord.gg/rxZ68KeM8B">Discord</a> and <a href="https://sandboxcommunity.xyz">website</a></p>
+                <p>The Sandbox Community is the best place to find cool sandbox sites. Ckeck out their <a href="https://bit.ly/3nP0Ksc">Discord</a> and <a href="https://bit.ly/3nP0Ksc">website</a></p>
             </div>
             </div>`
             }
