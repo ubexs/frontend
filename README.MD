@@ -1,8 +1,5 @@
 # ubexs Web Frontend
-
-Originally called BlocksHub by https://beak.dev/ (It's not related)
-
-
+Built on top of BlocksHub by https://beak.dev/ (It's not related)
 
 ### Dev Env Setup
 1. Create a file called config.json
