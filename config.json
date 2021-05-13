@@ -6,7 +6,7 @@
         "cdn": "https://cdn.ubexs.com",
     },
     "backendAuthorization": "example-key",
-    "env": "DEVELOPMENT",
+    "env": "production",
     "port": 3005,
     "recaptcha": {
         "v3": {
