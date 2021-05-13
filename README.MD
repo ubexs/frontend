@@ -1,4 +1,4 @@
-# ubexs Web Frontend
+# Ubexs Web Frontend
 Built on top of BlocksHub by https://beak.dev/ (It's not related)
 
 ### Dev Env Setup
