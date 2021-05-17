@@ -1,7 +1,7 @@
 request('/ad/my/created-ads', 'GET')
 .then(d => {
     if (d.length === 0) {
-        return $('#running-ads').empty().append(`<p>You have not created any ads.</p>`);
+        return $('#running-ads').empty().append(`<p>Get started advertising on Ubexs!</p>`);
     }
     $('#running-ads').empty();
     let groupIds = [];
@@ -90,8 +90,8 @@ $(document).on('click', '.onClickRunAd', function(e) {
             return;
         }
         d = parseInt(d, 10);
-        if (isNaN(d) || d > 100000 || d < 1) {
-            return warning('Please specify a valid number between 1 and 100,000.');
+        if (isNaN(d) || d > 1000000000 || d < 1) {
+            return warning('Please specify a valid number between 1 and 1,000,000,000. (1 × 10⁹)');
         }
         console.log(d);
         loading();
@@ -100,7 +100,7 @@ $(document).on('click', '.onClickRunAd', function(e) {
             amount: d,
         }).then(d => {
             console.log(d);
-            return success('Your bid has been placed.', () => {window.location.reload()});
+            return success('Your bid is now running!', () => {window.location.reload()});
         })
         .catch(e => {
             warning(e.responseJSON.message);
