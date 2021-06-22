@@ -1,9 +1,8 @@
 {
     "baseUrl": {
-        "backend": "https://api.ubexs.com",
-        "frontend": "https://api.ubexs.com",
-        "play": "https://play.ubexs.com",
-        "cdn": "https://cdn.ubexs.com",
+        "backend": "http://api.ubexs.com",
+        "frontend": "http://api.ubexs.com",
+        "play": "http://play.ubexs.com"
     },
     "backendAuthorization": "example-key",
     "env": "development",
@@ -11,6 +10,7 @@
     "recaptcha": {
         "v3": {
             "public": "6Lc9VM8UAAAAAFlnULqvxYegRA9iz-DZg-SAuQRE"
+        },
         "v2": {
             "public": "6LcNVc8UAAAAALqEX0uRZGnCCR7UHl53jDlYQwHY"
         }
