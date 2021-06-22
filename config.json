@@ -11,9 +11,8 @@
     "recaptcha": {
         "v3": {
             "public": "6Lc9VM8UAAAAAFlnULqvxYegRA9iz-DZg-SAuQRE"
-        },
         "v2": {
             "public": "6LcNVc8UAAAAALqEX0uRZGnCCR7UHl53jDlYQwHY"
-        }
+        },
     }
 }
