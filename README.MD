@@ -1,4 +1,4 @@
-# Ubexs Web Frontend
+# Ubx Web Frontend
 Built on top of BlocksHub by https://beak.dev/ (It's not related)
 
 ### Dev Env Setup
@@ -7,9 +7,9 @@ Built on top of BlocksHub by https://beak.dev/ (It's not related)
 ```json
 {
     "baseUrl": {
-        "backend": "http://api-devsite.ubexs.com",
-        "frontend": "http://api-devsite.ubexs.com",
-        "play": "http://play-devsite.ubexs.com"
+        "backend": "http://api-devsite.ubx.10allday.com",
+        "frontend": "http://api-devsite.ubx.10allday.com",
+        "play": "http://play-devsite.ubx.10allday.com"
     },
     "backendAuthorization": "example-key",
     "env": "DEVELOPMENT",
