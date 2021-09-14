@@ -4,7 +4,7 @@
 module.exports = {
     apps: [
         {
-            name: "BlocksHub WWW",
+            name: "Ubx WWW",
             script: "./dist/index.js",
             // purely so that soft reloading works decently
             instances: 2,
