@@ -22,7 +22,7 @@
       </div>
     <div class="row">
         <div class="col-sm-6 col-md-4">
-            <img src="https://cdn.blockshub.net/thumbnails/d8f9737603db2d077e9c6f2d5bd3eec1db8ff9fc8ef64784a5e4e6580c4519ba.png" data-userid="@model.userInfo.userId" style="width:100%;padding:1rem;" id="userAvatarImage" />
+            <img src="https://cdn.ubx.10allday.com/thumbnails/d8f9737603db2d077e9c6f2d5bd3eec1db8ff9fc8ef64784a5e4e6580c4519ba.png" data-userid="@model.userInfo.userId" style="width:100%;padding:1rem;" id="userAvatarImage" />
             <button type="button" class="btn btn-success" style="margin: 0 auto;display: block;width: 100%;" id="buttonUpdateAvatar">Update Avatar</button>
 
             <button type="button" class="btn btn-success" style="margin: 0.5rem auto 0 auto;display: block;width: 100%;" id="buttonCreateOutfit">Create Outfit</button>
