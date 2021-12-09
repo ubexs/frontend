@@ -12,6 +12,11 @@ interface IWebsiteConfig {
         frontend: string;
         backend: string;
         play: string;
+        storage: string;
+        analytics: string;
+        sentry: string;
+        cdn: string;
+        fontawesome: string;
     }
     port?: number;
     env?: string;
