@@ -1,6 +1,6 @@
 import { $log } from "@tsed/common";
 import { PlatformExpress } from "@tsed/platform-express";
-import { Server } from "./server.ts";
+import { Server } from "./server";
 
 async function bootstrap() {
     try {
