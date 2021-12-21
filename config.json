@@ -1,11 +1,11 @@
 {
     "baseUrl": {
-        "backend": "http://api.ubx.10allday.com",
-        "frontend": "http://api.ubx.10allday.com",
+        "backend": "https://backend.10allday.repl.co:3000",
+        "frontend": "https://frontend.10allday.repl.co:3000",
         "play": "http://play.ubx.10allday.com"
     },
     "backendAuthorization": "example-key",
-    "env": "development",
+    "env": "DEVELOPMENT",
     "port": 3005,
     "recaptcha": {
         "v3": {
