@@ -1,17 +1,1 @@
-$(document).on('click', '#createReply', function(e) {
-    e.preventDefault();
-    loading();
-    let body = $('#body').val();
-    let id = $('#ticketid').val();
-
-    request('/support/ticket/'+id+'/reply', 'POST', {
-        'body': body,
-        'v2Token': grecaptcha.getResponse(),
-    }).then(() => {
-        window.location.href = '/support/ticket/'+id;
-    })
-    .catch(e => {
-        console.error(e);
-        return warning(e.responseJSON.message);
-    })
-}) 
+"use strict";$(document).on("click","#createReply",function(a){a.preventDefault(),loading();var b=$("#body").val(),c=$("#ticketid").val();request("/support/ticket/"+c+"/reply","POST",{body:b,v2Token:grecaptcha.getResponse()}).then(function(){window.location.href="/support/ticket/"+c})["catch"](function(a){return warning(a.responseJSON.message)})});

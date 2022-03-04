@@ -1,0 +1,20 @@
+{
+  "files": {
+    "src/helpers/axios.ts": [
+      {
+        "id": "899b0d77-6424-402d-aedc-08cf47bd5d73",
+        "line": 3,
+        "version": 3,
+        "index": 59
+      }
+    ],
+    "src/public/css/custom.css": [
+      {
+        "id": "d9438bba-a4e6-4d36-a5a9-19174003e611",
+        "line": 792,
+        "version": 97,
+        "index": 15720
+      }
+    ]
+  }
+}

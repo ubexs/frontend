@@ -1,7 +1,6 @@
 html,body {
     height: 100%;
 }
-
 .image{
     position:relative;
     overflow:hidden;
@@ -17,30 +16,6 @@ html,body {
 }
 * {
     font-family: 'Montserrat', sans-serif;
-}
-a.navbar-brand  > span.brand-ubx {
-    color:rgb(76, 84, 68);
-    
-.gradient-heading {
-    margin-bottom:0;
-    font-size:1rem;
-    background: linear-gradient(90deg, rgba(71,195,91,1) 0%, rgba(105,222,124,1) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.gradient-border-bottom {
-    color:white;
-    border-radius:0;
-    border-bottom: 1px solid rgba(105,222,124,1);
-}
-div#bannerText > div {
-    background-color: #23282d;
-}
-div#bannerText > div > div > h6 {
-    margin-top:1rem;
-    margin-bottom:1rem;
-    font-size:0.85rem;
-    color: white;
 }
 .rainbow-fa:before {
     -webkit-background-clip: text;
@@ -92,7 +67,7 @@ div#bannerText > div > div > h6 {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-}​
+}â€‹
 .btn-success {
     background: linear-gradient(90deg, rgba(71,195,91,1) 0%, rgba(105,222,124,1) 100%);
     border-color:#47c35b;
@@ -286,7 +261,7 @@ div.navbar {
     margin: 0 auto;
 }
 .container > .navbar-toggler > .navbar-toggler-icon {
-    background-image: url(/img/nav-grey.svg?v2=);
+    background-image: url(/web/20200908224339im_/https://www.blockshub.net/img/nav-grey.svg?v2=);
 }
 .container > .navbar-toggler {
     border-color: white;
@@ -305,7 +280,7 @@ div.navbar {
     top:0;
     left:0;
     padding: .3em 0 1em 40px;
-    list-style-image: url(https://cdn.ubexs.com/thumbnails/5732f05140448511b9098951e1a47b9d3a8bb0dd384df902f3c519cec1b03edb.png);
+    list-style-image: url(https://web.archive.org/web/20200908224339im_/https://cdn.blockshub.net/thumbnails/5732f05140448511b9098951e1a47b9d3a8bb0dd384df902f3c519cec1b03edb.png);
 }
 .dropdown-menu.fade {
     display: block;
@@ -773,27 +748,12 @@ div.navBarMobileBottom > div.border-right {
 div#more-expanded > div.col-5 {
     background: #ffffff;
 }
-span.badge.stats-badge {
-    margin: 0.3rem 0.10rem;
-    text-align:left;
-    border-radius: 0;
-}
-span.badge.stats-badge > span.stats-badge-header {
-    font-size:0.6rem;
-}
-span.badge.stats-badge > span.stats-badge-body {
-    font-size:0.9rem;
-    font-weight:200;
-    padding-top:0.5rem;
-    display:block;
-}
 
 .support-ticket-text-box {
     padding: 0.5rem 0.65rem;
     height: 10rem;
     overflow-x:auto;
     white-space: pre-wrap;
-    background: #f5f6f8;
 }
 a.ticket-click {
     text-decoration: none;
@@ -830,41 +790,3 @@ div.staff-card-index > i {
     font-size: 35px;
 }
 */
-
-div.row.userChatMessageCard > div.col-5 {
-    background: #f5f6f8;
-    border-radius: 4px;
-    padding: 3px;
-}
-.tooltipped-asp {
-    cursor: pointer;
-}
-span#deleteUserSecondaryBalance, span#deleteUserPrimaryBalance {
-    font-size: 0.75rem;
-}
-div.gdpr-cookie-notice {
-    color: #212529;
-}
-div#cookieConsentInfoModal {
-    z-index: 99999;
-}
-p.point-75-rem  {
-    font-size:0.75rem;
-}
-.genre-padding-area   {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-div.navbar-mobile-user-info {
-    display: none;
-}
-@media (max-width: 992px) {
-    div.navbar-mobile-user-info {
-        display: block;
-    }
-}
-
-p.mobile-navbar-more-links > a {
-    color: inherit;
-}

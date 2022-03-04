@@ -68,6 +68,14 @@ export class Server {
                 .use(express.static(path.join(__dirname, './public/')))
         }
 
+        
+        // Dev env specific setup
+        if (process.env.NODE_ENV === 'production') {
+            this.app
+                // Serve static on dev only (we use nginx for static serve in production)
+                .use(express.static(path.join(__dirname, './public/')))
+        }
+
         // Middleware is split down here so we dont make unnecessary requests for static files
         this.app
             .use(cookieParser())

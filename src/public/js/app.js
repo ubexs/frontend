@@ -1,4 +1,4 @@
-window.subsitutionimageurl = "https://cdn.ubexs.com/thumbnails/d8f9737603db2d077e9c6f2d5bd3eec1db8ff9fc8ef64784a5e4e6580c4519ba.png";
+window.subsitutionimageurl = "https://cdn.10allday.com/thumbnails/avatar.png";
 // Get UserData
 var userData = $('#userdata');
 
@@ -88,9 +88,9 @@ function formatDate(dat) {
 function formatCurrency(cur, heightData = '1rem') {
     if (cur === 1) {
         // return '<span style="color:#28a745;"><i class="far fa-money-bill-alt"></i> </span>';
-        return '<span style="color:#28a745;"><img alt="$" style="height: ' + heightData + ';" src="https://cdn.ubexs.com/static/money-green-2.svg"/> </span>';
+        return '<span style="color:#28a745;"><img alt="$" style="height: ' + heightData + ';" src="/static/money-grey.svg"/> </span>';
     } else {
-        return '<span style="color:#ffc107;"><img alt="$" style="height: ' + heightData + ';" src="https://cdn.ubexs.com/static/coin-stack-yellow.svg"/> </span>';
+        return '<span style="color:#ffc107;"><img alt="$" style="height: ' + heightData + ';" src="/static/coin-stack-yellow.svg"/> </span>';
     }
 }
 

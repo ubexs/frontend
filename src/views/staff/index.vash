@@ -9,60 +9,60 @@
                 // 0 = name, 1 = url, 2 = font awesome class, 3 = required permission
                 model.links = [
                     [
-                        'Pending items',
+                        'PENDING ITEMS',
                         '/staff/catalog',
                         'fas fa-smile',
                         'ReviewPendingItems',
                     ],
                     [
-                        'Site banner',
+                        'SITE BANNER',
                         '/staff/banner',
                         'fas fa-exclamation-triangle',
                         'ManageBanner',
                     ],
                     [
-                        'Support tickets',
+                        'SUPPORT TICKETS',
                         '/staff/tickets',
                         'fas fa-envelope',
                         'ManageSupportTickets',
                     ],
                     [
-                        'Create items',
+                        'CREATE ITEM',
                         '/staff/create',
                         'fas fa-hat-cowboy',
                     ],
                     [
-                        'Forums',
+                        'FORUMS',
                         '/staff/forums',
                         'fas fa-user-tie',
                         'ManageForumCategories',
                     ],
                     [
-                        'Abuse reports',
+                        'ABUSE REPORTS',
                         '/staff/report-abuse/user-status',
                         'fas fa-flag',
                         'ReviewAbuseReports',
                     ],
                     [
-                        'Search users',
+                        'SEARCH USERS',
                         '/staff/user/search',
                         'fas fa-user',
                         'ManagePublicUserInfo',
                     ],
                     [
-                        'User information',
+                        'USERS LEADERBOARD',
                         '/staff/user/leaderboard',
                         'fas fa-list-ol',
                         'ReviewUserInformation',
                     ],
                     [
-                        'Currency products',
+                        'CURRENCY PRODUCTS',
                         '/staff/currency-product',
                         'fas fa-money-bill-wave-alt',
                         'ManageCurrencyProducts',
                     ],
                     [
-                        'Internet protocol whitelist',
+                        'IP WHITELIST',
                         '/staff/whitelist-ip',
                         'fas fa-tools',
                         'ManagePrivateUserInfo'
@@ -74,7 +74,7 @@
             <div class="row" style="margin-top:1rem;">
                 @if (model.links.length === 0) {
                     <div class="col-12">
-                        <p></p>
+                        <p>Oops, it looks like you don't have access to anything.</p>
                     </div>
                 }else{
                     for (const item of model.links) {
@@ -93,6 +93,9 @@
                         </div>
                     }
                 }
+                <div class="col-12" style="margin-top:1rem;">
+                    <p>If you think you are missing permissions, contact beak on discord!</p>
+                </div>
             </div>
   })
   @html.block('js', function(model) {

@@ -13,4 +13,4 @@ export default (version: string, configOptions: AxiosRequestConfig = {}) => {
     configOptions.headers = configOptions.headers || {};
     configOptions.headers['server-authorization'] = config.backendAuthorization;
     return axios.create(configOptions);
-} 
+}

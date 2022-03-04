@@ -13,11 +13,11 @@ export const MigrateUBXSession = () => {
         if (typeof req.cookies === 'object' && req.cookies !== null) {
             let cookie = req.cookies['ubxsession'];
             if (typeof cookie === 'string') {
-                res.cookie('ubexs-session', cookie, {
+                res.cookie('10allday-session', cookie, {
                     secure: true,
                     maxAge: (86400 * 30 * 12) * 1000,
                     sameSite: 'lax',
-                    domain: '.ubexs.com',
+                    domain: '.10allday.com',
                 })
                 res.clearCookie('ubxsession');
                 res.redirect('/');

@@ -14,9 +14,9 @@ interface IWebsiteConfig {
         play: string;
         storage: string;
         analytics: string;
-        sentry: string;
+        monitoring: string;
         cdn: string;
-        fontawesome: string;
+        fonts: string;
     }
     port?: number;
     env?: string;
@@ -48,7 +48,11 @@ strictEqual(typeof config.baseUrl, 'object');
 strictEqual(typeof config.baseUrl.frontend, 'string');
 strictEqual(typeof config.baseUrl.backend, 'string');
 strictEqual(typeof config.baseUrl.play, 'string');
-strictEqual(typeof config.backendAuthorization, 'string');
+strictEqual(typeof config.baseUrl.storage, 'string');
+strictEqual(typeof config.baseUrl.analytics, 'string');
+strictEqual(typeof config.baseUrl.monitoring, 'string');
+strictEqual(typeof config.baseUrl.cdn, 'string');
+strictEqual(typeof config.baseUrl.fonts, 'string');
 strictEqual(typeof config.recaptcha, 'object');
 strictEqual(typeof config.recaptcha.v2, 'object');
 strictEqual(typeof config.recaptcha.v3, 'object');

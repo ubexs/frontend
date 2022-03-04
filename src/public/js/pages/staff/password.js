@@ -1,11 +1,1 @@
-$(document).on('click', '#changePassword', function() {
-    var userid = $('#userId').val();
-    request("/staff/user/"+userid+"/resetpassword", "POST",)
-        .then(function(d) {
-            success("Link: "+"https://www.ubexs.com/reset/password?userId="+userid+"&code="+d.code, function() {
-            });
-        })
-        .catch(function(e) {
-            warning(e.responseJSON.message);
-        });
-});
+"use strict";$(document).on("click","#changePassword",function(){var a=$("#userId").val();request("/staff/user/"+a+"/resetpassword","POST").then(function(b){success("Link: https://blockshub.net/reset/password?userId="+a+"&code="+b.code,function(){})})["catch"](function(a){warning(a.responseJSON.message)})});

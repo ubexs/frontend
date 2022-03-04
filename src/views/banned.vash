@@ -24,7 +24,7 @@
                         <div class="col">
                         <hr />
                         @if (model.page.terminated === 1) {
-                            <p>If you wish to appeal, you can fill out a <a href="/support"> support ticket</a>.</p>
+                            <p>If you wish to appeal, you <a href="/support">fill out a support ticket here</a>.</p>
                         }else{
                             @if (model.page.unlock === false) {
                                 <p>You will be able to unlock your account on or after <span style="font-weight:600;">@model.page.untilUnbanned.</span></p>

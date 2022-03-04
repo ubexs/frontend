@@ -12,13 +12,13 @@
         @html.block('meta')
 
         <!-- Prefetch -->
-        <link rel="dns-prefetch" href="https://cdn.ubx.10allday.com">
-        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+        <link rel="dns-prefetch" href="https://cdn.10allday.com">
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/">
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
 
         <!-- CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@@4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
         <!-- Local CSS -->
         <link href="/css/custom.css?v=@model.v" rel="stylesheet">
         @*
@@ -41,12 +41,12 @@
             @if (model.cookieConsent.googleAnalytics === true) {
                 <!-- google analytics -->
                 <!-- Global site tag (gtag.js) - Google Analytics -->
-                <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WRD4X3R" nonce="@model.nonce"></script>
+                <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161288601-1" nonce="@model.nonce"></script>
                 <script async src="/js/misc/ga.js" nonce="@model.nonce"></script>
             }
         }
         <!-- Title -->
-        <title>@model.title - ubx</title>
+        <title>@model.title - 10allday</title>
         <!-- SEO -->
         @model.seo
         @html.block('seo')
@@ -89,7 +89,7 @@
 
                 </div>
                 <div class="col-5">
-                    <p style="text-align:left;padding-top:0.5rem;font-size:1.5rem;"><i class="fas fa-angle-double-right"></i> More</p>
+                    <p style="text-align:left;padding-top:0.5rem;font-size:1.5rem;"><i class="fas fa-angle-double-right"></i> MORE</p>
                     <div style="text-align:left;font-weight:700;padding-bottom: 1rem;padding-top:0.5rem;">
                         <p class="mobile-navbar-more-links">
                             @if (model.userInfo && model.userInfo.staff >= 1) {
@@ -151,7 +151,7 @@
                     <p>
                         <a href="/play">
                             <i class="fas fa-play"></i>
-                            <br>Play
+                            <br>PLAY
                         </a>
                     </p>
                 </div>
@@ -160,12 +160,12 @@
                         @if (typeof model.userInfo !== 'undefined') {
                             <a href="/dashboard">
                                 <i class="fas fa-home"></i>
-                                <br>Home
+                                <br>HOME
                             </a>
                         }else{
                             <a href="/signup">
                                 <i class="fas fa-door-open"></i>
-                                <br>Join
+                                <br>JOIN
                             </a>
                         }
                     </p>
@@ -174,7 +174,7 @@
                     <p>
                         <a href="/catalog">
                             <i class="fas fa-shopping-basket"></i>
-                            <br>Shop
+                            <br>SHOP
                         </a>
                     </p>
                 </div>
@@ -182,7 +182,7 @@
                     <p>
                         <a href="#" id="expand-more-mobile">
                             <i class="fas fa-angle-double-up"></i>
-                            <br>More
+                            <br>MORE
                         </a>
                     </p>
                 </div>
@@ -192,7 +192,7 @@
             <div class="container">
                 <h3 style="margin:0;padding:0;font-weight:600;">
                     <a class="navbar-brand" href="/" style="font-weight:600;">
-                        <span class="brand-ubx"> ubexs</span>
+                        <span class="brand-blocks">BLOCKS </span><span class="brand-hub">HUB</span>
                     </a>
                 </h3>
 
@@ -322,7 +322,7 @@
                             <a class="dropdown-item" href="/settings"><i class="fas fa-sliders-h"></i> My Settings</a>
                             <a class="dropdown-item" href="/moderation"><i class="fas fa-exclamation-triangle"></i> Moderation History</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item onClickLogout" href="#"><i class="fas fa-sign-out-alt"></i> Sign out</a>
+                            <a class="dropdown-item onClickLogout" href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
                         </div>
                     </li>
                 </ul>

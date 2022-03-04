@@ -29,7 +29,7 @@ export const csp = {
     'media-src': `'none'`,
     'frame-ancestors': `'self'`,
     'img-src': `'self' data: ${config.baseUrl.cdn} ${config.baseUrl.storage} ${config.baseUrl.analytics} ${config.baseUrl.frontend}`,
-    'connect-src': `'self' ws://localhost:8080/ ${config.baseUrl.analytics} ${config.baseUrl.sentry} ${config.baseUrl.fontawesome} ${config.baseUrl.frontend} ${config.baseUrl.play}`,
+    'connect-src': `'self' ws://10allday.com:8080/ ${config.baseUrl.analytics} ${config.baseUrl.monitoring} ${config.baseUrl.fonts} ${config.baseUrl.frontend} ${config.baseUrl.play}`,
     'object-src': `'none'`,
     'base-uri': `'self'`,
 } as any;
