@@ -60,7 +60,7 @@
         "linkifyjs": "^2.1.9",
         "lodash": "^4.17.20",
         "method-override": "^3.0.0",
-        "moment": "^2.27.0",
+        "moment": "^2.29.4",
         "morgan": "^1.10.0",
         "node-worker-threads-pool": "^1.4.2",
         "nodemon": "^2.0.4",
