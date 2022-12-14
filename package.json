@@ -51,7 +51,7 @@
         "consolidate": "^0.15.1",
         "cookie-parser": "^1.4.5",
         "core-js": "^3.6.5",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "fs-extra": "^10.0.0",
         "javascript-obfuscator": "^1.11.0",
         "jquery": "^3.5.1",
