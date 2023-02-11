@@ -63,7 +63,7 @@
         "moment": "^2.27.0",
         "morgan": "^1.10.0",
         "node-worker-threads-pool": "^1.4.2",
-        "nodemon": "^2.0.4",
+        "nodemon": "^2.0.20",
         "popper.js": "^1.16.1",
         "regenerator-runtime": "^0.13.9",
         "rimraf": "^3.0.2",
